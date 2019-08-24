@@ -1,0 +1,2 @@
+# bindings
+AsyncAPI bindings specifications
