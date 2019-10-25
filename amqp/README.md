@@ -6,7 +6,7 @@ This document defines how to describe AMQP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -34,11 +34,13 @@ Field Name | Type | Description
 <a name="channelBindingObjectExchangeType"></a>`exchange.type` | string | The type of the exchange. Can be either `topic`, `direct`, `fanout`, `default` or `headers`.
 <a name="channelBindingObjectExchangeDurable"></a>`exchange.durable` | boolean | Whether the exchange should survive broker restarts or not.
 <a name="channelBindingObjectExchangeAutoDelete"></a>`exchange.autoDelete` | boolean | Whether the exchange should be deleted when the last queue is unbound from it.
+<a name="channelBindingObjectExchangeVHost"></a>`exchange.vhost` | string | The virtual host of the exchange. Defaults to `/`.
 <a name="channelBindingObjectQueue"></a>`queue` | Map[string, any] | When `is`=`queue`, this object defines the queue properties.
 <a name="channelBindingObjectQueueName"></a>`queue.name` | string | The name of the queue. It MUST NOT exceed 255 characters long.
 <a name="channelBindingObjectQueueDurable"></a>`queue.durable` | boolean | Whether the queue should survive broker restarts or not.
 <a name="channelBindingObjectQueueExclusive"></a>`queue.exclusive` | boolean | Whether the queue should be used only by one connection or not.
 <a name="channelBindingObjectAutoDelete"></a>`queue.autoDelete` | boolean | Whether the queue should be deleted when the last consumer unsubscribes.
+<a name="channelBindingObjectQueueVHost"></a>`queue.vhost` | string | The virtual host of the queue. Defaults to `/`.
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -56,11 +58,13 @@ channels:
           durable: true
           exclusive: true
           autoDelete: false
+          vhost: /
         exchange:
           name: myExchange
           type: topic
           durable: true
           autoDelete: false
+          vhost: /
         bindingVersion: 0.1.0
 ```
 
