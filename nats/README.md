@@ -15,6 +15,12 @@ Current version is `0.1.0`.
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
+##### Fixed Fields
+
+Field Name | Type | Description
+---|:---:|---
+<a name="channelBindingObjectPayload"></a>`payload` | string | Defines the payload data type. Can be either `string`, `binary` or `JSON` (default). https://github.com/nats-io/nats.ts#connect-options
+
 
 
 <a name="channel"></a>
@@ -24,13 +30,23 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
 
+unsub after n messages
+
+sequence numbers
+
+Request reply
+    - timeout option
+    -
+
+queue groups
+
+
 
 <a name="operation"></a>
 
 ## Operation Binding Object
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
-
 
 
 <a name="message"></a>
