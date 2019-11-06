@@ -19,7 +19,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="serverBindingObjectPayload"></a>`payload` | string | Defines the payload data type. Can be either `string`, `binary` or `JSON` (default). https://github.com/nats-io/nats.ts#connect-options
+<a name="serverBindingObjectPayload"></a>`payload` | string | Defines the payload data type. Can be either `binary`, `JSON` or `string` (default)
 
 
 
