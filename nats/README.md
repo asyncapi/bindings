@@ -17,7 +17,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 ##### Fixed Fields
 
 | Field Name                                                       |  Type  | Description                                                                         |
-| ---------------------------------------------------------------- | :----: | ----------------------------------------------------------------------------------- |
+|------------------------------------------------------------------|:------:|-------------------------------------------------------------------------------------|
 | <a name="serverBindingObjectPayload"></a>`payload`               | string | Defines the payload data type. Can be either `binary`, `JSON` or `string` (default) |
 | <a name="serverBindingObjectEncoding"></a>`encoding`             | string | Defines the payloads encoding. Default to `utf8`.                                   |
 | <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.                  |
@@ -33,13 +33,11 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 ##### Fixed Fields
 
 | Field Name                                                                   |       Type       | Description                                                                             |
-| ---------------------------------------------------------------------------- | :--------------: | --------------------------------------------------------------------------------------- |
+|------------------------------------------------------------------------------|:----------------:|-----------------------------------------------------------------------------------------|
 | <a name="channelBindingObjectIs"></a>`is`                                    |      string      | Defines what type of channel it is. Can be either `requestReply` or `pubsub` (default). |
-| <a name="channelBindingObjectQueue"></a>`queue`                              | Map[string, any] | If the channel should use a queue, define the queue properties in this object.          |
-| <a name="channelBindingObjectQueueName"></a>`queue.name`                     |      string      | The name of the queue. It MUST NOT exceed 255 characters long.                          |
 | <a name="channelBindingObjectRequestReply"></a>`requestReply`                | Map[string, any] | If the channel is `requestReply`, define the request reply properties here.             |
 | <a name="channelBindingObjectRequestReplyTimeout"></a>`requestReply.timeout` |     integer      | The time you allow the subscriber to process the message and return a reply.            |
-| <a name="channelBindingObjectRequestReplyIs"></a>`requestReply.is`           |     string       | Defines what type of request reply it is. Can be either `requester` or `replier`.       |
+| <a name="channelBindingObjectRequestReplyIs"></a>`requestReply.is`           |      string      | Defines what type of request reply it is. Can be either `requester` or `replier`.       |
 | <a name="channelBindingObjectBindingVersion"></a>`bindingVersion`            |      string      | The version of this binding. If omitted, "latest" MUST be assumed.                      |
 
 ## Operation Binding Object
@@ -47,10 +45,12 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 <a name="message"></a>
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
-| Field Name                                                          |  Type   |     Applies To     | Description                                                        |
-| ------------------------------------------------------------------- | :-----: | :----------------: | ------------------------------------------------------------------ |
-| <a name="operationBindingObjectUnsubAfter"></a>`unsubAfter`         | integer |     Subscribe      | Defines whether the client should unsubscribe after n messages.    |
-| <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string  | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed. |
+| Field Name                                                          |       Type       |     Applies To     | Description                                                                         |
+|---------------------------------------------------------------------|:----------------:|:------------------:|-------------------------------------------------------------------------------------|
+| <a name="operationBindingObjectUnsubAfter"></a>`unsubAfter`         |     integer      |     Subscribe      | Defines whether the client should unsubscribe after n messages.                     |
+| <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` |      string      | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.                  |
+| <a name="operationBindingObjectQueue"></a>`queue`                   | Map[string, any] |     Subscribe      | If the subscription should use a queue, define the queue properties in this object. |
+| <a name="operationBindingObjectQueueName"></a>`queue.name`          |      string      |     Subscribe      | The name of the queue. It MUST NOT exceed 255 characters long.                      |
 
 ## Message Binding Object
 
