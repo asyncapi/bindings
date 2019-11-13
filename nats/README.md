@@ -45,12 +45,12 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 <a name="message"></a>
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
-| Field Name                                                          |       Type       |     Applies To     | Description                                                                         |
-|---------------------------------------------------------------------|:----------------:|:------------------:|-------------------------------------------------------------------------------------|
-| <a name="operationBindingObjectUnsubAfter"></a>`unsubAfter`         |     integer      |     Subscribe      | Defines whether the client should unsubscribe after n messages.                     |
-| <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` |      string      | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.                  |
-| <a name="operationBindingObjectQueue"></a>`queue`                   | Map[string, any] |     Subscribe      | If the subscription should use a queue, define the queue properties in this object. |
-| <a name="operationBindingObjectQueueName"></a>`queue.name`          |      string      |     Subscribe      | The name of the queue. It MUST NOT exceed 255 characters long.                      |
+| Field Name                                                          |       Type       |     Applies To     | Description                                                                                                                                                                                 |
+|---------------------------------------------------------------------|:----------------:|:------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <a name="operationBindingObjectUnsubAfter"></a>`unsubAfter`         |     integer      |     Subscribe      | Defines whether the client should unsubscribe after n messages.                                                                                                                             |
+| <a name="operationBindingObjectQueue"></a>`queue`                   | Map[string, any] |     Subscribe      | If the subscription should use a queue, define the queue properties in this object. Cannot be used used if channel `is` of type `requestReply` and `requestReply.is` are of type requester. |
+| <a name="operationBindingObjectQueueName"></a>`queue.name`          |      string      |     Subscribe      | The name of the queue. It MUST NOT exceed 255 characters long.                                                                                                                              |
+| <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` |      string      | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.                                                                                                                          |
 
 ## Message Binding Object
 
