@@ -10,6 +10,7 @@ This repository contains the specifications for each AsyncAPI protocol binding.
 * [JMS binding](./jms)
 * [Kafka binding](./kafka)
 * [MQTT binding](./mqtt)
+* [MQTT5 binding](./mqtt5)
 * [NATS binding](./nats)
 * [Redis binding](./redis)
 * [SNS binding](./sns)
