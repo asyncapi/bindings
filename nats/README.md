@@ -16,11 +16,10 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 ##### Fixed Fields
 
-| Field Name                                                       |  Type  | Description                                                                         |
-|------------------------------------------------------------------|:------:|-------------------------------------------------------------------------------------|
-| <a name="serverBindingObjectPayload"></a>`payload`               | string | Defines the payload data type. Can be either `binary`, `JSON` or `string` (default) |
-| <a name="serverBindingObjectEncoding"></a>`encoding`             | string | Defines the payloads encoding. Default to `utf8`.                                   |
-| <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.                  |
+| Field Name                                                       |  Type  | Description                                                        |
+| ---------------------------------------------------------------- | :----: | ------------------------------------------------------------------ |
+| <a name="serverBindingObjectEncoding"></a>`encoding`             | string | Defines the payloads encoding. Default to `utf8`.                  |
+| <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. |
 
 <a name="channel"></a>
 
