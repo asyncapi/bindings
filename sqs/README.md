@@ -61,7 +61,7 @@ channels:
             orderBy: messageGroupId
             deDupeBy: messageDuplicationId
 #
-#         When a standard high performanace queue. May not delier in order (non-FIFO)
+#         When a standard high performanace queue. May not deliver in order (non-FIFO)
 #
 #         is: standard
 #         standard:
