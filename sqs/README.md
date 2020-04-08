@@ -37,7 +37,6 @@ Field Name | Type | Applies To | Description
 ---|:---:|:---:|---
 <a name="operationBindingObjectVersion"></a>`verison` | String | Publish, Subscribe | Defines binding verison.
 <a name="operationBindingObjectIs"></a>`is` | String | Publish, Subscribe | Defines if queue has been configured as standard or FIFO. Its value MUST be either fifo or standard.
-
 <a name="operationBindingObjectFifo"></a>`fifo` | string | Publish, Subscribe | When is = fifo, defines config for first in first out queue.
 <a name="operationBindingObjectName"></a>`fifo.name` | string | Publish, Subscribe | Name of queue, must end in .fifo suffix for FIFO queues.
 <a name="operationBindingObjectAttributeName"></a>`fifo.attributeNames` | list | Subscribe | Attributes to be returned. Includes All, ApproximateFirstReceiveTimestamp, ApproximateReceiveCount, AWSTraceHeader, SenderId, SentTimestamp, MessageDeduplicationId, MessageGroupId, SequenceNumber
