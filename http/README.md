@@ -93,8 +93,7 @@ channels:
                 Content-Type:
                   type: string
                   enum: ['application/json']
-            meta:
-              version: '0.1.0'
+            bindingVersion: '0.1.0'
 ```
 
 [schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject
