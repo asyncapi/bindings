@@ -69,7 +69,7 @@ This object contains information about the message representation in Kafka.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectKey"></a>`key` | string | The message key.
+<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] | The message key.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -87,3 +87,5 @@ channels:
               enum: ['myKey']
             bindingVersion: '0.1.0'
 ```
+
+[schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject
