@@ -24,6 +24,7 @@ Field Name | Type | Description
 <a name="serverBindingObjectLastWill"></a>`lastWill` | object | Last Will and Testament configuration.
 <a name="serverBindingObjectLastWillTopic"></a>`lastWill.topic` | string | The topic where the Last Will and Testament message will be sent.
 <a name="serverBindingObjectLastWillQoS"></a>`lastWill.qos` | integer | Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received. Its value MUST be either 0, 1 or 2.
+<a name="serverBindingObjectLastWillMessage"></a>`lastWill.message` | string | The text of the Last Will and Testament message that will be sent.
 <a name="serverBindingObjectLastWillRetain"></a>`lastWill.retain` | boolean | Whether the broker should retain the Last Will and Testament message or not.
 <a name="serverBindingObjectKeepAlive"></a>`keepAlive` | integer | Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
