@@ -31,12 +31,12 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 ##### Fixed Fields
 
-Field Name | Type | Description
----|:---:|---
-<a name="operationBindingObjectType"></a>`type` | string | **Required**. Type of operation. Its value MUST be either `request` or `response`.
-<a name="operationBindingObjectMethod"></a>`method` | string | When `type` is `request`, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `CONNECT`, and `TRACE`.
-<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
+Field Name | Type | Applies To | Description
+---|:---:|:---:|---
+<a name="operationBindingObjectType"></a>`type` | string | Publish, Subscribe | **Required**. Type of operation. Its value MUST be either `request` or `response`.
+<a name="operationBindingObjectMethod"></a>`method` | string | Subscribe | When `type` is `request`, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `CONNECT`, and `TRACE`.
+<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | Publish, Subscribe | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
 

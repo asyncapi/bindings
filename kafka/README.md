@@ -33,11 +33,11 @@ This object contains information about the operation representation in Kafka.
 
 ##### Fixed Fields
 
-Field Name | Type | Description
----|:---:|---
-<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Id of the consumer group.
-<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group.
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
+Field Name | Type | Applies To | Description
+---|:---:|:---:|---
+<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Publish | Id of the consumer group.
+<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Publish | Id of the consumer inside a consumer group.
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
 
