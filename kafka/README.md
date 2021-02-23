@@ -6,16 +6,36 @@ This document defines how to describe Kafka-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
 
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object contains information about the server representation in Kafka.
 
+##### Fixed Fields
 
+Field Name | Type | Description | Applicability [default] | Constraints
+---|:---:|:---:|:---:|---
+`schemaRegistryUrl` | string (url) | API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used) | OPTIONAL | -
+`schemaRegistryVendor` | string | Identifies the Kafka serdes library that should be used (e.g. `confluent`, `apicurio`, or `ibm`) | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified
+`schemaRegistryAvailable` | boolean | Specifies if the Schema Registry identified in `schemaRegistryUrl` is available for use by consumers of the AsyncAPI spec | OPTIONAL [true] | MUST NOT be specified if `schemaRegistryUrl` is not specified
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
+
+##### Example
+
+```yaml
+servers:
+  production:
+    bindings:
+      kafka:
+        schemaRegistryUrl: "https://my-schema-registry.com"
+        schemaRegistryVendor: "confluent"
+        schemaRegistryAvailable: false
+        bindingVersion: '0.2.0'
+```
 
 
 <a name="channel"></a>
@@ -55,7 +75,7 @@ channels:
           clientId:
             type: string
             enum: ['myClientId']
-          bindingVersion: '0.1.0'
+          bindingVersion: '0.2.0'
 ```
 
 
@@ -67,10 +87,11 @@ This object contains information about the message representation in Kafka.
 
 ##### Fixed Fields
 
-Field Name | Type | Description
----|:---:|---
-<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] | The message key.
-<a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
+Field Name | Type | Description | Applicability [default] | Constraints
+---|:---:|:---:|:---:|---
+<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] | The message key. | OPTIONAL | -
+`schemaIdLocation` | `none` or `header` or `payload` | Location in the message of the ID that identifies the schema in a schema registry.  | OPTIONAL [`none`] | -
+<a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`] | -
 
 This object MUST contain only the properties defined above.
 
@@ -85,7 +106,8 @@ channels:
             key:
               type: string
               enum: ['myKey']
-            bindingVersion: '0.1.0'
+            schemaIdLocation: 'payload'
+            bindingVersion: '0.2.0'
 ```
 
 [schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject

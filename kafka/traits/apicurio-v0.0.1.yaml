@@ -1,0 +1,14 @@
+name: apicurio
+summary: Message headers used by Apicurio serdes library
+headers:
+  type: object
+  properties:
+    apicurio.value.globalId:
+      type: string
+    apicurio.value.version:
+      type: integer
+    apicurio.value.encoding:
+      type: string
+      enum:
+      - "BINARY"
+      - "JSON"

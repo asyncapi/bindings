@@ -1,0 +1,14 @@
+name: ibm-eventstreams
+summary: Message headers used by IBM Event Streams serdes library
+headers:
+  type: object
+  properties:
+    com.ibm.eventstreams.schemaregistry.schema.id:
+      type: string
+    com.ibm.eventstreams.schemaregistry.schema.version:
+      type: integer
+    com.ibm.eventstreams.schemaregistry.encoding:
+      type: string
+      enum:
+      - "BINARY"
+      - "JSON"
