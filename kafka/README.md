@@ -6,16 +6,36 @@ This document defines how to describe Kafka-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
 
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object contains information about the server representation in Kafka.
 
+##### Fixed Fields
 
+Field Name | Type | Description | Applicability [default] | Constraints
+---|:---:|:---:|:---:|---
+`saslMechamism` | string | Specifies the [`sasl.mechanism`](https://kafka.apache.org/documentation/#consumerconfigs_sasl.mechanism) config property that must be specified by Kafka clients connecting to this server. <br>Example values include `GSSAPI`, `PLAIN`, `OAUTHBEARER`, `SCRAM-SHA-256`, `SCRAM-SHA-512`  | OPTIONAL [`GSSAPI`] | -
+`securityProtocol` | string | Specifies the [`security.protocol`](https://kafka.apache.org/documentation/#consumerconfigs_security.protocol) config property that must be specified by Kafka clients connecting to this server. <br>Example values include `PLAINTEXT`, `SSL`, `SASL_PLAINTEXT`, `SASL_SSL` | OPTIONAL [`PLAINTEXT`] | -
+<a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
+
+This object MUST contain only the properties defined above.
+
+##### Example
+
+```yaml
+servers:
+  production:
+    bindings:
+      kafka:
+        saslMechanism: 'SCRAM-SHA-512'
+        securityProtocol: 'SASL_PLAINTEXT'
+        bindingVersion: '0.2.0'
+```
 
 
 <a name="channel"></a>
