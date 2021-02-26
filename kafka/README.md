@@ -22,7 +22,7 @@ Field Name | Type | Description | Applicability [default] | Constraints
 `schemaRegistryUrl` | string (url) | API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used) | OPTIONAL | -
 `schemaRegistryVendor` | string | Identifies the Kafka serdes library that should be used (e.g. `confluent`, `apicurio`, or `ibm`) | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified
 `schemaRegistryAvailable` | boolean | Specifies if the Schema Registry identified in `schemaRegistryUrl` is available for use by consumers of the AsyncAPI spec | OPTIONAL [true] | MUST NOT be specified if `schemaRegistryUrl` is not specified
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
+<a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
 
 ##### Example
 
@@ -57,6 +57,7 @@ Field Name | Type | Description
 ---|:---:|---
 <a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Id of the consumer group.
 <a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group.
+`useSchemaRegistry` | boolean | Specifies whether a Schema Registry should be used when performing this operation
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -75,6 +76,7 @@ channels:
           clientId:
             type: string
             enum: ['myClientId']
+          useSchemaRegistry: false
           bindingVersion: '0.2.0'
 ```
 
