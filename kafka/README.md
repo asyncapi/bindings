@@ -21,7 +21,6 @@ Field Name | Type | Description | Applicability [default] | Constraints
 ---|:---:|:---:|:---:|---
 `schemaRegistryUrl` | string (url) | API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used) | OPTIONAL | -
 `schemaRegistryVendor` | string | Identifies the Kafka serdes library that should be used (e.g. `confluent`, `apicurio`, or `ibm`) | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified
-`schemaRegistryAvailable` | boolean | Specifies if the Schema Registry identified in `schemaRegistryUrl` is available for use by consumers of the AsyncAPI spec | OPTIONAL [true] | MUST NOT be specified if `schemaRegistryUrl` is not specified
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
 
 ##### Example
@@ -33,7 +32,6 @@ servers:
       kafka:
         schemaRegistryUrl: "https://my-schema-registry.com"
         schemaRegistryVendor: "confluent"
-        schemaRegistryAvailable: false
         bindingVersion: '0.2.0'
 ```
 
