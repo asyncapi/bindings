@@ -15,7 +15,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## AsyncAPI considerations
 
-This specification binding builds on the use of the `anypointmq` protocol within the AsyncAPI specification to allow connections to Anypoint MQ messaging brokers to be defined within the server object.
+This specification binding uses the `anypointmq` protocol in AsyncAPI documents to allow connections to Anypoint MQ messaging brokers to be defined within the `server` object.
 
 AsyncAPI Object Fixed Field Name | Reserved Value for Anypoint MQ Protocol | Description
 ---|:---|:---
