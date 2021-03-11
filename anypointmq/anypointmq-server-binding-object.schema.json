@@ -1,0 +1,170 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://asyncapi.com/anypointmq/bindings/server.json",
+    "type": "object",
+    "title": "Anypoint MQ Server Binding Object",
+    "examples": [
+        {
+            "bindingVersion": "0.0.1",
+            "proxy": {
+                "host": "proxy.corporate.com",
+                "port": 80,
+                "username": "proxy-user",
+                "password": "passwd-of-proxy-user"
+            },
+            "sendBufferSize": 1024,
+            "receiveBufferSize": 2048,
+            "clientTimeout": 1000,
+            "sendTCPWithNoDelay": true,
+            "linger": 1000,
+            "keepAlive": true,
+            "connectionTimeout": 30000
+        }
+    ],
+    "required": [],
+    "properties": {
+        "bindingVersion": {
+            "$id": "#/properties/bindingVersion",
+            "type": "string",
+            "title": "The bindingVersion schema",
+            "description": "TODO",
+            "default": "",
+            "examples": [
+                "0.0.1"
+            ]
+        },
+        "proxy": {
+            "$id": "#/properties/proxy",
+            "type": "object",
+            "title": "The proxy schema",
+            "description": "TODO",
+            "default": {},
+            "examples": [
+                {
+                    "host": "proxy.corporate.com",
+                    "port": 80,
+                    "username": "proxy-user",
+                    "password": "passwd-of-proxy-user"
+                }
+            ],
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "$id": "#/properties/proxy/properties/host",
+                    "type": "string",
+                    "title": "The host schema",
+                    "description": "TODO",
+                    "default": "",
+                    "examples": [
+                        "proxy.corporate.com"
+                    ]
+                },
+                "port": {
+                    "$id": "#/properties/proxy/properties/port",
+                    "type": "integer",
+                    "title": "The port schema",
+                    "description": "TODO",
+                    "default": 0,
+                    "examples": [
+                        80
+                    ]
+                },
+                "username": {
+                    "$id": "#/properties/proxy/properties/username",
+                    "type": "string",
+                    "title": "The username schema",
+                    "description": "TODO",
+                    "default": "",
+                    "examples": [
+                        "proxy-user"
+                    ]
+                },
+                "password": {
+                    "$id": "#/properties/proxy/properties/password",
+                    "type": "string",
+                    "title": "The password schema",
+                    "description": "TODO",
+                    "default": "",
+                    "examples": [
+                        "passwd-of-proxy-user"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "sendBufferSize": {
+            "$id": "#/properties/sendBufferSize",
+            "type": "integer",
+            "title": "The sendBufferSize schema",
+            "description": "TODO",
+            "default": 0,
+            "examples": [
+                1024
+            ]
+        },
+        "receiveBufferSize": {
+            "$id": "#/properties/receiveBufferSize",
+            "type": "integer",
+            "title": "The receiveBufferSize schema",
+            "description": "TODO",
+            "default": 0,
+            "examples": [
+                2048
+            ]
+        },
+        "clientTimeout": {
+            "$id": "#/properties/clientTimeout",
+            "type": "integer",
+            "title": "The clientTimeout schema",
+            "description": "TODO",
+            "default": 0,
+            "examples": [
+                1000
+            ]
+        },
+        "sendTCPWithNoDelay": {
+            "$id": "#/properties/sendTCPWithNoDelay",
+            "type": "boolean",
+            "title": "The sendTCPWithNoDelay schema",
+            "description": "TODO",
+            "default": false,
+            "examples": [
+                true
+            ]
+        },
+        "linger": {
+            "$id": "#/properties/linger",
+            "type": "integer",
+            "title": "The linger schema",
+            "description": "TODO",
+            "default": 0,
+            "examples": [
+                1000
+            ]
+        },
+        "keepAlive": {
+            "$id": "#/properties/keepAlive",
+            "type": "boolean",
+            "title": "The keepAlive schema",
+            "description": "TODO",
+            "default": false,
+            "examples": [
+                true
+            ]
+        },
+        "connectionTimeout": {
+            "$id": "#/properties/connectionTimeout",
+            "type": "integer",
+            "title": "The connectionTimeout schema",
+            "description": "TODO",
+            "default": 0,
+            "examples": [
+                30000
+            ]
+        }
+    },
+    "additionalProperties": false
+}
