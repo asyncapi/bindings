@@ -13,9 +13,9 @@ The version of the AsyncAPI specification to which these bindings apply is `2.0.
 
 ### Backwards Compatibility
 
-All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not specified in this specification. This is to ensure backwards compatibility of binding objects.
+All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not defined in this specification. This is to ensure backwards compatibility of binding objects.
 
-For example, a concrete binding object valid against a newer version of this specification is likely to contain fields that were not yet defined in an older version of this specification. However, because additional fields are allowed, this binding object is also valid against the older specification. The binding object can therefore be used in a system that is only aware of the older version of this specification, although all fields of the binding object not yet defined in this older specification version will be ignored.
+For example, a concrete binding object valid against a newer version of this specification is likely to contain fields that were not yet defined in an older version of this specification. However, because additional fields are allowed, this binding object is also valid against the older specification. The binding object can therefore be used in a system that is only aware of the older specification, although all fields not yet defined in this older specification version will be ignored.
 
 ## Terminology
 
