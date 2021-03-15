@@ -7,7 +7,9 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 <a name="version"></a>
 ## Version
 
-Current version is `0.0.1`.
+The version of this bindings specification is `0.0.1`.
+
+The version of the AsyncAPI specification to which these bindings apply is `2.0.0`.
 
 ## Terminology
 
@@ -15,7 +17,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Protocol
 
-These bindings use the `anypointmq` protocol in AsyncAPI documents to denote connections to and interactions with Anypoint MQ message brokers.
+These bindings use the `anypointmq` [protocol](https://github.com/asyncapi/spec/blob/master/versions/2.0.0/asyncapi.md#definitionsProtocol) in AsyncAPI documents to denote connections to and interactions with Anypoint MQ message brokers.
 
 The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST API](https://docs.mulesoft.com/mq/mq-apis#mqbrokerapi).
 
@@ -34,7 +36,7 @@ TODO:
 <a name="server"></a>
 ## Server Binding Object
 
-The Anypoint MQ Server Binding Object is defined by a [JSON Schema](anypointmq-server-binding-object.schema.json), which defines these *optional* fields:
+The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/versions/2.0.0/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](anypointmq-server-binding-object.schema.json), which defines these *optional* fields:
 
 - `proxy.host`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination host for proxy requests.
 - `proxy.port`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination port for proxy requests.
@@ -47,6 +49,8 @@ The Anypoint MQ Server Binding Object is defined by a [JSON Schema](anypointmq-s
 - `linger`: SO_LINGER value, which determines how long (in milliseconds) the socket takes to close so that any remaining data is transmitted correctly.
 - `keepAlive`: SO_KEEPALIVE behavior on open sockets, which automatically checks open socket connections that are unused for long periods, and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a server socket to control whether connections to the server are kept alive before they are recycled.
 - `connectionTimeout`: Number of milliseconds to wait until an outbound connection to a remote server is successfully created, before failing with a timeout.
+
+Additional fields are permitted but ignored.
 
 ### Examples
 
@@ -87,14 +91,44 @@ servers:
 <a name="channel"></a>
 ## Channel Binding Object
 
+The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/versions/2.0.0/asyncapi.md#channel-bindings-object), which defines these *optional* fields:
+
 TODO
+
+Additional fields are permitted but ignored.
+
+### Examples
+
+```yaml
+TODO
+```
 
 <a name="operation"></a>
 ## Operation Binding Object
 
+The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob/master/versions/2.0.0/asyncapi.md#operation-bindings-object), which defines these *optional* fields:
+
 TODO
+
+Additional fields are permitted but ignored.
+
+### Examples
+
+```yaml
+TODO
+```
 
 <a name="message"></a>
 ## Message Binding Object
 
+The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/master/versions/2.0.0/asyncapi.md#message-bindings-object), which defines these *optional* fields:
+
 TODO
+
+Additional fields are permitted but ignored.
+
+### Examples
+
+```yaml
+TODO
+```
