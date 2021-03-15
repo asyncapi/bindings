@@ -11,6 +11,12 @@ The version of this bindings specification is `0.0.1`.
 
 The version of the AsyncAPI specification to which these bindings apply is `2.0.0`.
 
+### Backwards Compatibility
+
+All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not specified in this specification. This is to ensure backwards compatibility of binding objects.
+
+For example, a concrete binding object valid against a newer version of this specification is likely to contain fields that were not yet defined in an older version of this specification. However, because additional fields are allowed, this binding object is also valid against the older specification. The binding object can therefore be used in a system that is only aware of the older version of this specification, although all fields of the binding object not yet defined in this older specification version will be ignored.
+
 ## Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this bindings specification are to be interpreted as described in IETF [RFC2119](https://www.ietf.org/rfc/rfc2119.txt).
@@ -50,7 +56,7 @@ The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/ma
 - `keepAlive`: SO_KEEPALIVE behavior on open sockets, which automatically checks open socket connections that are unused for long periods, and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a server socket to control whether connections to the server are kept alive before they are recycled.
 - `connectionTimeout`: Number of milliseconds to wait until an outbound connection to a remote server is successfully created, before failing with a timeout.
 
-Additional fields are permitted but ignored.
+Additional fields MAY be present but are ignored if the server binding object is interpreted according to this version of the bindings specification.
 
 ### Examples
 
@@ -95,7 +101,7 @@ The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/m
 
 TODO
 
-Additional fields are permitted but ignored.
+Additional fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
 
 ### Examples
 
@@ -110,7 +116,7 @@ The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob
 
 TODO
 
-Additional fields are permitted but ignored.
+Additional fields MAY be present but are ignored if the operation binding object is interpreted according to this version of the bindings specification.
 
 ### Examples
 
@@ -125,7 +131,7 @@ The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/m
 
 TODO
 
-Additional fields are permitted but ignored.
+Additional fields MAY be present but are ignored if the message binding object is interpreted according to this version of the bindings specification.
 
 ### Examples
 
