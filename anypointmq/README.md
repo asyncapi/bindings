@@ -15,7 +15,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Protocol
 
-These bindings use the `anypointmq` protocol in AsyncAPI documents to denote connections to Anypoint MQ message brokers.
+These bindings use the `anypointmq` protocol in AsyncAPI documents to denote connections to and interactions with Anypoint MQ message brokers.
 
 The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST API](https://docs.mulesoft.com/mq/mq-apis#mqbrokerapi).
 
@@ -24,7 +24,7 @@ The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST
 The fields of the standard [Server Object](https://github.com/asyncapi/asyncapi/blob/master/versions/2.0.0/asyncapi.md#serverObject) are constrained and interpreted as follows:
 
 - `protocol` is *required* and MUST be `anypointmq` for the scope of this specification.
-- `url` is *required* and MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`), e.g., `https://mq-${REGION_ID}.anypoint.mulesoft.com/api`. MUST NOT use a scheme other than `https` or `http` (as supported by the Broker REST API endpoint).
+- `url` is *required* and MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`), such as `https://mq-us-east-1.anypoint.mulesoft.com/api` or `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`). MUST NOT use a scheme other than `https` or `http` (as supported by the Broker REST API endpoint).
 - `protocolVersion` is *optional* and if present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`. Defaults to `v1` if absent.
 
 TODO:
@@ -34,26 +34,42 @@ TODO:
 <a name="server"></a>
 ## Server Binding Object
 
-TODO
+The Anypoint MQ Server Binding Object is defined by a [JSON Schema](anypointmq-server-binding-object.schema.json), which defines these *optional* fields:
 
-### Example
+- `proxy.host`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination host for proxy requests.
+- `proxy.port`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination port for proxy requests.
+- `proxy.username`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Username to authenticate against the proxy.
+- `proxy.password`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Password to authenticate against the proxy.
+- `sendBufferSize`: Size of the buffer (in bytes) used when sending data, set on the socket itself.
+- `receiveBufferSize`: Size of the buffer (in bytes) used when receiving data.
+- `clientTimeout`: SO_TIMEOUT value on sockets. Indicates the amount of time (in milliseconds) that the socket waits in a blocking operation before failing. A value of 0 indicates an indefinite wait.
+- `sendTCPWithNoDelay`: If set, transmitted data is not grouped but sent immediately.
+- `linger`: SO_LINGER value, which determines how long (in milliseconds) the socket takes to close so that any remaining data is transmitted correctly.
+- `keepAlive`: SO_KEEPALIVE behavior on open sockets, which automatically checks open socket connections that are unused for long periods, and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a server socket to control whether connections to the server are kept alive before they are recycled.
+- `connectionTimeout`: Number of milliseconds to wait until an outbound connection to a remote server is successfully created, before failing with a timeout.
+
+### Examples
 
 ```yaml
 servers:
   development:
     url: https://mq-us-east-1.anypoint.mulesoft.com/api
-    description: Anypoint MQ broker for development, in the US East (N. Virginia) runtime plane under management of the US control plane
+    description: |
+      Anypoint MQ broker for development, in the US East (N. Virginia) runtime plane under management of the US control plane.
+      Minimal configuration, using defaults for all fields of the server binding object.
+      Implicitly uses v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
     protocol: anypointmq
-    protocolVersion: v1
 
   production:
     url: https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api
-    description: Anypoint MQ broker for production, in the EU Central (Frankfurt) runtime plane under management of the EU control plane
+    description: |
+      Anypoint MQ broker for production, in the EU Central (Frankfurt) runtime plane under management of the EU control plane.
+      Complete configuration, providing explicit values for all fields of the server binding object.
+      Explicitly specifies the use of v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
     protocol: anypointmq
     protocolVersion: v1
     bindings:
       anypointmq:
-        bindingVersion: 0.0.1
         proxy:
           host: proxy.corporate.com
           port: 80
@@ -65,7 +81,7 @@ servers:
         sendTCPWithNoDelay: true
         linger: 1000
         keepAlive: true
-        connectionTimeout: 30000
+        connectionTimeout: 10000
 ```
 
 <a name="channel"></a>
