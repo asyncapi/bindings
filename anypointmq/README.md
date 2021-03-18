@@ -27,6 +27,15 @@ These bindings use the `anypointmq` [protocol](https://github.com/asyncapi/spec/
 
 The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST API](https://docs.mulesoft.com/mq/mq-apis#mqbrokerapi).
 
+## Code Generation
+
+An AsyncAPI document defines a machine-readable contract for the message-driven API of an application. That application is expected to adhere to that contract. Code generation can be used to
+
+- generate a skeleton of that application (this is common), or
+- generate a stub of an "interaction partner application" that interacts with that application (this is less common).
+
+Some of the fields in the bindings defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while other fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then apply to the type of application that is being generated (the application described by the AsyncAPI document, or its "interaction partner").
+
 ## Server Object
 
 The fields of the standard [Server Object](https://github.com/asyncapi/asyncapi/blob/master/versions/2.0.0/asyncapi.md#serverObject) are constrained and interpreted as follows:
@@ -58,9 +67,11 @@ The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/ma
 
 Additional fields MAY be present but are ignored if the server binding object is interpreted according to this version of the bindings specification.
 
+Note that all of these fields serve _code generation_ based on the AsyncAPI document, rather than defining the contract of the message-driven API.
+
 ### Examples
 
-The following example shows a `servers` object with two server objects, both using `anypointmq` as the `protocol`, and one having a server binding object for `anypointmq`:
+The following example shows a `servers` object with two servers, both using `anypointmq` as the `protocol`, and one having a server binding object for `anypointmq`:
 
 ```yaml
 servers:
@@ -107,7 +118,7 @@ Because an empty channel binding object does not add any information to an Async
 
 ### Examples
 
-The following example shows a `channels` object with two channel item objects, one having an empty channel binding object for `anypointmq` (which is not recommended):
+The following example shows a `channels` object with two channels, one having an empty channel binding object for `anypointmq` (which is not recommended):
 
 ```yaml
 channels:
@@ -138,8 +149,30 @@ Additional fields MAY be present but are ignored if the operation binding object
 
 ### Examples
 
+The following example shows a `channels` object with two channels, each having one operation. Only one operation has an operation binding object for `anypointmq`:
+
 ```yaml
-TODO
+channels:
+  user/signedup:
+    subscribe:
+      operationId: userHasSignedUp
+      description: |
+        TODO
+      bindings:
+        anypointmq:
+          ack: TODO
+      message:
+        //...
+  user/signup:
+    publish:
+      operationId: signUpUser
+      description: |
+        TODO
+      bindings:
+        anypointmq:
+          ack: TODO
+      message:
+        //...
 ```
 
 <a name="message"></a>
