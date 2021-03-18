@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://asyncapi.com/anypointmq/bindings/channel.json",
+    "type": "object",
+    "title": "Anypoint MQ Channel Binding Object",
+    "examples": [
+        {}
+    ],
+    "required": [],
+    "properties": {},
+    "additionalProperties": true
+}

@@ -99,30 +99,32 @@ servers:
 <a name="channel"></a>
 ## Channel Binding Object
 
-The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](anypointmq-channel-binding-object.schema.json), which defines these *optional* fields:
+The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](anypointmq-channel-binding-object.schema.json) that currently defines *no fields*.
 
-TODO
+Fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
 
-Additional fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
-
-Note that
-
-- the type of Anypoint MQ destination (queue (FIFO or not) or Exchange) is not capture in the channel binding object.
+Because an empty channel binding object does not add any information to an AsyncAPI document, it is RECOMMENDED that AsyncAPI documents omit channel binding objects for `anypointmq`.
 
 ### Examples
 
-The following example shows a `channels` object with a channel item object that has a channel binding object for `anypointmq`:
+The following example shows a `channels` object with two channel item objects, one having an empty channel binding object for `anypointmq` (which is not recommended):
 
 ```yaml
 channels:
   user/signedup:
-    description: This application sends events to this channel about users having signed up
+    description: |
+      This application sends events to this channel about users that have signed up.
+      Minimal and recommended configuration, not specifying an empty channel binding object.
     subscribe:
+      //...
+  user/signup:
+    description: |
+      This application receives command messages from this channel about users to sign up.
+      Non-recommended configuration, explicitly providing an empty channel binding object.
     bindings:
       anypointmq:
-        is: queue
-        queue:
-          exclusive: true
+    publish:
+      //...
 ```
 
 <a name="operation"></a>
