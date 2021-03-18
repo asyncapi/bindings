@@ -29,12 +29,14 @@ The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST
 
 ## Code Generation
 
-An AsyncAPI document defines a machine-readable contract for the message-driven API of an application. That application is expected to adhere to that contract. Code generation can be used to
+An AsyncAPI document defines a machine-readable contract for the message-driven API exposed by an application. The application promises to adhere to that contract, and its "interaction partners" can send and/or receive messages accordingly.
 
-- generate a skeleton of that application (this is common), or
-- generate a stub of an "interaction partner application" that interacts with that application (this is less common).
+Code generation based on an AsyncAPI document can be used to
 
-Some of the fields in the bindings defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while other fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then apply to the type of application that is being generated (the application described by the AsyncAPI document, or its "interaction partner").
+- generate a skeleton of the application that exposes the message-driven API (this is common), or
+- generate a stub of an "interaction partner" application that interacts with that application via this API (this is less common).
+
+Some of the fields in the bindings defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while other fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then apply to the application that is being generated (the application described by the AsyncAPI document, or its "interaction partner").
 
 ## Server Object
 
