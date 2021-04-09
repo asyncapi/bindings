@@ -13,9 +13,9 @@ The version of the AsyncAPI specification to which these bindings apply is `2.0.
 
 ### Backwards Compatibility
 
-All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not defined in this specification. This is to ensure backwards compatibility of binding objects.
+All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not defined in this specification. This is to ensure backwards compatibility of binding objects, and also to allow code generators to require their own, specific fields which are not defined in this bindings specification.
 
-For example, a concrete binding object valid against a newer version of this specification is likely to contain fields that were not yet defined in an older version of this specification. However, because additional fields are allowed, this binding object is also valid against the older specification. The binding object can therefore be used in a system that is only aware of the older specification, although all fields not yet defined in this older specification version will be ignored.
+As an example of backwards compatibility, consider a concrete binding object valid against a newer version of this specification. This binding object may contain fields specific to that newer version, which were not yet defined in an older version of this specification. However, because additional fields are allowed, this binding object is also valid against the older specification. The binding object can therefore be used in a system that is only aware of the older specification, although all fields not yet defined in this older specification version will be ignored.
 
 ## Terminology
 
@@ -34,13 +34,13 @@ An AsyncAPI document defines a machine-readable contract for the message-driven 
 Code generation based on an AsyncAPI document can be used to
 
 - generate a skeleton of the application that exposes the message-driven API (this is common), or
-- generate a stub of an "interaction partner" application that interacts with that application via this API (this is less common).
+- generate a stub of an "interaction partner" application that interacts with that application via its message-driven API (this is less common).
 
-Some of the fields in the bindings defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while other fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then apply to the application that is being generated (the application described by the AsyncAPI document, or its "interaction partner").
+Some of the fields in the bindings defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while other fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then influence the application code that is being generated.
 
 ## Server Object
 
-The fields of the standard [Server Object](https://github.com/asyncapi/asyncapi/blob/master/versions/2.0.0/asyncapi.md#serverObject) are constrained and interpreted as follows:
+The fields of the standard [Server Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverObject) are constrained and interpreted as follows:
 
 - `protocol` is *required* and MUST be `anypointmq` for the scope of this specification.
 - `url` is *required* and MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`), such as `https://mq-us-east-1.anypoint.mulesoft.com/api` or `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`). MUST NOT use a scheme other than `https` or `http` (as supported by the Broker REST API endpoint).
@@ -78,7 +78,7 @@ The following example shows a `servers` object with two servers, both using `any
 ```yaml
 servers:
   development:
-    url: https://mq-us-east-1.anypoint.mulesoft.com/api
+    url:         https://mq-us-east-1.anypoint.mulesoft.com/api
     description: |
       Anypoint MQ broker for development, in the US East (N. Virginia) runtime plane under management of the US control plane.
       Minimal configuration, using defaults for all fields of the server binding object.
@@ -86,27 +86,27 @@ servers:
     protocol: anypointmq
 
   production:
-    url: https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api
+    url:         https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api
     description: |
       Anypoint MQ broker for production, in the EU Central (Frankfurt) runtime plane under management of the EU control plane.
       Complete configuration, providing explicit values for all fields of the server binding object.
       Explicitly specifies the use of v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
-    protocol: anypointmq
+    protocol:        anypointmq
     protocolVersion: v1
     bindings:
       anypointmq:
         proxy:
-          host: proxy.corporate.com
-          port: 80
+          host:    proxy.corporate.com
+          port:    80
           username: proxy-user
           password: passwd-of-proxy-user
-        sendBufferSize: 1024
-        receiveBufferSize: 2048
-        clientTimeout: 1000
+        sendBufferSize:     1024
+        receiveBufferSize:  2048
+        clientTimeout:      1000
         sendTCPWithNoDelay: true
-        linger: 1000
-        keepAlive: true
-        connectionTimeout: 10000
+        linger:             1000
+        keepAlive:          true
+        connectionTimeout:  10000
 ```
 
 <a name="channel"></a>
@@ -151,7 +151,7 @@ Additional fields MAY be present but are ignored if the operation binding object
 
 ### Examples
 
-The following example shows a `channels` object with two channels, each having one operation. Only one operation has an operation binding object for `anypointmq`:
+The following example shows a `channels` object with two channels, each having one operation (`subscribe` or `publish`). Only the `publish` operation has an operation binding object for `anypointmq`:
 
 ```yaml
 channels:
@@ -172,7 +172,16 @@ channels:
         TODO
       bindings:
         anypointmq:
-          ack: TODO
+          // Destination (Queue or Exchange) name for this channel. Defaults to the channel name. SHOULD only be specified if the channel name differs from the actual destination name, or if the channel name is not a valid destination name in Anypoint MQ.
+          destination:             user-signup-queue
+          consumer:
+            // or manual | default immediate | Acknowledgment mode to use for the messages retrieved
+            acknowledgmentMode:    immediate
+            // Duration in milliseconds that a message is held by a consumer waiting for an acknowledgment or not acknowledgment. After that duration elapses, the message is again available to any consumer.
+            acknowledgmentTimeout: 10000
+            // default 10000 | Time in milliseconds to wait for a message to be ready for consumption
+            pollingTime:           10000
+          producer:
       message:
         //...
 ```
