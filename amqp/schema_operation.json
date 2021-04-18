@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Operation Schema",
+  "type": "object",
+  "properties": {
+    "expiration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "userId": {
+      "type": "string"
+    },
+    "cc": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "priority": {
+      "type": "integer"
+    },
+    "deliveryMode": {
+      "type": "integer",
+      "enum": [1,2]
+    },
+    "mandatory": {
+      "type": "boolean"
+    },
+    "bcc": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "replyTo": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "boolean"
+    },
+    "ack": {
+      "type": "boolean"
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+
+  }
+}

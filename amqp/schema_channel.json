@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Channel Schema",
+  "type": "object",
+  "properties": {
+    "is": {
+      "type": "string",
+      "enum": ["queue", "routingKey"]
+    },
+    "exchange": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "type": "string",
+          "enum": ["topic", "direct", "fanout", "default", "headers"]
+        },
+        "durable": {
+          "type": "boolean"
+        },
+        "autoDelete": {
+          "type": "boolean"
+        },
+        "vhost": {
+          "type": "string",
+          "default": "/"
+        }
+      }
+    },
+    "queue": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "durable": {
+          "type": "boolean"
+        },
+        "exclusive": {
+          "type": "boolean"
+        },
+        "autoDelete": {
+          "type": "boolean"
+        },
+        "vhost": {
+          "type": "string",
+          "default": "/"
+        }
+      }
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+
+  }
+}

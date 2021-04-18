@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Message Schema",
+  "type": "object",
+  "properties": {
+    "contentEncoding": {
+      "type": "string"
+    },
+    "messageType": {
+      "type": "string",
+      "default": "latest"
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+
+  }
+}
