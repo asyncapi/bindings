@@ -2,6 +2,12 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Channel Schema",
   "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "#/definitions/specificationExtension"
+    }
+  },
   "properties": {
     "is": {
       "type": "string",
@@ -57,5 +63,12 @@
       "default": "latest"
     }
 
+  },
+  "definitions": {
+    "specificationExtension": {
+      "description": "Any property starting with x- is valid.",
+      "additionalProperties": true,
+      "additionalItems": true
+    }
   }
 }

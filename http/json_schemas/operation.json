@@ -1,7 +1,13 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Operation Schema",
   "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "#/definitions/specificationExtension"
+    }
+  },
   "properties": {
     "type": {
       "type": "string",
@@ -12,18 +18,24 @@
       "enum": ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS", "CONNECT", "TRACE"]
     },
     "query": {
-      "type": "object",
-      "properties": {
-        "properties": {
-          "type": "object"
-        }
-      },
-      "required": ["properties"]
+      "$ref": "http://json-schema.org/draft-07/schema#"
     },
     "bindingVersion": {
       "type": "string",
       "default": "latest"
     }
   },
-  "required": ["type"]
+  "required": ["type"],
+
+  "definitions": {
+    "specificationExtension": {
+      "description": "Any property starting with x- is valid.",
+      "additionalProperties": true,
+      "additionalItems": true
+    }
+  }
 }
+
+
+
+
