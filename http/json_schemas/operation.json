@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Operation Schema",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["request","response"]
+    },
+    "method": {
+      "type": "string",
+      "enum": ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS", "CONNECT", "TRACE"]
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "object"
+        }
+      },
+      "required": ["properties"]
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+  },
+  "required": ["type"]
+}

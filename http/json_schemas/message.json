@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Message Schema",
+  "type": "object",
+  "properties": {
+    "headers": {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "object"
+        }
+      },
+      "required": ["properties"]
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+  }
+}
