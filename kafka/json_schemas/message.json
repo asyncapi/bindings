@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Message Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "#/definitions/specificationExtension"
+    }
+  },
+  "properties": {
+    "key": {
+      "$ref": "http://json-schema.org/draft-07/schema#"
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+  },
+  "definitions": {
+    "specificationExtension": {
+      "description": "Any property starting with x- is valid.",
+      "additionalProperties": true,
+      "additionalItems": true
+    }
+  }
+}
