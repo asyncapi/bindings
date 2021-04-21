@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Channel Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "#/definitions/specificationExtension"
+    }
+  },
+  "properties": {
+    "destinationType": {
+      "type": "string",
+      "enum": ["topic", "queue"]
+    },
+    "queue": {
+      "type": "object",
+      "properties": {
+        "objectName": {
+          "type": "string",
+          "maxLength": 48
+        },
+        "isPartitioned": {
+          "type": "boolean"
+        },
+        "exclusive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "topic": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string",
+          "maxLength": 10240
+        },
+        "objectName": {
+          "type": "string",
+          "maxLength": 48
+        },
+        "durablePermitted": {
+          "type": "boolean"
+        },
+        "lastMsgRetained": {
+          "type": "boolean"
+        }
+      }
+    },
+    "maxMsgLength": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum":104857600
+    },
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+  },
+  "definitions": {
+    "specificationExtension": {
+      "description": "Any property starting with x- is valid.",
+      "additionalProperties": true,
+      "additionalItems": true
+    }
+  }
+}
