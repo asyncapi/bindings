@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Operation Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "#/definitions/specificationExtension"
+    }
+  },
+  "properties": {
+    "bindingVersion": {
+      "type": "string",
+      "default": "latest"
+    }
+  },
+  "definitions": {
+    "specificationExtension": {
+      "description": "Any property starting with x- is valid.",
+      "additionalProperties": true,
+      "additionalItems": true
+    }
+  }
+}
