@@ -53,7 +53,7 @@ TODO:
 <a name="server"></a>
 ## Server Binding Object
 
-The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](anypointmq-server-binding-object.schema.json), which defines these *optional* fields:
+The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](json_schemas/server.json), which defines these *optional* fields:
 
 - `proxy.host`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination host for proxy requests.
 - `proxy.port`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination port for proxy requests.
@@ -112,7 +112,7 @@ servers:
 <a name="channel"></a>
 ## Channel Binding Object
 
-The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](anypointmq-channel-binding-object.schema.json) that currently defines *no fields*.
+The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](json_schemas/channel.json) that currently defines *no fields*.
 
 Fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
 
@@ -143,7 +143,7 @@ channels:
 <a name="operation"></a>
 ## Operation Binding Object
 
-The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#operation-bindings-object) is defined by a [JSON Schema](anypointmq-operation-binding-object.schema.json), which defines these *optional* fields:
+The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#operation-bindings-object) is defined by a [JSON Schema](json_schemas/operation.json), which defines these *optional* fields:
 
 TODO
 
@@ -189,7 +189,7 @@ channels:
 <a name="message"></a>
 ## Message Binding Object
 
-The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#message-bindings-object) is defined by a [JSON Schema](anypointmq-message-binding-object.schema.json), which defines these *optional* fields:
+The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#message-bindings-object) is defined by a [JSON Schema](json_schemas/message.json), which defines these *optional* fields:
 
 TODO
 
