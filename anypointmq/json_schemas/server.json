@@ -4,7 +4,9 @@
     "type": "object",
     "title": "Anypoint MQ Server Binding Object",
     "examples": [
+        {},
         {
+            "bindingVersion": "latest",
             "proxy": {
                 "host": "proxy.corporate.com",
                 "port": 80,
@@ -21,7 +23,20 @@
         }
     ],
     "required": [],
+    "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+            "$ref": "#/definitions/specificationExtension"
+        }
+    },
     "properties": {
+        "bindingVersion": {
+            "$id": "#/properties/bindingVersion",
+            "type": "string",
+            "title": "Anypoint MQ bindings specification version",
+            "description": "The version of the Anypoint MQ bindings specification that defines the content of this Binding Object.",
+            "default": "latest",
+            "examples": ["latest", "0.0.1"]
+        },
         "proxy": {
             "$id": "#/properties/proxy",
             "type": "object",
@@ -127,5 +142,12 @@
             "examples": [10000]
         }
     },
-    "additionalProperties": true
+    "additionalProperties": true,
+    "definitions": {
+        "specificationExtension": {
+            "description": "Any property starting with x- is valid.",
+            "additionalProperties": true,
+            "additionalItems": true
+        }
+    }
 }

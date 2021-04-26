@@ -4,9 +4,33 @@
     "type": "object",
     "title": "Anypoint MQ Channel Binding Object",
     "examples": [
-        {}
+        {},
+        {
+            "bindingVersion": "latest"
+        }
     ],
     "required": [],
-    "properties": {},
-    "additionalProperties": true
+    "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+            "$ref": "#/definitions/specificationExtension"
+        }
+    },
+    "properties": {
+        "bindingVersion": {
+            "$id": "#/properties/bindingVersion",
+            "type": "string",
+            "title": "Anypoint MQ bindings specification version",
+            "description": "The version of the Anypoint MQ bindings specification that defines the content of this Binding Object.",
+            "default": "latest",
+            "examples": ["latest", "0.0.1"]
+        }
+    },
+    "additionalProperties": true,
+    "definitions": {
+        "specificationExtension": {
+            "description": "Any property starting with x- is valid.",
+            "additionalProperties": true,
+            "additionalItems": true
+        }
+    }
 }

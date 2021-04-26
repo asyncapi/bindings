@@ -8,6 +8,8 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 ## Version
 
 The version of this bindings specification is `0.0.1`.
+This is also the `bindingVersion` for all Binding Objects defined by this specification.
+In any given Binding Object, `latest` can alternatively be used as long as this version of the bindings specification remains the latest published version.
 
 The version of the AsyncAPI specification to which these bindings apply is `2.0.0`.
 
@@ -95,6 +97,7 @@ servers:
     protocolVersion: v1
     bindings:
       anypointmq:
+        bindingVersion: 0.0.1
         proxy:
           host:    proxy.corporate.com
           port:    80
@@ -120,7 +123,7 @@ Because an empty channel binding object does not add any information to an Async
 
 ### Examples
 
-The following example shows a `channels` object with two channels, one having an empty channel binding object for `anypointmq` (which is not recommended):
+The following example shows a `channels` object with two channels, one having a semantically empty channel binding object for `anypointmq` (which is not recommended):
 
 ```yaml
 channels:
@@ -133,9 +136,10 @@ channels:
   user/signup:
     description: |
       This application receives command messages from this channel about users to sign up.
-      Non-recommended configuration, explicitly providing an empty channel binding object.
+      Non-recommended configuration, explicitly providing a semantically empty channel binding object.
     bindings:
       anypointmq:
+      	bindingVersion: 0.0.1
     publish:
       //...
 ```
@@ -172,6 +176,7 @@ channels:
         TODO
       bindings:
         anypointmq:
+          bindingVersion: 0.0.1
           // Destination (Queue or Exchange) name for this channel. Defaults to the channel name. SHOULD only be specified if the channel name differs from the actual destination name, or if the channel name is not a valid destination name in Anypoint MQ.
           destination:             user-signup-queue
           consumer:
