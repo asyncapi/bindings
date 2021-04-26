@@ -8,16 +8,16 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 ## Version
 
 The version of this bindings specification is `0.0.1`.
-This is also the `bindingVersion` for all Binding Objects defined by this specification.
-In any given Binding Object, `latest` can alternatively be used as long as this version of the bindings specification remains the latest published version.
+This is also the `bindingVersion` for all binding objects defined by this specification.
+In any given binding object, `latest` can alternatively be used as long as this version of the bindings specification remains the latest published version.
 
 The version of the AsyncAPI specification to which these bindings apply is `2.0.0`.
 
 ### Backwards Compatibility
 
-All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not defined in this specification. This is to ensure backwards compatibility of binding objects, and also to allow code generators to require their own, specific fields which are not defined in this bindings specification.
+All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not defined in this specification. This is to ensure backwards compatibility of binding objects, and also to allow code generators to define their own, specific fields which are not defined in this bindings specification.
 
-As an example of backwards compatibility, consider a concrete binding object valid against a newer version of this specification. This binding object may contain fields specific to that newer version, which were not yet defined in an older version of this specification. However, because additional fields are allowed, this binding object is also valid against the older specification. The binding object can therefore be used in a system that is only aware of the older specification, although all fields not yet defined in this older specification version will be ignored.
+As an example of backwards compatibility, consider a concrete binding object valid against version `1.1.0` of this specification. This binding object may specify `bindingVersion: 1.1.0`. This binding object may contain fields specific to version `1.1.0`, which were not yet defined in, say, version `1.0.5` of this specification. However, because additional fields are allowed, this binding object is also valid against version `1.0.5` of this specification. The binding object valid against version `1.1.0` can therefore be used in a system that is only aware of version `1.0.5`, although all fields not yet defined in version `1.0.5` of this specification will be ignored.
 
 ## Terminology
 
@@ -177,7 +177,7 @@ channels:
       bindings:
         anypointmq:
           bindingVersion: 0.0.1
-          // Destination (Queue or Exchange) name for this channel. Defaults to the channel name. SHOULD only be specified if the channel name differs from the actual destination name, or if the channel name is not a valid destination name in Anypoint MQ.
+          // Destination (Queue or Exchange) name for this channel. Defaults to the channel name. SHOULD only be specified if the channel name differs from the actual destination name, such as when the channel name is not a valid destination name in Anypoint MQ.
           destination:             user-signup-queue
           consumer:
             // or manual | default immediate | Acknowledgment mode to use for the messages retrieved

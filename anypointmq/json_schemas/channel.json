@@ -20,7 +20,7 @@
             "$id": "#/properties/bindingVersion",
             "type": "string",
             "title": "Anypoint MQ bindings specification version",
-            "description": "The version of the Anypoint MQ bindings specification that defines the content of this Binding Object.",
+            "description": "The version of the Anypoint MQ bindings specification that defines the content of this binding object.",
             "default": "latest",
             "examples": ["latest", "0.0.1"]
         }
