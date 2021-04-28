@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "patternProperties": {
     "^x-[\\w\\d\\.\\-\\_]+$": {
-      "$ref": "#/definitions/specificationExtension"
+      "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/specificationExtension"
     }
   },
   "properties": {
@@ -64,12 +64,5 @@
       "default": "latest"
     }
 
-  },
-  "definitions": {
-    "specificationExtension": {
-      "description": "Any property starting with x- is valid.",
-      "additionalProperties": true,
-      "additionalItems": true
-    }
   }
 }
