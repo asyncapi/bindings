@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "patternProperties": {
     "^x-[\\w\\d\\.\\-\\_]+$": {
-      "$ref": "#/definitions/specificationExtension"
+      "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/specificationExtension"
     }
   },
   "properties": {
@@ -19,22 +19,14 @@
       "enum": ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS", "CONNECT", "TRACE"]
     },
     "query": {
-      "$ref": "http://json-schema.org/draft-07/schema#"
+      "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/schema"
     },
     "bindingVersion": {
       "type": "string",
       "default": "latest"
     }
   },
-  "required": ["type"],
-
-  "definitions": {
-    "specificationExtension": {
-      "description": "Any property starting with x- is valid.",
-      "additionalProperties": true,
-      "additionalItems": true
-    }
-  }
+  "required": ["type"]
 }
 
 
