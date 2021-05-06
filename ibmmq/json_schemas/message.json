@@ -29,5 +29,32 @@
       "default": "latest"
     }
 
-  }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": { "const": "binary" }
+      }
+    },
+    {
+      "properties": {
+        "type": { "const": "jms" }
+      },
+      "not": {
+        "required": [
+          "headers"
+        ]
+      }
+    },
+    {
+      "properties": {
+        "type": { "const": "string" }
+      },
+      "not": {
+        "required": [
+          "headers"
+        ]
+      }
+    }
+  ]
 }

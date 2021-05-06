@@ -57,5 +57,33 @@
       "type": "string",
       "default": "latest"
     }
-  }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "destinationType": { "const": "topic" }
+      },
+      "required": [
+        "topic"
+      ],
+      "not": {
+        "required": [
+          "queue"
+        ]
+      }
+    },
+    {
+      "properties": {
+        "destinationType": { "const": "queue" }
+      },
+      "required": [
+        "queue"
+      ],
+      "not": {
+        "required": [
+          "topic"
+        ]
+      }
+    }
+  ]
 }

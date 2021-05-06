@@ -64,5 +64,33 @@
       "default": "latest"
     }
 
-  }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "is": { "const": "routingKey" }
+      },
+      "required": [
+        "exchange"
+      ],
+      "not": {
+        "required": [
+          "queue"
+        ]
+      }
+    },
+    {
+      "properties": {
+        "is": { "const": "queue" }
+      },
+      "required": [
+        "queue"
+      ],
+      "not": {
+        "required": [
+          "exchange"
+        ]
+      }
+    }
+  ]
 }

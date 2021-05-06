@@ -12,11 +12,24 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["request","response"]
+      "enum": [
+        "request",
+        "response"
+      ]
     },
     "method": {
       "type": "string",
-      "enum": ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS", "CONNECT", "TRACE"]
+      "enum": [
+        "GET",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE",
+        "HEAD",
+        "OPTIONS",
+        "CONNECT",
+        "TRACE"
+      ]
     },
     "query": {
       "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/schema"
@@ -26,7 +39,33 @@
       "default": "latest"
     }
   },
-  "required": ["type"]
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "request"
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    {
+      "properties": {
+        "is": {
+          "const": "response"
+        }
+      },
+      "not": {
+        "required": [
+          "method"
+        ]
+      }
+    }
+  ]
 }
 
 
