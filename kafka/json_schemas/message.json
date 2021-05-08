@@ -6,12 +6,12 @@
   "additionalProperties": false,
   "patternProperties": {
     "^x-[\\w\\d\\.\\-\\_]+$": {
-      "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/specificationExtension"
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
     }
   },
   "properties": {
     "key": {
-      "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/schema"
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema"
     },
     "bindingVersion": {
       "type": "string"
