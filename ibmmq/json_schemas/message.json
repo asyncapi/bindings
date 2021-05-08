@@ -12,7 +12,8 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["string", "jms", "binary"]
+      "enum": ["string", "jms", "binary"],
+      "default": "string"
     },
     "headers": {
       "type": "string"
@@ -22,7 +23,8 @@
     },
     "expiry": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "default": 0
     },
     "bindingVersion": {
       "type": "string"

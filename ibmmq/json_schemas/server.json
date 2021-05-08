@@ -14,18 +14,21 @@
       "type": "string"
     },
     "ccdtQueueManagerName": {
-      "type": "string"
+      "type": "string",
+      "default": "*"
     },
     "cipherSpec": {
       "type": "string"
     },
     "multiEndpointServer": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "heartBeatInterval": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 999999
+      "maximum": 999999,
+      "default": 300
     },
     "bindingVersion": {
       "type": "string"

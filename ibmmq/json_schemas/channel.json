@@ -12,7 +12,8 @@
   "properties": {
     "destinationType": {
       "type": "string",
-      "enum": ["topic", "queue"]
+      "enum": ["topic", "queue"],
+      "default": "topic"
     },
     "queue": {
       "type": "object",
@@ -22,10 +23,12 @@
           "maxLength": 48
         },
         "isPartitioned": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "exclusive": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         }
       }
     },
@@ -41,10 +44,12 @@
           "maxLength": 48
         },
         "durablePermitted": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": true
         },
         "lastMsgRetained": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         }
       }
     },
