@@ -17,8 +17,7 @@
       "$ref": "https://github.com/asyncapi/asyncapi-node/blob/master/schemas/2.0.0.json#/definitions/schema"
     },
     "bindingVersion": {
-      "type": "string",
-      "default": "latest"
+      "type": "string"
     }
 
   }

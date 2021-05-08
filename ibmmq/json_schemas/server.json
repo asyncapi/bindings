@@ -28,8 +28,7 @@
       "maximum": 999999
     },
     "bindingVersion": {
-      "type": "string",
-      "default": "latest"
+      "type": "string"
     }
   }
 }

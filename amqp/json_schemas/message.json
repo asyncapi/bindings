@@ -18,8 +18,7 @@
       "default": "latest"
     },
     "bindingVersion": {
-      "type": "string",
-      "default": "latest"
+      "type": "string"
     }
 
   }

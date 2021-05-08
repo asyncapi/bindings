@@ -25,8 +25,7 @@
       "minimum": 0
     },
     "bindingVersion": {
-      "type": "string",
-      "default": "latest"
+      "type": "string"
     }
 
   },

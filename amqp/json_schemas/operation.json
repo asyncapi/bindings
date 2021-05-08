@@ -49,8 +49,7 @@
       "type": "boolean"
     },
     "bindingVersion": {
-      "type": "string",
-      "default": "latest"
+      "type": "string"
     }
 
   }

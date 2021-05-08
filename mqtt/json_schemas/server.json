@@ -39,8 +39,7 @@
       "type": "integer"
     },
     "bindingVersion": {
-      "type": "string",
-      "default": "latest"
+      "type": "string"
     }
   }
 }
