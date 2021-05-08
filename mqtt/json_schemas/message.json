@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://asyncapi.com/mqtt/bindings/message.json",
+  "$id": "http://asyncapi.com/bindings/mqtt/message.json",
   "title": "Operation Schema",
   "type": "object",
   "additionalProperties": false,

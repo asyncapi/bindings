@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://asyncapi.com/kafka/bindings/operation.json",
+  "$id": "http://asyncapi.com/bindings/kafka/operation.json",
   "title": "Operation Schema",
   "type": "object",
   "additionalProperties": false,

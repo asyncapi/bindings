@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://asyncapi.com/ibmmq/bindings/channel.json",
+  "$id": "http://asyncapi.com/bindings/ibmmq/channel.json",
   "title": "Channel Schema",
   "type": "object",
   "additionalProperties": false,
