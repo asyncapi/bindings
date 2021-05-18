@@ -11,10 +11,12 @@
   },
   "properties": {
     "key": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema"
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "description": "The message key."
     },
     "bindingVersion": {
-      "type": "string"
+      "type": "string",
+      "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
   }
 }

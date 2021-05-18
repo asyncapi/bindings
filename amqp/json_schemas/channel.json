@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://asyncapi.com/bindings/amqp/channel.json",
   "title": "Channel Schema",
+  "description": "This object contains information about the channel representation in AMQP.",
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
@@ -12,52 +13,65 @@
   "properties": {
     "is": {
       "type": "string",
-      "enum": ["queue", "routingKey"]
+      "enum": ["queue", "routingKey"],
+      "description": "Defines what type of channel is it. Can be either 'queue' or 'routingKey' (default)."
     },
     "exchange": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "maxLength": 255
+          "maxLength": 255,
+          "description": "The name of the exchange. It MUST NOT exceed 255 characters long."
         },
         "type": {
           "type": "string",
-          "enum": ["topic", "direct", "fanout", "default", "headers"]
+          "enum": ["topic", "direct", "fanout", "default", "headers"],
+          "description": "The type of the exchange. Can be either 'topic', 'direct', 'fanout', 'default' or 'headers'."
         },
         "durable": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether the exchange should survive broker restarts or not."
         },
         "autoDelete": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether the exchange should be deleted when the last queue is unbound from it."
         },
         "vhost": {
           "type": "string",
-          "default": "/"
+          "default": "/",
+          "description": "The virtual host of the exchange. Defaults to '/'."
         }
-      }
+      },
+      "description": "When is=routingKey, this object defines the exchange properties."
     },
     "queue": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "maxLength": 255
+          "maxLength": 255,
+          "description": "The name of the queue. It MUST NOT exceed 255 characters long."
         },
         "durable": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether the queue should survive broker restarts or not."
         },
         "exclusive": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether the queue should be used only by one connection or not."
         },
         "autoDelete": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether the queue should be deleted when the last consumer unsubscribes."
         },
         "vhost": {
           "type": "string",
-          "default": "/"
+          "default": "/",
+          "description": "The virtual host of the queue. Defaults to '/'."
         }
-      }
+      },
+      "description": "When is=queue, this object defines the queue properties."
     },
     "bindingVersion": {
       "type": "string"
