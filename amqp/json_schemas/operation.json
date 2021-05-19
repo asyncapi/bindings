@@ -66,6 +66,24 @@
       ],
       "description": "The version of this binding. If omitted, \"latest\" MUST be assumed."
     }
-
-  }
+  },
+  "examples": [
+    {
+      "expiration": 100000,
+      "userId": "guest",
+      "cc": [
+        "user.logs"
+      ],
+      "priority": 10,
+      "deliveryMode": 2,
+      "mandatory": false,
+      "bcc": [
+        "external.audit"
+      ],
+      "replyTo": "user.signedup",
+      "timestamp": true,
+      "ack": false,
+      "bindingVersion": "0.2.0"
+    }
+  ]
 }

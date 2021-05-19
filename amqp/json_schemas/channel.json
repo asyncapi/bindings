@@ -109,5 +109,29 @@
         ]
       }
     }
+  ],
+  "examples": [
+    {
+      "is": "routingKey",
+      "exchange": {
+        "name": "myExchange",
+        "type": "topic",
+        "durable": true,
+        "autoDelete": false,
+        "vhost": "/"
+      },
+      "bindingVersion": "0.2.0"
+    },
+    {
+      "is": "queue",
+      "queue": {
+        "name": "my-queue-name",
+        "durable": true,
+        "exclusive": true,
+        "autoDelete": false,
+        "vhost": "/"
+      },
+      "bindingVersion": "0.2.0"
+    }
   ]
 }
