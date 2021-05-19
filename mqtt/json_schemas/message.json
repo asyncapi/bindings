@@ -13,6 +13,9 @@
   "properties": {
     "bindingVersion": {
       "type": "string",
+      "enum": [
+        "0.1.0"
+      ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
   }
