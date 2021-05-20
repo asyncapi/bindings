@@ -234,7 +234,7 @@ channels:
       message:
         bindings:
           ibmmq:
-            type: text
+            type: string
             bindingVersion: 0.1.0
 ```
 
