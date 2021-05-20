@@ -22,5 +22,21 @@
       ],
       "description": "The version of this binding. If omitted, \"latest\" MUST be assumed."
     }
-  }
+  },
+  "examples": [
+    {
+      "headers": {
+        "type": "object",
+        "properties": {
+          "Content-Type": {
+            "type": "string",
+            "enum": [
+              "application/json"
+            ]
+          }
+        }
+      },
+      "bindingVersion": "0.1.0"
+    }
+  ]
 }
