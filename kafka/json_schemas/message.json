@@ -21,5 +21,16 @@
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
-  }
+  },
+  "examples": [
+    {
+      "key": {
+        "type": "string",
+        "enum": [
+          "myKey"
+        ]
+      },
+      "bindingVersion": "0.1.0"
+    }
+  ]
 }
