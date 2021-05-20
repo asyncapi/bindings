@@ -105,5 +105,22 @@
         ]
       }
     }
+  ],
+  "examples": [
+    {
+      "destinationType": "topic",
+      "topic": {
+        "objectName": "myTopicName"
+      },
+      "bindingVersion": "0.1.0"
+    },
+    {
+      "destinationType": "queue",
+      "queue": {
+        "objectName": "myQueueName",
+        "exclusive": true
+      },
+      "bindingVersion": "0.1.0"
+    }
   ]
 }

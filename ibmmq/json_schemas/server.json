@@ -43,5 +43,16 @@
       ],
       "description": "The version of this binding."
     }
-  }
+  },
+  "examples": [
+    {
+      "groupId": "PRODCLSTR1",
+      "cipherSpec": "ANY_TLS12_OR_HIGHER",
+      "bindingVersion": "0.1.0"
+    },
+    {
+      "groupId": "PRODCLSTR1",
+      "bindingVersion": "0.1.0"
+    }
+  ]
 }

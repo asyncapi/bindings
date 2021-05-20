@@ -66,5 +66,16 @@
         ]
       }
     }
+  ],
+  "examples": [
+    {
+      "type": "string",
+      "bindingVersion": "0.1.0"
+    },
+    {
+      "type": "jms",
+      "description": "JMS stream message",
+      "bindingVersion": "0.1.0"
+    }
   ]
 }
