@@ -54,5 +54,19 @@
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
-  }
+  },
+  "examples": [
+    {
+      "clientId": "guest",
+      "cleanSession": true,
+      "lastWill": {
+        "topic": "/last-wills",
+        "qos": 2,
+        "message": "Guest gone offline.",
+        "retain": false
+      },
+      "keepAlive": 60,
+      "bindingVersion": "0.1.0"
+    }
+  ]
 }

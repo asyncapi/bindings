@@ -26,5 +26,12 @@
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
-  }
+  },
+  "examples": [
+    {
+      "qos": 2,
+      "retain": true,
+      "bindingVersion": "0.1.0"
+    }
+  ]
 }
