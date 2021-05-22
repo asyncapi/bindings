@@ -36,7 +36,8 @@
           "default": false,
           "description": "Specifies if it is recommended to open the queue exclusively."
         }
-      }
+      },
+      "required": ["objectName"]
     },
     "topic": {
       "type": "object",
