@@ -34,5 +34,11 @@
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
-  }
+  },
+  "examples": [
+    {
+      "method": "POST",
+      "bindingVersion": "0.1.0"
+    }
+  ]
 }
