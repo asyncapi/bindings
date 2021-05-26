@@ -38,7 +38,7 @@ Code generation based on an AsyncAPI document can be used to
 - generate a skeleton of the application that exposes the message-driven API (this is common), or
 - generate a stub of an "interaction partner" application that interacts with that application via its message-driven API (this is less common).
 
-Some of the fields in the bindings defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while other fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then influence the application code that is being generated.
+Only a few fields of the binding objects defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while most fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then influence the application code that is being generated.
 
 ## Server Object
 
@@ -57,6 +57,7 @@ TODO:
 
 The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](json_schemas/server.json), which defines these *optional* fields:
 
+- `bindingVersion`: The version of the Anypoint MQ bindings specification that defines the content of this server binding object.
 - `proxy.host`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination host for proxy requests.
 - `proxy.port`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination port for proxy requests.
 - `proxy.username`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Username to authenticate against the proxy.
@@ -115,11 +116,13 @@ servers:
 <a name="channel"></a>
 ## Channel Binding Object
 
-The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](json_schemas/channel.json) that currently defines *no fields*.
+The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](json_schemas/channel.json), which currently defines only the *optional* `bindingVersion` field:
 
-Fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
+- `bindingVersion`: The version of the Anypoint MQ bindings specification that defines the content of this channel binding object.
 
-Because an empty channel binding object does not add any information to an AsyncAPI document, it is RECOMMENDED that AsyncAPI documents omit channel binding objects for `anypointmq`.
+Additional fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
+
+Because a channel binding object just containing `bindingVersion` does not add any information to an AsyncAPI document, it is RECOMMENDED that AsyncAPI documents omit channel binding objects for `anypointmq`.
 
 ### Examples
 
