@@ -9,7 +9,7 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 
 The version of this bindings specification is `0.1.0`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
-In any given binding object, `latest` can alternatively be used as long as this version of the bindings specification remains the latest published version.
+In any given binding object, `latest` MAY alternatively be used to refer to the currently latest published version of this bindings specification.
 
 The version of the AsyncAPI specification to which these bindings apply is `2.1.0`.
 
