@@ -83,7 +83,7 @@ Field Name | Type | Description
 <a name="channelBindingObjectType"></a>`destinationType`          | string | **Optional**, defaults to `queue`. The type of destination, which MUST be either `exchange` or `queue` or `fifo-queue`. SHOULD be specified to document the messaging model (publish/subscribe, point-to-point, strict message ordering) supported by this channel.
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
-Note that an Anypoint MQ exchange can only be sent to, not received from. To receive messages sent to an exchange, an intermediary queue must be [defined and bound to the exchange](https://docs.mulesoft.com/mq/mq-understanding#message-exchanges). In this bindings specification, these intermediary queues are not exposed in the AsyncAPI document. Instead, it is simply assumed that whenever messages must be received from an exchange, such an unnamed (in the AsyncAPI document) intermediary queue is involved.
+Note that an Anypoint MQ exchange can only be sent to, not received from. To receive messages sent to an exchange, [an intermediary queue must be defined and bound to the exchange](https://docs.mulesoft.com/mq/mq-understanding#message-exchanges). In this bindings specification, these intermediary queues are not exposed in the AsyncAPI document. Instead, it is simply assumed that whenever messages must be received from an exchange, such an intermediary queue is involved yet invisible in the AsyncAPI document.
 
 ### Examples
 
@@ -121,38 +121,27 @@ Field Name | Type | Description
 
 ### Examples
 
-The following example shows a `channels` object with two channels, each having one operation (`subscribe` or `publish`). Only the `publish` operation has an operation binding object for `anypointmq`:
+The following example shows a `channels` object with two channels, each having one operation (`subscribe` or `publish`). Only the `subscribe` operation has an operation binding object for `anypointmq`:
 
 ```yaml
 channels:
-  user/signedup:
-    subscribe:
-      operationId: userHasSignedUp
-      description: |
-        TODO
-      bindings:
-        anypointmq:
-          ack: TODO
-      message:
-        //...
   user/signup:
     publish:
       operationId: signUpUser
       description: |
-        TODO
+        This application receives command messages via this operation about users to sign up.
+        Minimal configuration, omitting an operation binding object.
+      message:
+        //...
+  user/signedup:
+    subscribe:
+      operationId: userHasSignedUp
+      description: |
+        This application sends events via this operation about users that have signed up.
+        Explicitly provides an operation binding object.
       bindings:
         anypointmq:
-          bindingVersion: 0.1.0
-          // Destination (Queue or Exchange) name for this channel. Defaults to the channel name. SHOULD only be specified if the channel name differs from the actual destination name, such as when the channel name is not a valid destination name in Anypoint MQ.
-          destination:             user-signup-queue
-          consumer:
-            // or manual | default immediate | Acknowledgment mode to use for the messages retrieved
-            acknowledgmentMode:    immediate
-            // Duration in milliseconds that a message is held by a consumer waiting for an acknowledgment or not acknowledgment. After that duration elapses, the message is again available to any consumer.
-            acknowledgmentTimeout: 10000
-            // default 10000 | Time in milliseconds to wait for a message to be ready for consumption
-            pollingTime:           10000
-          producer:
+          bindingVersion: "0.1.0"
       message:
         //...
 ```
@@ -160,14 +149,50 @@ channels:
 <a name="message"></a>
 ## Message Binding Object
 
-The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#message-bindings-object) is defined by a [JSON Schema](json_schemas/message.json), which defines these *optional* fields:
+The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#message-bindings-object) is defined by a [JSON Schema](json_schemas/message.json), which defines these fields:
 
-TODO
+Field Name | Type | Description
+---|:---:|---
+<a name="messageBindingObjectMessageId"></a>`messageId`           | string | **Optional**. The unique ID of the message. When publishing the message, if not specified, the broker creates a unique essage ID. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
+<a name="messageBindingObjectMessageGroupId"></a>`messageGroupId` | string | **Optional**. ID of the message group to which the published message belongs. Applies only to FIFO queues. Message group IDs can contain up to 128 alphanumeric and punctuation characters. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
+<a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
-Additional fields MAY be present but are ignored if the message binding object is interpreted according to this version of the bindings specification.
+Note that message headers, which are specified in the `headers` field of the standard [Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObject), are transmitted in the [Anypoint MQ message `properties` section](https://docs.mulesoft.com/mq/mq-apis#example-publish-a-message). In AsyncAPI, this `headers` field does not include protocol headers such as `messageId` or `messageGroupId`, which are transmitted in the [Anypoint MQ message `headers` section](https://docs.mulesoft.com/mq/mq-apis#postsetup).
 
 ### Examples
 
+The following example shows a `channels` object with two channels, each having one operation (`subscribe` or `publish`) with one message. Only the message of the `subscribe` operation has a message binding object for `anypointmq`:
+
 ```yaml
-TODO
+channels:
+  user/signup:
+    publish:
+      message:
+        //...
+  user/signedup:
+    subscribe:
+      message:
+        headers:
+          type: object
+          properties:
+            correlationId:
+              description: Correlation ID set by application
+              type: string
+        payload:
+          type: object
+          properties:
+            //...
+        correlationId:
+          description: Correlation ID is specified as a header and transmitted in the Anypoint MQ message properties section
+          location: $message.header#/correlationId
+        bindings:
+          anypointmq:
+            bindingVersion: "0.1.0"
+        examples:
+          - messageId:       "e0c62826-52d9-4d64-bdd8-a7c415917acf"
+            messageGroupId:  "42"
+            headers:
+              correlationId: "6e343f8c-bf0d-11eb-8529-0242ac130003"
+            payload:
+              //...
 ```
