@@ -13,12 +13,6 @@ In any given binding object, `latest` can alternatively be used as long as this 
 
 The version of the AsyncAPI specification to which these bindings apply is `2.1.0`.
 
-### Backwards Compatibility
-
-All bindings defined in this specification allow additional, unspecified fields, so that a concrete instance of a binding object MAY contain arbitrary fields not defined in this specification. This is to ensure backwards compatibility of binding objects, and also to allow code generators to define their own, specific fields which are not defined in this bindings specification.
-
-As an example of backwards compatibility, consider a concrete binding object valid against version `1.1.0` of this specification. This binding object may specify `bindingVersion: 1.1.0`. This binding object may contain fields specific to version `1.1.0`, which were not yet defined in, say, version `1.0.5` of this specification. However, because additional fields are allowed, this binding object is also valid against version `1.0.5` of this specification. The binding object valid against version `1.1.0` can therefore be used in a system that is only aware of version `1.0.5`, although all fields not yet defined in version `1.0.5` of this specification will be ignored.
-
 ## Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this bindings specification are to be interpreted as described in IETF [RFC2119](https://www.ietf.org/rfc/rfc2119.txt).
@@ -35,38 +29,25 @@ The fields of the standard [Server Object](https://github.com/asyncapi/spec/blob
 
 Server Object Field Name | Values for Anypoint MQ Protocol | Description
 ---|:---|:---
-<a name="serverObjectProtocolFieldValueAnypointMQ"></a>`protocol`               | `anypointmq`                                                 | Is *required* and MUST be `anypointmq` for the scope of this specification.
-<a name="serverObjectUrlFieldValueAnypointMQ"></a>`url`                         | for example `https://mq-us-east-1.anypoint.mulesoft.com/api` | Is *required* and MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`). Valid examples are `https://mq-us-east-1.anypoint.mulesoft.com/api` and `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`).
-<a name="serverObjectProtocolVersionFieldValueAnypointMQ"></a>`protocolVersion` | for example `v1`                                             | Is *optional* and if present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`. Defaults to `v1` if absent.
-<a name="serverObjectSecurityFieldValueAnypointMQ"></a>`security`               | suitably configured OAuth 2.0 client credentials grant type  | Currently, authentication against the MuleSoft-hosted Anypoint MQ message brokers uses the OAuth 2.0 client credentials grant type. At runtime, the client ID and client secret values of an Anypoint MQ client app must be supplied. Also, the OAuth 2.0 scopes are currently not client-configurable. The `security` field of the server object must correctly match these constraints.
+<a name="serverObjectProtocolFieldValueAnypointMQ"></a>`protocol`               | `anypointmq`                                                 | **Required**. MUST be `anypointmq` for the scope of this specification.
+<a name="serverObjectUrlFieldValueAnypointMQ"></a>`url`                         | e.g., `https://mq-us-east-1.anypoint.mulesoft.com/api`       | **Required**. MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`). Valid examples are `https://mq-us-east-1.anypoint.mulesoft.com/api` and `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`).
+<a name="serverObjectProtocolVersionFieldValueAnypointMQ"></a>`protocolVersion` | e.g., `v1`                                                   | **Optional**, defaults to `v1`. If present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`.
+<a name="serverObjectSecurityFieldValueAnypointMQ"></a>`security`               | suitably configured OAuth 2.0 client credentials grant type  | **Required**. Currently, authentication against the MuleSoft-hosted Anypoint MQ message brokers uses the OAuth 2.0 client credentials grant type. At runtime, the client ID and client secret values of an Anypoint MQ client app must be supplied. Also, the OAuth 2.0 scopes are currently not client-configurable. The `security` field of the server object MUST correctly match these constraints.
 
-Please note that the choice of a particular Anypoint MQ client app (and its client ID and secret) imply an implicit choice of the Anypoint Platform organization ID and environment (ID), namely those in which this client app is defined. See the [Anypoint MQ documentation](https://docs.mulesoft.com/mq/mq-client-apps) for details on how to configure Anypoint MQ client apps.
+Note that the choice of a particular Anypoint MQ client app (and its client ID and secret) imply an implicit choice of the Anypoint Platform organization ID and environment (ID), namely those in which this client app is defined. See the [Anypoint MQ documentation](https://docs.mulesoft.com/mq/mq-client-apps) for details on how to configure Anypoint MQ client apps.
 
 <a name="server"></a>
 ## Server Binding Object
 
-The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](json_schemas/server.json), which defines these *optional* fields:
+The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](json_schemas/server.json), which currently defines only the *optional* `bindingVersion` field:
 
-- `bindingVersion`: The version of the Anypoint MQ bindings specification that defines the content of this server binding object.
-- `proxy.host`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination host for proxy requests.
-- `proxy.port`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Destination port for proxy requests.
-- `proxy.username`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Username to authenticate against the proxy.
-- `proxy.password`: Defines use of a HTTP proxy for interactions with the Anypoint MQ broker: Password to authenticate against the proxy.
-- `sendBufferSize`: Size of the buffer (in bytes) used when sending data, set on the socket itself.
-- `receiveBufferSize`: Size of the buffer (in bytes) used when receiving data.
-- `clientTimeout`: SO_TIMEOUT value on sockets. Indicates the amount of time (in milliseconds) that the socket waits in a blocking operation before failing. A value of 0 indicates an indefinite wait.
-- `sendTCPWithNoDelay`: If set, transmitted data is not grouped but sent immediately.
-- `linger`: SO_LINGER value, which determines how long (in milliseconds) the socket takes to close so that any remaining data is transmitted correctly.
-- `keepAlive`: SO_KEEPALIVE behavior on open sockets, which automatically checks open socket connections that are unused for long periods, and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a server socket to control whether connections to the server are kept alive before they are recycled.
-- `connectionTimeout`: Number of milliseconds to wait until an outbound connection to a remote server is successfully created, before failing with a timeout.
-
-Additional fields MAY be present but are ignored if the server binding object is interpreted according to this version of the bindings specification.
-
-Note that all of these fields serve _code generation_ based on the AsyncAPI document, rather than defining the contract of the message-driven API.
+Field Name | Type | Description
+---|:---:|---
+<a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
 ### Examples
 
-The following example shows a `servers` object with two servers, both using `anypointmq` as the `protocol`, and one having a server binding object for `anypointmq`:
+The following example shows a `servers` object with two servers, both using `anypointmq` as the `protocol`, the second having a server binding object for `anypointmq`:
 
 ```yaml
 servers:
@@ -74,77 +55,69 @@ servers:
     url:         https://mq-us-east-1.anypoint.mulesoft.com/api
     description: |
       Anypoint MQ broker for development, in the US East (N. Virginia) runtime plane under management of the US control plane.
-      Minimal configuration, using defaults for all fields of the server binding object.
       Implicitly uses v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
+      Minimal configuration, omitting a server binding object.
     protocol: anypointmq
 
   production:
     url:         https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api
     description: |
       Anypoint MQ broker for production, in the EU Central (Frankfurt) runtime plane under management of the EU control plane.
-      Complete configuration, providing explicit values for all fields of the server binding object.
       Explicitly specifies the use of v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
+      Explicitly provides a server binding object.
     protocol:        anypointmq
     protocolVersion: v1
     bindings:
       anypointmq:
-        bindingVersion: 0.1.0
-        proxy:
-          host:    proxy.corporate.com
-          port:    80
-          username: proxy-user
-          password: passwd-of-proxy-user
-        sendBufferSize:     1024
-        receiveBufferSize:  2048
-        clientTimeout:      1000
-        sendTCPWithNoDelay: true
-        linger:             1000
-        keepAlive:          true
-        connectionTimeout:  10000
+        bindingVersion: "0.1.0"
 ```
 
 <a name="channel"></a>
 ## Channel Binding Object
 
-The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](json_schemas/channel.json), which currently defines only the *optional* `bindingVersion` field:
+The Anypoint MQ [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](json_schemas/channel.json), which defines these fields:
 
-- `bindingVersion`: The version of the Anypoint MQ bindings specification that defines the content of this channel binding object.
+Field Name | Type | Description
+---|:---:|---
+<a name="channelBindingObjectDestination"></a>`destination`       | string | **Optional**, defaults to the channel name. The destination (queue or exchange) name for this channel. SHOULD only be specified if the channel name differs from the actual destination name, such as when the channel name is not a valid destination name in Anypoint MQ.
+<a name="channelBindingObjectType"></a>`destinationType`          | string | **Optional**, defaults to `queue`. The type of destination, which MUST be either `exchange` or `queue` or `fifo-queue`. SHOULD be specified to document the messaging model (publish/subscribe, point-to-point, strict message ordering) supported by this channel.
+<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
-Additional fields MAY be present but are ignored if the channel binding object is interpreted according to this version of the bindings specification.
-
-Because a channel binding object just containing `bindingVersion` does not add any information to an AsyncAPI document, it is RECOMMENDED that AsyncAPI documents omit channel binding objects for `anypointmq`.
+Note that an Anypoint MQ exchange can only be sent to, not received from. To receive messages sent to an exchange, an intermediary queue must be [defined and bound to the exchange](https://docs.mulesoft.com/mq/mq-understanding#message-exchanges). In this bindings specification, these intermediary queues are not exposed in the AsyncAPI document. Instead, it is simply assumed that whenever messages must be received from an exchange, such an unnamed (in the AsyncAPI document) intermediary queue is involved.
 
 ### Examples
 
-The following example shows a `channels` object with two channels, one having a semantically empty channel binding object for `anypointmq` (which is not recommended):
+The following example shows a `channels` object with two channels, the second having a channel binding object for `anypointmq`:
 
 ```yaml
 channels:
-  user/signedup:
-    description: |
-      This application sends events to this channel about users that have signed up.
-      Minimal and recommended configuration, not specifying an empty channel binding object.
-    subscribe:
-      //...
   user/signup:
     description: |
       This application receives command messages from this channel about users to sign up.
-      Non-recommended configuration, explicitly providing a semantically empty channel binding object.
+      Minimal configuration, omitting a channel binding object.
+    publish:
+      //...
+  user/signedup:
+    description: |
+      This application sends events to this channel about users that have signed up.
+      Explicitly provides a channel binding object.
     bindings:
       anypointmq:
-      	bindingVersion: 0.1.0
-    publish:
+        destination:     user-signup-exchg
+        destinationType: exchange
+        bindingVersion:  "0.1.0"
+    subscribe:
       //...
 ```
 
 <a name="operation"></a>
 ## Operation Binding Object
 
-The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#operation-bindings-object) is defined by a [JSON Schema](json_schemas/operation.json), which defines these *optional* fields:
+The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#operation-bindings-object) is defined by a [JSON Schema](json_schemas/operation.json), which currently defines only the *optional* `bindingVersion` field:
 
-TODO
-
-Additional fields MAY be present but are ignored if the operation binding object is interpreted according to this version of the bindings specification.
+Field Name | Type | Description
+---|:---:|---
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
 ### Examples
 
