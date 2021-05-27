@@ -7,11 +7,11 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 <a name="version"></a>
 ## Version
 
-The version of this bindings specification is `0.0.1`.
+The version of this bindings specification is `0.1.0`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
 In any given binding object, `latest` can alternatively be used as long as this version of the bindings specification remains the latest published version.
 
-The version of the AsyncAPI specification to which these bindings apply is `2.0.0`.
+The version of the AsyncAPI specification to which these bindings apply is `2.1.0`.
 
 ### Backwards Compatibility
 
@@ -29,28 +29,18 @@ These bindings use the `anypointmq` [protocol](https://github.com/asyncapi/spec/
 
 The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST API](https://docs.mulesoft.com/mq/mq-apis#mqbrokerapi).
 
-## Code Generation
-
-An AsyncAPI document defines a machine-readable contract for the message-driven API exposed by an application. The application promises to adhere to that contract, and its "interaction partners" can send and/or receive messages accordingly.
-
-Code generation based on an AsyncAPI document can be used to
-
-- generate a skeleton of the application that exposes the message-driven API (this is common), or
-- generate a stub of an "interaction partner" application that interacts with that application via its message-driven API (this is less common).
-
-Only a few fields of the binding objects defined in this specification serve to more clearly define the contract of an API in the presence of an Anypoint MQ message broker, while most fields are useful primarily for code generation. The latter fields can be used in both code generation scenarios, and will then influence the application code that is being generated.
-
 ## Server Object
 
 The fields of the standard [Server Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverObject) are constrained and interpreted as follows:
 
-- `protocol` is *required* and MUST be `anypointmq` for the scope of this specification.
-- `url` is *required* and MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`), such as `https://mq-us-east-1.anypoint.mulesoft.com/api` or `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`). MUST NOT use a scheme other than `https` or `http` (as supported by the Broker REST API endpoint).
-- `protocolVersion` is *optional* and if present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`. Defaults to `v1` if absent.
+Server Object Field Name | Values for Anypoint MQ Protocol | Description
+---|:---|:---
+<a name="serverObjectProtocolFieldValueAnypointMQ"></a>`protocol`               | `anypointmq`                                                 | Is *required* and MUST be `anypointmq` for the scope of this specification.
+<a name="serverObjectUrlFieldValueAnypointMQ"></a>`url`                         | for example `https://mq-us-east-1.anypoint.mulesoft.com/api` | Is *required* and MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`). Valid examples are `https://mq-us-east-1.anypoint.mulesoft.com/api` and `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`).
+<a name="serverObjectProtocolVersionFieldValueAnypointMQ"></a>`protocolVersion` | for example `v1`                                             | Is *optional* and if present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`. Defaults to `v1` if absent.
+<a name="serverObjectSecurityFieldValueAnypointMQ"></a>`security`               | suitably configured OAuth 2.0 client credentials grant type  | Currently, authentication against the MuleSoft-hosted Anypoint MQ message brokers uses the OAuth 2.0 client credentials grant type. At runtime, the client ID and client secret values of an Anypoint MQ client app must be supplied. Also, the OAuth 2.0 scopes are currently not client-configurable. The `security` field of the server object must correctly match these constraints.
 
-TODO:
-- authentication is by Anypoint MQ client ID and secret, which implies the Anypoint Platform organization ID and environment (ID)
-- capture this as security scheme and Security Requirement Object
+Please note that the choice of a particular Anypoint MQ client app (and its client ID and secret) imply an implicit choice of the Anypoint Platform organization ID and environment (ID), namely those in which this client app is defined. See the [Anypoint MQ documentation](https://docs.mulesoft.com/mq/mq-client-apps) for details on how to configure Anypoint MQ client apps.
 
 <a name="server"></a>
 ## Server Binding Object
@@ -98,7 +88,7 @@ servers:
     protocolVersion: v1
     bindings:
       anypointmq:
-        bindingVersion: 0.0.1
+        bindingVersion: 0.1.0
         proxy:
           host:    proxy.corporate.com
           port:    80
@@ -142,7 +132,7 @@ channels:
       Non-recommended configuration, explicitly providing a semantically empty channel binding object.
     bindings:
       anypointmq:
-      	bindingVersion: 0.0.1
+      	bindingVersion: 0.1.0
     publish:
       //...
 ```
@@ -179,7 +169,7 @@ channels:
         TODO
       bindings:
         anypointmq:
-          bindingVersion: 0.0.1
+          bindingVersion: 0.1.0
           // Destination (Queue or Exchange) name for this channel. Defaults to the channel name. SHOULD only be specified if the channel name differs from the actual destination name, such as when the channel name is not a valid destination name in Anypoint MQ.
           destination:             user-signup-queue
           consumer:
