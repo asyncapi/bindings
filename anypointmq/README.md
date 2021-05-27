@@ -5,7 +5,7 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 [Anypoint MQ](https://docs.mulesoft.com/mq/) is MuleSoft's multi-tenant, cloud messaging service and is fully integrated with [Anypoint Platform](https://www.mulesoft.com/platform/enterprise-integration).
 
 <a name="version"></a>
-## Version
+## Versions
 
 The version of this bindings specification is `0.1.0`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
@@ -32,9 +32,9 @@ Server Object Field Name | Values for Anypoint MQ Protocol | Description
 <a name="serverObjectProtocolFieldValueAnypointMQ"></a>`protocol`               | `anypointmq`                                                 | **Required**. MUST be `anypointmq` for the scope of this specification.
 <a name="serverObjectUrlFieldValueAnypointMQ"></a>`url`                         | e.g., `https://mq-us-east-1.anypoint.mulesoft.com/api`       | **Required**. MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`). Valid examples are `https://mq-us-east-1.anypoint.mulesoft.com/api` and `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`).
 <a name="serverObjectProtocolVersionFieldValueAnypointMQ"></a>`protocolVersion` | e.g., `v1`                                                   | **Optional**, defaults to `v1`. If present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`.
-<a name="serverObjectSecurityFieldValueAnypointMQ"></a>`security`               | suitably configured OAuth 2.0 client credentials grant type  | **Required**. Currently, authentication against the MuleSoft-hosted Anypoint MQ message brokers uses the OAuth 2.0 client credentials grant type. At runtime, the client ID and client secret values of an Anypoint MQ client app must be supplied. Also, the OAuth 2.0 scopes are currently not client-configurable. The `security` field of the server object MUST correctly match these constraints.
+<a name="serverObjectSecurityFieldValueAnypointMQ"></a>`security`               | suitably configured OAuth 2.0 client credentials grant type  | **Required**. Authentication against the MuleSoft-hosted Anypoint MQ message brokers uses the OAuth 2.0 client credentials grant type. At runtime, the client ID and client secret values of an Anypoint MQ client app must be supplied. Also, the OAuth 2.0 scopes are currently not client-configurable. The `security` field of the server object MUST correctly match these constraints.
 
-Note that the choice of a particular Anypoint MQ client app (and its client ID and secret) imply an implicit choice of the Anypoint Platform organization ID and environment (ID), namely those in which this client app is defined. See the [Anypoint MQ documentation](https://docs.mulesoft.com/mq/mq-client-apps) for details on how to configure Anypoint MQ client apps.
+Note that the choice of a particular Anypoint MQ client app (via its client ID and secret) decides the Anypoint Platform organization ID and environment (ID) to be those in which this client app is defined. See the [Anypoint MQ documentation](https://docs.mulesoft.com/mq/mq-client-apps) for details on how to configure Anypoint MQ client apps.
 
 <a name="server"></a>
 ## Server Binding Object
