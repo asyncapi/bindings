@@ -7,7 +7,7 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 <a name="version"></a>
 ## Versions
 
-The version of this bindings specification is `0.1.0`.
+The version of this bindings specification is `0.0.1`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
 In any given binding object, `latest` MAY alternatively be used to refer to the currently latest published version of this bindings specification.
 
@@ -69,7 +69,7 @@ servers:
     protocolVersion: v1
     bindings:
       anypointmq:
-        bindingVersion: "0.1.0"
+        bindingVersion: '0.0.1'
 ```
 
 <a name="channel"></a>
@@ -96,7 +96,7 @@ channels:
       This application receives command messages from this channel about users to sign up.
       Minimal configuration, omitting a channel binding object.
     publish:
-      //...
+      #...
   user/signedup:
     description: |
       This application sends events to this channel about users that have signed up.
@@ -105,9 +105,9 @@ channels:
       anypointmq:
         destination:     user-signup-exchg
         destinationType: exchange
-        bindingVersion:  "0.1.0"
+        bindingVersion:  '0.0.1'
     subscribe:
-      //...
+      #...
 ```
 
 <a name="operation"></a>
@@ -132,7 +132,7 @@ channels:
         This application receives command messages via this operation about users to sign up.
         Minimal configuration, omitting an operation binding object.
       message:
-        //...
+        #...
   user/signedup:
     subscribe:
       operationId: userHasSignedUp
@@ -141,9 +141,9 @@ channels:
         Explicitly provides an operation binding object.
       bindings:
         anypointmq:
-          bindingVersion: "0.1.0"
+          bindingVersion: '0.0.1'
       message:
-        //...
+        #...
 ```
 
 <a name="message"></a>
@@ -153,8 +153,8 @@ The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/m
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectMessageId"></a>`messageId`           | string | **Optional**. The unique ID of the message. When publishing the message, if not specified, the broker creates a unique essage ID. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
-<a name="messageBindingObjectMessageGroupId"></a>`messageGroupId` | string | **Optional**. ID of the message group to which the published message belongs. Applies only to FIFO queues. Message group IDs can contain up to 128 alphanumeric and punctuation characters. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
+<a name="messageBindingObjectMessageId"></a>`messageId`           | string | **Optional**. The unique ID of the message. When publishing the message, if not specified, the broker creates a unique message ID. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
+<a name="messageBindingObjectMessageGroupId"></a>`messageGroupId` | string | **Optional**. The ID of the message group to which the message belongs. Applies only to FIFO queues. Message group IDs can contain up to 128 alphanumeric and punctuation characters. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
 Note that message headers, which are specified in the `headers` field of the standard [Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObject), are transmitted in the [Anypoint MQ message `properties` section](https://docs.mulesoft.com/mq/mq-apis#example-publish-a-message). In AsyncAPI, this `headers` field does not include protocol headers such as `messageId` or `messageGroupId`, which are transmitted in the [Anypoint MQ message `headers` section](https://docs.mulesoft.com/mq/mq-apis#postsetup).
@@ -168,7 +168,7 @@ channels:
   user/signup:
     publish:
       message:
-        //...
+        #...
   user/signedup:
     subscribe:
       message:
@@ -181,18 +181,104 @@ channels:
         payload:
           type: object
           properties:
-            //...
+            #...
+        correlationId:
+          description: Correlation ID is specified as a header and transmitted in the Anypoint MQ message properties section
+          location:    $message.header#/correlationId
+        bindings:
+          anypointmq:
+            messageId:      'e0c62826-52d9-4d64-bdd8-a7c415917acf'
+            messageGroupId: '42'
+            bindingVersion: '0.0.1'
+```
+
+## Complete Example
+
+The following is a complete, simple AsyncAPI document illustrating the usage of all binding objects defined in this bindings specification, with all their fields.
+
+```
+asyncapi: '2.0.0'
+info:
+  title: Example with Anypoint MQ
+  version: '1.0.0'
+
+servers:
+  development:
+    protocol: anypointmq
+    protocolVersion: v1
+    url: https://mq-us-east-1.anypoint.mulesoft.com/api
+    description: |
+      Anypoint MQ broker for development, in the US East (N. Virginia) runtime plane 
+      under management of the US control plane.
+    security:
+      - oauthDev: []
+    bindings:
+      anypointmq:
+        bindingVersion: '0.1.0'
+  production:
+    protocol: anypointmq
+    protocolVersion: v1
+    url: https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api
+    description: |
+      Anypoint MQ broker for production, in the EU Central (Frankfurt) runtime plane 
+      under management of the EU control plane.
+    security:
+      - oauthProd: []
+    bindings:
+      anypointmq:
+        bindingVersion: '0.1.0'
+  
+channels:
+  user/signup:
+    description: |
+      This application receives command messages from this channel about users to sign up.
+    bindings:
+      anypointmq:
+        destination:     user-signup-queue
+        destinationType: fifo-queue
+        bindingVersion:  '0.1.0'
+    publish:
+      operationId: signUpUser
+      description: |
+        This application receives command messages via this operation about users to sign up.
+      bindings:
+        anypointmq:
+          bindingVersion: '0.1.0'
+      message:
+        contentType: application/json
+        headers:
+          type: object
+          properties:
+            correlationId:
+              description: Correlation ID set by application
+              type: string
+        payload:
+          type: object
+          properties:
+            username:
+              type: string
+              minLength: 3
         correlationId:
           description: Correlation ID is specified as a header and transmitted in the Anypoint MQ message properties section
           location: $message.header#/correlationId
         bindings:
           anypointmq:
-            bindingVersion: "0.1.0"
-        examples:
-          - messageId:       "e0c62826-52d9-4d64-bdd8-a7c415917acf"
-            messageGroupId:  "42"
-            headers:
-              correlationId: "6e343f8c-bf0d-11eb-8529-0242ac130003"
-            payload:
-              //...
+            messageId:      'e0c62826-52d9-4d64-bdd8-a7c415917acf'
+            messageGroupId: '42'
+            bindingVersion: '0.1.0'
+  
+components:
+  securitySchemes:
+    oauthDev:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://mq-us-east-1.anypoint.mulesoft.com/api/v1/authorize
+          scopes: {}
+    oauthProd:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api/v1/authorize
+          scopes: {}
 ```
