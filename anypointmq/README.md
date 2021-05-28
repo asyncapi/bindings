@@ -266,7 +266,7 @@ channels:
             messageId:      'e0c62826-52d9-4d64-bdd8-a7c415917acf'
             messageGroupId: '42'
             bindingVersion: '0.1.0'
-  
+
 components:
   securitySchemes:
     oauthDev:
