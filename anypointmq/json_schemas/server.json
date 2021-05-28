@@ -1,153 +1,27 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "http://asyncapi.com/anypointmq/bindings/server.json",
-    "type": "object",
-    "title": "Anypoint MQ Server Binding Object",
-    "examples": [
-        {},
-        {
-            "bindingVersion": "latest",
-            "proxy": {
-                "host": "proxy.corporate.com",
-                "port": 80,
-                "username": "proxy-user",
-                "password": "passwd-of-proxy-user"
-            },
-            "sendBufferSize": 1024,
-            "receiveBufferSize": 2048,
-            "clientTimeout": 1000,
-            "sendTCPWithNoDelay": true,
-            "linger": 1000,
-            "keepAlive": true,
-            "connectionTimeout": 10000
-        }
-    ],
-    "required": [],
-    "patternProperties": {
-        "^x-[\\w\\d\\.\\-\\_]+$": {
-            "$ref": "#/definitions/specificationExtension"
-        }
-    },
-    "properties": {
-        "bindingVersion": {
-            "$id": "#/properties/bindingVersion",
-            "type": "string",
-            "title": "Anypoint MQ bindings specification version",
-            "description": "The version of the Anypoint MQ bindings specification that defines the content of this binding object.",
-            "default": "latest",
-            "examples": ["latest", "0.0.1"]
-        },
-        "proxy": {
-            "$id": "#/properties/proxy",
-            "type": "object",
-            "title": "HTTP proxy definition",
-            "description": "Defines use of a HTTP proxy for interactions with the Anypoint MQ broker.",
-            "default": {},
-            "examples": [
-                {
-                    "host": "proxy.corporate.com",
-                    "port": 80,
-                    "username": "proxy-user",
-                    "password": "passwd-of-proxy-user"
-                }
-            ],
-            "required": [],
-            "properties": {
-                "host": {
-                    "$id": "#/properties/proxy/properties/host",
-                    "type": "string",
-                    "title": "Proxy host",
-                    "description": "Destination host for proxy requests.",
-                    "default": "",
-                    "examples": ["proxy.corporate.com"]
-                },
-                "port": {
-                    "$id": "#/properties/proxy/properties/port",
-                    "type": "integer",
-                    "title": "Proxy port",
-                    "description": "Destination port for proxy requests.",
-                    "default": 80,
-                    "examples": [80,443]
-                },
-                "username": {
-                    "$id": "#/properties/proxy/properties/username",
-                    "type": "string",
-                    "title": "Proxy username",
-                    "description": "Username to authenticate against the proxy.",
-                    "default": "",
-                    "examples": ["proxy-user"]
-                },
-                "password": {
-                    "$id": "#/properties/proxy/properties/password",
-                    "type": "string",
-                    "title": "Proxy password",
-                    "description": "Password to authenticate against the proxy.",
-                    "default": "",
-                    "examples": ["passwd-of-proxy-user"]
-                }
-            },
-            "additionalProperties": true
-        },
-        "sendBufferSize": {
-            "$id": "#/properties/sendBufferSize",
-            "type": "integer",
-            "title": "Size of socket send buffer",
-            "description": "Size of the buffer (in bytes) used when sending data, set on the socket itself.",
-            "examples": [1024]
-        },
-        "receiveBufferSize": {
-            "$id": "#/properties/receiveBufferSize",
-            "type": "integer",
-            "title": "Size of socket receive buffer",
-            "description": "Size of the buffer (in bytes) used when receiving data.",
-            "examples": [2048]
-        },
-        "clientTimeout": {
-            "$id": "#/properties/clientTimeout",
-            "type": "integer",
-            "title": "Socket timeout",
-            "description": "SO_TIMEOUT value on sockets. Indicates the amount of time (in milliseconds) that the socket waits in a blocking operation before failing. A value of 0 indicates an indefinite wait.",
-            "default": 0,
-            "examples": [1000]
-        },
-        "sendTCPWithNoDelay": {
-            "$id": "#/properties/sendTCPWithNoDelay",
-            "type": "boolean",
-            "title": "Send data immediately",
-            "description": "If set, transmitted data is not grouped but sent immediately.",
-            "default": true,
-            "examples": [true]
-        },
-        "linger": {
-            "$id": "#/properties/linger",
-            "type": "integer",
-            "title": "Socket linger value",
-            "description": "SO_LINGER value, which determines how long (in milliseconds) the socket takes to close so that any remaining data is transmitted correctly.",
-            "examples": [1000]
-        },
-        "keepAlive": {
-            "$id": "#/properties/keepAlive",
-            "type": "boolean",
-            "title": "Keep sockets alive",
-            "description": "SO_KEEPALIVE behavior on open sockets, which automatically checks open socket connections that are unused for long periods, and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a server socket to control whether connections to the server are kept alive before they are recycled.",
-            "default": false,
-            "examples": [true]
-        },
-        "connectionTimeout": {
-            "$id": "#/properties/connectionTimeout",
-            "type": "integer",
-            "title": "Socket connection timeout",
-            "description": "Number of milliseconds to wait until an outbound connection to a remote server is successfully created, before failing with a timeout.",
-            "default": 30000,
-            "examples": [10000]
-        }
-    },
-    "additionalProperties": true,
-    "definitions": {
-        "specificationExtension": {
-            "description": "Any property starting with x- is valid.",
-            "additionalProperties": true,
-            "additionalItems": true
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://asyncapi.com/bindings/anypointmq/server.json",
+  "title": "Server Schema",
+  "description": "This object contains configuration for describing an Anypoint MQ broker as an AsyncAPI server. This objects only contains configuration that can not be provided in the AsyncAPI standard server object.",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
     }
+  },
+  "properties": {
+    "bindingVersion": {
+      "type": "string",
+      "enum": [
+        "0.0.1"
+      ],
+      "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
+    }
+  },
+  "examples": [
+    {
+      "bindingVersion": "0.0.1"
+    }
+  ]
 }
