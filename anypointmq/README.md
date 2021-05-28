@@ -159,6 +159,8 @@ Field Name | Type | Description
 
 Note that message headers, which are specified in the `headers` field of the standard [Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObject), are transmitted in the [Anypoint MQ message `properties` section](https://docs.mulesoft.com/mq/mq-apis#example-publish-a-message). In AsyncAPI, this `headers` field does not include protocol headers such as `messageId` or `messageGroupId`, which are transmitted in the [Anypoint MQ message `headers` section](https://docs.mulesoft.com/mq/mq-apis#postsetup).
 
+Please note that the definition of this message binding object is likely to change in future versions of this bindings specification to better describe the mapping of the fields of the AsyncAPI standard message object to the various parts of the Anypoint MQ message as it is exchanged as an HTTP body with the Anypoint MQ Broker REST API.
+
 ### Examples
 
 The following example shows a `channels` object with two channels, each having one operation (`subscribe` or `publish`) with one message. Only the message of the `subscribe` operation has a message binding object for `anypointmq`:
