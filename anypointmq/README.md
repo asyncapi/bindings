@@ -196,11 +196,11 @@ channels:
 
 The following is a complete, simple AsyncAPI document illustrating the usage of all binding objects defined in this bindings specification, with all their fields.
 
-```
+```yaml
 asyncapi: '2.0.0'
 info:
   title: Example with Anypoint MQ
-  version: '1.0.0'
+  version: '0.0.1'
 
 servers:
   development:
