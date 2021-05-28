@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://asyncapi.com/bindings/http/operation.json",
+  "title": "Operation Schema",
+  "description": "This object contains information about the operation representation in HTTP.",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
+    }
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "request",
+        "response"
+      ],
+      "description": "Required. Type of operation. Its value MUST be either 'request' or 'response'."
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE",
+        "HEAD",
+        "OPTIONS",
+        "CONNECT",
+        "TRACE"
+      ],
+      "description": "When 'type' is 'request', this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT', and 'TRACE'."
+    },
+    "query": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "description": "A Schema object containing the definitions for each query parameter. This schema MUST be of type 'object' and have a properties key."
+    },
+    "bindingVersion": {
+      "type": "string",
+      "enum": [
+        "0.1.0"
+      ],
+      "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "request"
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    {
+      "properties": {
+        "is": {
+          "const": "response"
+        }
+      },
+      "not": {
+        "required": [
+          "method"
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "type": "response",
+      "query": {
+        "type": "object",
+        "required": [
+          "companyId"
+        ],
+        "properties": {
+          "companyId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "The Id of the company."
+          }
+        },
+        "additionalProperties": false
+      },
+      "bindingVersion": "0.1.0"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "query": {
+        "type": "object",
+        "required": [
+          "companyId"
+        ],
+        "properties": {
+          "companyId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "The Id of the company."
+          }
+        },
+        "additionalProperties": false
+      },
+      "bindingVersion": "0.1.0"
+    }
+  ]
+}
+
+
+
+
