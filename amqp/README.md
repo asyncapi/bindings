@@ -65,7 +65,7 @@ channels:
           durable: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
 
 
@@ -111,7 +111,7 @@ channels:
           replyTo: user.signedup
           timestamp: true
           ack: false
-          bindingVersion: 0.1.0
+          bindingVersion: 0.2.0
 ```
 
 
@@ -140,5 +140,5 @@ channels:
           amqp:
             contentEncoding: gzip
             messageType: 'user.signup'
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 ```
