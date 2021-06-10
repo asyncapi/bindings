@@ -11,6 +11,10 @@
     }
   },
   "properties": {
+    "headers": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "description": "A Schema object containing the definitions for Anypoint MQ-specific headers (protocol headers). This schema MUST be of type 'object' and have a 'properties' key. Examples of Anypoint MQ protocol headers are 'messageId' and 'messageGroupId'."
+    },
     "messageId": {
       "type": "string",
       "description": "The unique ID of the message. When publishing the message, if not specified, the broker creates a unique message ID. This is transmitted as a protocol header in the Anypoint MQ message `headers` section."
@@ -30,8 +34,14 @@
   },
   "examples": [
     {
-      "messageId":      "e0c62826-52d9-4d64-bdd8-a7c415917acf",
-      "messageGroupId": "42",
+      "headers": {
+        "type": "object",
+        "properties": {
+          "messageId": {
+            "type": "string"
+          }
+        }
+      },
       "bindingVersion": "0.0.1"
     }
   ]

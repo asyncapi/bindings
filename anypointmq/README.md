@@ -21,7 +21,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 These bindings use the `anypointmq` [protocol](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#definitionsProtocol) in AsyncAPI documents to denote connections to and interactions with Anypoint MQ message brokers.
 
-The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST API](https://docs.mulesoft.com/mq/mq-apis#mqbrokerapi).
+The Anypoint MQ protocol is based on invocations of the [Anypoint MQ Broker REST API](https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/anypoint-mq-broker/).
 
 ## Server Object
 
@@ -153,13 +153,11 @@ The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/m
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectMessageId"></a>`messageId`           | string | **Optional**. The unique ID of the message. When publishing the message, if not specified, the broker creates a unique message ID. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
-<a name="messageBindingObjectMessageGroupId"></a>`messageGroupId` | string | **Optional**. The ID of the message group to which the message belongs. Applies only to FIFO queues. Message group IDs can contain up to 128 alphanumeric and punctuation characters. This is transmitted as a protocol header in the Anypoint MQ message `headers` section.
+<a name="messageBindingObjectHeaders"></a>`headers`               | [Schema Object][schemaObject] | **Optional**. A Schema object containing the definitions for Anypoint MQ-specific headers (so-called protocol headers). This schema MUST be of type `object` and have a `properties` key. Examples of Anypoint MQ protocol headers are `messageId` and `messageGroupId`.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
 
-Note that message headers, which are specified in the `headers` field of the standard [Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObject), are transmitted in the [Anypoint MQ message `properties` section](https://docs.mulesoft.com/mq/mq-apis#example-publish-a-message). In AsyncAPI, this `headers` field does not include protocol headers such as `messageId` or `messageGroupId`, which are transmitted in the [Anypoint MQ message `headers` section](https://docs.mulesoft.com/mq/mq-apis#postsetup).
-
-Please note that the definition of this message binding object is likely to change in future versions of this bindings specification to better describe the mapping of the fields of the AsyncAPI standard message object to the various parts of the Anypoint MQ message as it is exchanged as an HTTP body with the Anypoint MQ Broker REST API.
+Note that application headers must be specified in the [`headers` field of the standard Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObjectHeaders) and are transmitted in the [`properties` section of the Anypoint MQ message](https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/anypoint-mq-broker/).
+In contrast, protocol headers such as `messageId` must be specified in the [`headers` field of the message binding object](#messageBindingObjectHeaders) and are transmitted in the [`headers` section of the Anypoint MQ message](https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/anypoint-mq-broker/).
 
 ### Examples
 
@@ -189,8 +187,11 @@ channels:
           location:    $message.header#/correlationId
         bindings:
           anypointmq:
-            messageId:      'e0c62826-52d9-4d64-bdd8-a7c415917acf'
-            messageGroupId: '42'
+            headers:
+              type: object
+              properties:
+                messageId:
+                  type: string
             bindingVersion: '0.0.1'
 ```
 
@@ -216,7 +217,7 @@ servers:
       - oauthDev: []
     bindings:
       anypointmq:
-        bindingVersion: '0.1.0'
+        bindingVersion: '0.0.1'
   production:
     protocol: anypointmq
     protocolVersion: v1
@@ -228,7 +229,7 @@ servers:
       - oauthProd: []
     bindings:
       anypointmq:
-        bindingVersion: '0.1.0'
+        bindingVersion: '0.0.1'
   
 channels:
   user/signup:
@@ -238,14 +239,14 @@ channels:
       anypointmq:
         destination:     user-signup-queue
         destinationType: fifo-queue
-        bindingVersion:  '0.1.0'
+        bindingVersion:  '0.0.1'
     publish:
       operationId: signUpUser
       description: |
         This application receives command messages via this operation about users to sign up.
       bindings:
         anypointmq:
-          bindingVersion: '0.1.0'
+          bindingVersion: '0.0.1'
       message:
         contentType: application/json
         headers:
@@ -265,9 +266,12 @@ channels:
           location: $message.header#/correlationId
         bindings:
           anypointmq:
-            messageId:      'e0c62826-52d9-4d64-bdd8-a7c415917acf'
-            messageGroupId: '42'
-            bindingVersion: '0.1.0'
+            headers:
+              type: object
+              properties:
+                messageId:
+                  type: string
+            bindingVersion: '0.0.1'
 
 components:
   securitySchemes:
