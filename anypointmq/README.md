@@ -11,8 +11,6 @@ The version of this bindings specification is `0.0.1`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
 In any given binding object, `latest` MAY alternatively be used to refer to the currently latest published version of this bindings specification.
 
-The version of the AsyncAPI specification to which these bindings apply is `2.1.0`.
-
 ## Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this bindings specification are to be interpreted as described in IETF [RFC2119](https://www.ietf.org/rfc/rfc2119.txt).
