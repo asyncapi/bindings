@@ -37,38 +37,7 @@ Note that the choice of a particular Anypoint MQ client app (via its client ID a
 <a name="server"></a>
 ## Server Binding Object
 
-The Anypoint MQ [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#serverBindingsObject) is defined by a [JSON Schema](json_schemas/server.json), which currently defines only the *optional* `bindingVersion` field:
-
-Field Name | Type | Description
----|:---:|---
-<a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
-
-### Examples
-
-The following example shows a `servers` object with two servers, both using `anypointmq` as the `protocol`, the second having a server binding object for `anypointmq`:
-
-```yaml
-servers:
-  development:
-    url:         https://mq-us-east-1.anypoint.mulesoft.com/api
-    description: |
-      Anypoint MQ broker for development, in the US East (N. Virginia) runtime plane under management of the US control plane.
-      Implicitly uses v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
-      Minimal configuration, omitting a server binding object.
-    protocol: anypointmq
-
-  production:
-    url:         https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api
-    description: |
-      Anypoint MQ broker for production, in the EU Central (Frankfurt) runtime plane under management of the EU control plane.
-      Explicitly specifies the use of v1 of the anypointmq protocol and hence the Anypoint MQ Broker REST API.
-      Explicitly provides a server binding object.
-    protocol:        anypointmq
-    protocolVersion: v1
-    bindings:
-      anypointmq:
-        bindingVersion: '0.0.1'
-```
+This object MUST NOT contain any properties. Its name is reserved for future use.
 
 <a name="channel"></a>
 ## Channel Binding Object
@@ -111,38 +80,7 @@ channels:
 <a name="operation"></a>
 ## Operation Binding Object
 
-The Anypoint MQ [Operation Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#operation-bindings-object) is defined by a [JSON Schema](json_schemas/operation.json), which currently defines only the *optional* `bindingVersion` field:
-
-Field Name | Type | Description
----|:---:|---
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.
-
-### Examples
-
-The following example shows a `channels` object with two channels, each having one operation (`subscribe` or `publish`). Only the `subscribe` operation has an operation binding object for `anypointmq`:
-
-```yaml
-channels:
-  user/signup:
-    publish:
-      operationId: signUpUser
-      description: |
-        This application receives command messages via this operation about users to sign up.
-        Minimal configuration, omitting an operation binding object.
-      message:
-        #...
-  user/signedup:
-    subscribe:
-      operationId: userHasSignedUp
-      description: |
-        This application sends events via this operation about users that have signed up.
-        Explicitly provides an operation binding object.
-      bindings:
-        anypointmq:
-          bindingVersion: '0.0.1'
-      message:
-        #...
-```
+This object MUST NOT contain any properties. Its name is reserved for future use.
 
 <a name="message"></a>
 ## Message Binding Object
@@ -213,9 +151,6 @@ servers:
       under management of the US control plane.
     security:
       - oauthDev: []
-    bindings:
-      anypointmq:
-        bindingVersion: '0.0.1'
   production:
     protocol: anypointmq
     protocolVersion: v1
@@ -242,9 +177,6 @@ channels:
       operationId: signUpUser
       description: |
         This application receives command messages via this operation about users to sign up.
-      bindings:
-        anypointmq:
-          bindingVersion: '0.0.1'
       message:
         contentType: application/json
         headers:
