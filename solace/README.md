@@ -42,11 +42,11 @@ Each inner binding has the following structure. Note that bindings under a 'subs
 
 Field Name | Type | Description | Applicable Operation
 ---|---|---|---
-`destinationType`|String|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name.|publish
-`deliveryMode`|String|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'direct'.|subscribe
+`destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name.|publish
+`deliveryMode`|String|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.|subscribe
 `queue.name`|String|The name of the queue, only applicable when destinationType is 'queue'.|publish
-`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. A common use is to represent a channel with parameters, as a topic with wildcards.|publish
-`queue.exclusive`|Boolean|The queue access type as documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.|publish
+`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'.|publish
+`queue.accessType`|Enum|'exclusive' or 'nonExclusive'. This is documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.|publish
 
 
 <a name="message"></a>
@@ -61,7 +61,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 ## Discussion ##
 
-Here is an example of when we could need two SMF bindings.
+Here is an example of when we could need two Solace bindings.
 
 Imagine a system where there is a schema called Person, and there are topics:
 
@@ -90,12 +90,12 @@ channels:
       bindings:
         solace:
           bindingVersion: 0.2.0
-          - channelType: queue
+          - destinationType: queue
             queue:
               name: CreatedHREvents
               topicSubscriptions:
               - person/*/created
-          - channelType: queue
+          - destinationType: queue
             queue:
               name: UpdatedHREvents
               topicSubscriptions:
