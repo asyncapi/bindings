@@ -69,7 +69,7 @@ This object contains information about the message representation in Kafka.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] / [AVRO file](https://github.com/asyncapi/avro-schema-parser) | The message key.
+<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object](https://asyncapi.io/docs/specifications/v2.1.0#referenceObject) way. 
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
