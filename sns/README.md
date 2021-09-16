@@ -31,6 +31,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |---|:---:|---|
 | <a name="channelBindingObjectFifo"></a>`type` | [ordering](#ordering)| **Optional.** By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.  |
 | <a name="channelBindingObjectPolicy"></a>`policy` |[policy](#policy) | **Optional.** The security policy for the SNS Topic |
+| <a name="channelBindingObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the topic. |
 |<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.|
 
 ### Schemas
@@ -196,7 +197,7 @@ channels:
           consumers:
             - protocol: sqs
               endpoint:
-                arn: arn:aws:sq:Aus-west-2:123456789012:UserSignedUpQueue
+                arn: arn:aws:sqs:us-west-2:123456789012:UserSignedUpQueue
               rawMessageDelivery: true  
 ```
 

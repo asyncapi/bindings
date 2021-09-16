@@ -28,9 +28,9 @@ Use the Channel Binding Operation for Point-to-Point SQS channels.
 
 There are three likely scenarios for use of the Channel Binding Object:
 
-- One file defines both publish and subscribe operations, for example if we were implementing the work queue pattern to offload work from an HTTP API endpoint to a worker process. In this case the channel would be defined on the Channel Object in that single file. (Not illustrated above).
-- The producer and consumer both have an AsyncAPI specification file, and the producer is raising an event, for example interop between microservices, and the producer 'owns' the channel definition and thus has the SQS Binding on its Channel Object. (Illustrated above).
-- The producer and consumer both have an AsyncAPI specification file, and the consumer receives commands, for example interop between microservices, and the consumer 'owns' the channel  definition and thus has the SQS Binding on its Channel Object. (Not illustrated above).
+- One file defines both publish and subscribe operations, for example if we were implementing the work queue pattern to offload work from an HTTP API endpoint to a worker process. In this case the channel would be defined on the Channel Object in that single file. 
+- The producer and consumer both have an AsyncAPI specification file, and the producer is raising an event, for example interop between microservices, and the producer 'owns' the channel definition and thus has the SQS Binding on its Channel Object. 
+- The producer and consumer both have an AsyncAPI specification file, and the consumer receives commands, for example interop between microservices, and the consumer 'owns' the channel  definition and thus has the SQS Binding on its Channel Object. 
 
 An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To support this requirement, the Channel Binding Object allows you to define both a Queue Object to use as the Channel or target in a *publish* Operation and a Dead Letter Queue. You can then refer to the Dead letter Queue in the Redrive Policy using the Identifier Object and setting the *name* field to match the *name* field of your Dead Letter Queue Object. (If you define the DLQ externally, the Identifier also supports an ARN). 
 
@@ -48,13 +48,14 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |---|:---:|---|
 |<a name="queueObjectRef"></a>$ref | `string` | Allows for an external definition of a queue. The referenced structure MUST be in the format of a [Queue](#queue). If there are conflicts between the referenced definition and this Queue's definition, the behavior is *undefined*.|
 | <a name="queueObjectName"></a>`name` | string | **Required.** The name of the queue. When an [SNS Operation Binding Object]() references an SQS queue by name, the identifier should be the one in this field.|
-| <a name=queueObjectType"></a>`type` | string one of: fifo, standard | **Required.**  Is this a FIFO queue or a standard queue? |
+| <a name="queueObjectType"></a>`type` | string one of: fifo, standard | **Required.**  Is this a FIFO queue or a standard queue? |
 | <a name="queueObjectDeliveryDelay"></a>`deliveryDelay` | integer | **Optional.** The number of seconds to delay before a message sent to the queue can be received. used to create a *delay queue*. Range is 0 to 15 minutes. Defaults to 0. |
 | <a name="queueObjectVisbilityTimeout"></a>`visibilityTimeout` |integer| **Optional.** The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again. Range from 0 to 12 hours. Defaults to 30 seconds. |
 | <a name="queueObjectRecieveMessageWaitTime"></a>`receiveMessageWaitTime` |integer| **Optional.** Determines if the queue uses [short polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html) or [long polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html). On a 0 (the default) the queue reads available messages and returns immediately. On a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning.  |
 | <a name="queueObjectMessageRetentionPeriod"></a>`messageRetentionPeriod` |integer| **Optional.** How long to retain a message on the queue, unless deleted, in days. The rang is 1 minute to 14 days. The default is 4 days. |
 | <a name="queueObjectRedrivePolicy"></a>`reDrivePolicy` | [Redrive Policy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.|
 | <a name="queueObjectPolicy"></a>`policy` |[Policy](#policy) | **Optional.** The security policy for the SQS Queue | 
+| <a name="queueObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the queue. |
 
 #### Identifier
 |Field Name | Type | Description|
