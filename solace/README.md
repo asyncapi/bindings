@@ -90,16 +90,17 @@ channels:
       bindings:
         solace:
           bindingVersion: 0.2.0
-          - destinationType: queue
-            queue:
-              name: CreatedHREvents
-              topicSubscriptions:
-              - person/*/created
-          - destinationType: queue
-            queue:
-              name: UpdatedHREvents
-              topicSubscriptions:
-              - person/*/updated
+          bindings:
+            - destinationType: queue
+              queue:
+                name: CreatedHREvents
+                topicSubscriptions:
+                - person/*/created
+            - destinationType: queue
+              queue:
+                name: UpdatedHREvents
+                topicSubscriptions:
+                - person/*/updated
       message:
         $ref: '#/components/messages/PersonEvent'
     parameters:
