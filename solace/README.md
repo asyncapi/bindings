@@ -34,11 +34,11 @@ We need the ability to support several bindings for each operation, see the [Dis
 Field Name | Type | Description
 ---|---|---
 `bindingVersion`|String|The current version is 0.2.0
-`bindings`|List of Inner Binding Objects|Inner Binding Objects are described next.
+`destinations`|List of Destination Objects|Destination Objects are described next.
 
-### Inner Binding Object
+### Destination Object
 
-Each inner binding has the following structure. Note that bindings under a 'subscribe' operation define the behaviour of publishers, and those under a 'publish' operation define how subscribers are configured.
+Each destination has the following structure. Note that bindings under a 'subscribe' operation define the behaviour of publishers, and those under a 'publish' operation define how subscribers are configured.
 
 Field Name | Type | Description | Applicable Operation
 ---|---|---|---
@@ -90,16 +90,17 @@ channels:
       bindings:
         solace:
           bindingVersion: 0.2.0
-          - destinationType: queue
-            queue:
-              name: CreatedHREvents
-              topicSubscriptions:
-              - person/*/created
-          - destinationType: queue
-            queue:
-              name: UpdatedHREvents
-              topicSubscriptions:
-              - person/*/updated
+          destinations:
+            - destinationType: queue
+              queue:
+                name: CreatedHREvents
+                topicSubscriptions:
+                - person/*/created
+            - destinationType: queue
+              queue:
+                name: UpdatedHREvents
+                topicSubscriptions:
+                - person/*/updated
       message:
         $ref: '#/components/messages/PersonEvent'
     parameters:
