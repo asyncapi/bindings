@@ -35,8 +35,8 @@ This object contains information about the operation representation in Kafka.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Id of the consumer group.
-<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group.
+<a name="operationBindingObjectGroupId"></a>`groupId` | string \| [string] | Id of the consumer group.
+<a name="operationBindingObjectClientId"></a>`clientId` | string \| [string] | Id of the consumer inside a consumer group.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -49,12 +49,10 @@ channels:
     publish:
       bindings:
         kafka:
-          groupId:
-            type: string
-            enum: ['myGroupId']
+          groupId: 'myGroupId'
           clientId:
-            type: string
-            enum: ['myClientId']
+            - 'myClientId'
+            - 'myOtherClientId'
           bindingVersion: '0.1.0'
 ```
 

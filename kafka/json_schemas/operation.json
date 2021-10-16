@@ -12,11 +12,31 @@
   },
   "properties": {
     "groupId": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
       "description": "Id of the consumer group."
     },
     "clientId": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
       "description": "Id of the consumer inside a consumer group."
     },
     "bindingVersion": {
@@ -30,18 +50,11 @@
   },
   "examples": [
     {
-      "groupId": {
-        "type": "string",
-        "enum": [
-          "myGroupId"
-        ]
-      },
-      "clientId": {
-        "type": "string",
-        "enum": [
-          "myClientId"
-        ]
-      },
+      "groupId": "myGroupId",
+      "clientId": [
+        "myClientId",
+        "myOtherClientId"
+      ],
       "bindingVersion": "0.1.0"
     }
   ]
