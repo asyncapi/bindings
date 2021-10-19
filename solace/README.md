@@ -13,8 +13,10 @@ Current version is `0.2.0`. There was a 0.1.0 version that was used internally b
 
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
-
+Field Name | Type | Description
+---|---|---
+`bindingVersion`|String|The current version is 0.2.0
+`msgVpn`|String|The Virtual Private Network name on the Solace broker.
 
 
 <a name="channel"></a>
