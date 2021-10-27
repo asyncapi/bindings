@@ -65,13 +65,13 @@
   "bindingVersion": {
     "type": "string",
     "enum": [
-      "0.2.0"
+      "0.1.0"
     ],
     "description": "The version of this binding. If omitted, \"latest\" MUST be assumed."
   },
   "examples": [
     {
-      "bindingVersion": "0.2.0",
+      "bindingVersion": "0.1.0",
       "bindings": [
         {
           "destinationType": "queue",
