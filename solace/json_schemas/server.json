@@ -18,7 +18,7 @@
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.1.0"
+        "0.2.0"
       ],
       "description": "The version of this binding."
     }
@@ -26,7 +26,7 @@
   "examples": [
     {
       "msgVpn": "ProdVPN",
-      "bindingVersion": "0.1.0"
+      "bindingVersion": "0.2.0"
     }
   ]
 }

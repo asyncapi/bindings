@@ -6,7 +6,7 @@ This document defines how to describe Solace-specific information with AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 <a name="server"></a>
 
@@ -14,7 +14,7 @@ Current version is `0.1.0`.
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.1.0
+`bindingVersion`|String|The current version is 0.2.0
 `msgVpn`|String|The Virtual Private Network name on the Solace broker.
 
 
@@ -34,7 +34,7 @@ We need the ability to support several bindings for each operation, see the [Exa
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.1.0
+`bindingVersion`|String|The current version is 0.2.0
 `destinations`|List of Destination Objects|Destination Objects are described next.
 
 ### Destination Object
@@ -43,11 +43,13 @@ Each destination has the following structure. Note that bindings under a 'subscr
 
 Field Name | Type | Description | Applicable Operation
 ---|---|---|---
-`destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name.|publish
-`deliveryMode`|String|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.|subscribe
+`destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions.|publish
+`deliveryMode`|Enum|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.|subscribe
 `queue.name`|String|The name of the queue, only applicable when destinationType is 'queue'.|publish
-`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'.|publish
-`queue.accessType`|Enum|'exclusive' or 'nonExclusive'. This is documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.|publish
+`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name.|publish
+`queue.accessType`|Enum|'exclusive' or 'nonexclusive'. This is documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.|publish
+`topic.topicSubscriptions`|List of String|A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name.|publish
+
 
 
 <a name="message"></a>
@@ -60,9 +62,9 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 <a name="example"></a>
 
-## Example ##
+## Example with two destinations ##
 
-Here is an example of when we could need two Solace bindings.
+Here is an example of when we could need two Solace destinations.
 
 Imagine a system where there is a schema called Person, and there are topics:
 
@@ -72,7 +74,7 @@ and
 
 `person/{personId}/updated`
 
-and you have one application that receive both events. We also want each to be on its own queue. The AsyncAPI file could look like this:
+and you have one application that receives both events. We also want each to be on its own queue. The AsyncAPI file could look like this:
 
 ```yaml
 components:
@@ -90,7 +92,7 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.1.0
+          bindingVersion: 0.2.0
           destinations:
             - destinationType: queue
               queue:
@@ -111,7 +113,7 @@ channels:
       eventType:
         schema:
           type: string
-asyncapi: 2.1.0
+asyncapi: 2.0.0
 info:
   title: HRApp
   version: 0.0.1
@@ -120,4 +122,42 @@ info:
 The expected behaviour would be that the application binds to both queues, and each queue has its own topic subscription, one to created and one to updated events.
 
 
+## Example with a wildcard subscription ##
 
+This example shows how a client could receive all the topics under `person/` using a wildcard subscription:
+
+```yaml
+components:
+  schemas:
+    Person:
+      type: string        
+  messages:
+    PersonEvent:
+      payload:
+        $ref: '#/components/schemas/Person'
+      schemaFormat: application/vnd.aai.asyncapi+json;version=2.0.0
+      contentType: application/json
+channels:
+  'person/{personId}/{eventType}':
+    publish:
+      bindings:
+        solace:
+          bindingVersion: 0.2.0
+          destinations:
+            - destinationType: topic
+              topicSubscriptions:
+              - person/>
+      message:
+        $ref: '#/components/messages/PersonEvent'
+    parameters:
+      personId:
+        schema:
+          type: string
+      eventType:
+        schema:
+          type: string
+asyncapi: 2.0.0
+info:
+  title: HRApp
+  version: 0.0.1
+```

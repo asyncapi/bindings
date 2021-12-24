@@ -26,7 +26,7 @@
               "destinationType": {
                 "type": "string",
                 "const": "queue",
-                "description": "If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name."
+                "description": "If the type is queue, then the subscriber can bind to the queue. The queue subscribes to the given topicSubscriptions. If no topicSubscriptions are provied, the queue will subscribe to the topic as represented by the channel name."
               },
               "queue": {
                 "type": "object",
@@ -42,8 +42,12 @@
                       "type": "string"
                     }
                   },
-                  "exclusive": {
-                    "type": "boolean"
+                  "accessType": {
+                    "type": "string",
+                    "enum": [
+                      "exclusive",
+                      "nonexclusive"
+                    ]
                   }
                 }
               }
@@ -54,8 +58,15 @@
               "destinationType": {
                 "type": "string",
                 "const": "topic",
-                "description": "If the type is topic, then the subscriber subscribes to the topic as represented by the channel name."
-              }
+                "description": "If the type is topic, then the subscriber subscribes to the given topicSubscriptions. If no topicSubscriptions are provided, the client will subscribe to the topic as represented by the channel name."
+              },
+              "topicSubscriptions": {
+                "type": "array",
+                "description": "The list of topics that the client subscribes to.",
+                "items": {
+                  "type": "string"
+                }
+          }
             }
           }
         ]
@@ -65,14 +76,14 @@
   "bindingVersion": {
     "type": "string",
     "enum": [
-      "0.1.0"
+      "0.2.0"
     ],
     "description": "The version of this binding. If omitted, \"latest\" MUST be assumed."
   },
   "examples": [
     {
-      "bindingVersion": "0.1.0",
-      "bindings": [
+      "bindingVersion": "0.2.0",
+      "destinations": [
         {
           "destinationType": "queue",
           "queue": {
@@ -80,12 +91,14 @@
             "topicSubscriptions": [
               "samples/*"
             ],
-            "exclusive": false
+            "accessType": "nonexclusive"
           }
         },
         {
           "destinationType": "topic",
-          "deliveryMode": "persistent"
+          "topicSubscriptions": [
+            "samples/*"
+          ]
         }
       ]
     }
