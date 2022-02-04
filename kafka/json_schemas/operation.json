@@ -7,17 +7,30 @@
   "additionalProperties": false,
   "patternProperties": {
     "^x-[\\w\\d\\.\\-\\_]+$": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
+      "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.9.0/schemas/2.1.0.json#/definitions/specificationExtension"
     }
   },
   "properties": {
     "groupId": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.9.0/schemas/2.1.0.json#/definitions/schema",
       "description": "Id of the consumer group."
     },
     "clientId": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.9.0/schemas/2.1.0.json#/definitions/schema",
       "description": "Id of the consumer inside a consumer group."
+    },
+    "schemaIdLocation": {
+      "type": "string",
+      "description": "If a Schema Registry is used when performing this operation, tells where the id of schema is stored."
+      "enum": ["header", "payload"]
+    },
+    "schemaIdPayloadEncoding": {
+      "type": "string",
+      "description": "Number of bytes or vendor specific values when schema id is encoded in payload."
+    },
+    "schemaLookupStrategy": {
+      "type": "string",
+      "description": "Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied."
     },
     "bindingVersion": {
       "type": "string",

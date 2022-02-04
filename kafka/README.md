@@ -6,16 +6,34 @@ This document defines how to describe Kafka-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 
 <a name="server"></a>
 
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object contains information about the server representation in Kafka.
 
+##### Fixed Fields
 
+Field Name | Type | Description | Applicability [default] | Constraints
+---|:---:|:---:|:---:|---
+`schemaRegistryUrl` | string (url) | API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used) | OPTIONAL | -
+`schemaRegistryVendor` | string | The vendor of Schema Registry and Kafka serdes library that should be used (e.g. `apicurio`, `confluent`, `ibm`, or `karapace`) | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified
+<a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
+
+##### Example
+
+```yaml
+servers:
+  production:
+    bindings:
+      kafka:
+        schemaRegistryUrl: 'https://my-schema-registry.com'
+        schemaRegistryVendor: 'confluent'
+        bindingVersion: '0.3.0'
+```
 
 
 <a name="channel"></a>
@@ -33,11 +51,14 @@ This object contains information about the operation representation in Kafka.
 
 ##### Fixed Fields
 
-Field Name | Type | Description
----|:---:|---
-<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Id of the consumer group.
-<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group.
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
+Field Name | Type | Description | Applicability [default] | Constraints
+---|:---:|:---:|:---:|---
+<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Id of the consumer group. | OPTIONAL | -
+<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group. | OPTIONAL | -
+<a name="operationBindingObjectSchemaIdLocation"></a>`schemaIdLocation` | string | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. `header` or `payload`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
+<a name="operationBindingObjectSchemaIdPayloadEncoding"></a>`schemaIdPayloadEncoding` | string | Number of bytes or vendor specific values when schema id is encoded in payload (e.g `confluent`/ `apicurio-legacy` / `apicurio-new`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
+<a name="operationBindingObjectSchemaLookupStrategy"></a>`schemaLookupStrategy` | string | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
 
 This object MUST contain only the properties defined above.
 
@@ -55,7 +76,10 @@ channels:
           clientId:
             type: string
             enum: ['myClientId']
-          bindingVersion: '0.1.0'
+          schemaIdLocation: 'payload'
+          schemaIdPayloadEncoding: 'apicurio-new'
+          schemaLookupStrategy: 'TopicIdStrategy'
+          bindingVersion: '0.3.0'
 ```
 
 
@@ -69,7 +93,7 @@ This object contains information about the message representation in Kafka.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object](https://asyncapi.io/docs/specifications/v2.1.0#referenceObject) way. 
+<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object](https://asyncapi.io/docs/specifications/v2.1.0#referenceObject) way.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -85,7 +109,7 @@ channels:
             key:
               type: string
               enum: ['myKey']
-            bindingVersion: '0.1.0'
+            bindingVersion: '0.3.0'
 ```
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject
+[schemaObject]: https://www.asyncapi.com/docs/specifications/2.1.0/#schemaObject
