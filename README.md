@@ -15,6 +15,7 @@ This repository contains the specifications for each AsyncAPI protocol binding.
 * [NATS binding](./nats)
 * [Redis binding](./redis)
 * [SNS binding](./sns)
+* [Solace binding](./solace)
 * [SQS binding](./sqs)
 * [STOMP binding](./stomp)
 * [WebSockets binding](./websockets)
