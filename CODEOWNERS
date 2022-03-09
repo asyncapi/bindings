@@ -6,10 +6,10 @@
 
 # The default owners are automatically added as reviewers when you open a pull request unless different owners are specified in the file.
 
-/anypointmq @GeraldLoeffler
-/ibmmq      @rcoppen
-/kafka      @lbroudoux @dalelane
-/solace     @damaru-inc @CameronRushton
-*.json      @KhudaDad414
+/anypointmq/ @GeraldLoeffler
+/ibmmq/      @rcoppen
+/kafka/      @lbroudoux @dalelane
+/solace/     @damaru-inc @CameronRushton
+*.json       @KhudaDad414
 
 * @derberg @fmvilas @asyncapi-bot-eve
