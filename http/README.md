@@ -21,8 +21,37 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 <a name="channel"></a>
 
 ## Channel Binding Object
+Describes the http binding operation for a particular channel. This http binding object supports [OpenAPI's Path Item Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#path-item-object) 
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+##### Example 
+```yaml
+channels:
+  /employees:
+    bindings:
+      http:
+        get:
+          description: 'Get employees data as per the id passed'
+          parameters:
+            - name: ID
+              in: query
+              reqruied: true
+          response:
+            '200':
+              description: A employee data as per ID
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      name: string
+            default:
+              description: Unexpected Error
+              content:
+                application/json:
+                  schema:
+                    type: string
+```
+
 
 
 <a name="operation"></a>

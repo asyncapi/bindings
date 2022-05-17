@@ -8,26 +8,36 @@
   "patternProperties": {
     "^x-[\\w\\d\\.\\-\\_]+$": {
       "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
-    },
-    "^(GET|POST|PUT|PATCH|DELETE|OPTIONS|HEAD|TRACE)": {
-      "type": "object",
-      "properties": {
-        "query": {
-          "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
-          "description": "A Schema object containing the definitions for each query parameter. This schema MUST be of type 'object' and have a properties key."
-        },
-        "requestBody": {
-          "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
-          "description": "A Schema object containing definitions for each request body parameters."
-        },
-        "response": {
-          "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
-          "description": "A Schema object containing the definitions for each response parameter."
-        }
-      }
     }
   },
   "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "request",
+        "response"
+      ],
+      "description": "Required. Type of operation. Its value MUST be either 'request' or 'response'."
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE",
+        "HEAD",
+        "OPTIONS",
+        "CONNECT",
+        "TRACE"
+      ],
+      "description": "When 'type' is 'request', this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT', and 'TRACE'."
+    },
+    "query": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "description": "A Schema object containing the definitions for each query parameter. This schema MUST be of type 'object' and have a properties key."
+    },
     "bindingVersion": {
       "type": "string",
       "enum": [
@@ -36,47 +46,73 @@
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
   },
-  "examples": [
+  "required": [
+    "type"
+  ],
+  "oneOf": [
     {
-      "GET": {
-        "query": {
-          "type": "object",
-          "properties": {
-            "userId": {
-              "type": "string"
-            }
-          }
-        },
-        "response": {
-          "type": "object",
-          "properties": {
-            "userId": {
-              "type": "string"
-            },
-            "userName": {
-              "type": "string"
-            }
-          }
+      "properties": {
+        "type": {
+          "const": "request"
         }
       },
-      "POST": {
-        "requestBody": {
-          "type": "object",
-          "properties": {
-            "userName": {
-              "type": "string"
-            }
+      "required": [
+        "method"
+      ]
+    },
+    {
+      "properties": {
+        "is": {
+          "const": "response"
+        }
+      },
+      "not": {
+        "required": [
+          "method"
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "type": "response",
+      "query": {
+        "type": "object",
+        "required": [
+          "companyId"
+        ],
+        "properties": {
+          "companyId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "The Id of the company."
           }
         },
-        "response": {
-          "type": "object",
-          "properties": {
-            "userId": {
-              "type": "string"
-            }
+        "additionalProperties": false
+      },
+      "bindingVersion": "0.1.0"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "query": {
+        "type": "object",
+        "required": [
+          "companyId"
+        ],
+        "properties": {
+          "companyId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "The Id of the company."
           }
-        }
-      }
+        },
+        "additionalProperties": false
+      },
+      "bindingVersion": "0.1.0"
     }
   ]
 }
+
+
+
