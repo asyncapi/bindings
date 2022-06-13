@@ -113,7 +113,7 @@ channels:
       eventType:
         schema:
           type: string
-asyncapi: 2.0.0
+asyncapi: 2.4.0
 info:
   title: HRApp
   version: 0.0.1
@@ -156,7 +156,7 @@ channels:
       eventType:
         schema:
           type: string
-asyncapi: 2.0.0
+asyncapi: 2.4.0
 info:
   title: HRApp
   version: 0.0.1
