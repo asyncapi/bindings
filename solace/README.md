@@ -39,16 +39,16 @@ Field Name | Type | Description
 
 ### Destination Object
 
-Each destination has the following structure. Note that bindings under a 'subscribe' operation define the behaviour of publishers, and those under a 'publish' operation define how subscribers are configured.
+Each destination has the following structure:
 
-Field Name | Type | Description | Applicable Operation
+Field Name | Type | Description
 ---|---|---|---
-`destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions.|publish
-`deliveryMode`|Enum|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.|subscribe
-`queue.name`|String|The name of the queue, only applicable when destinationType is 'queue'.|publish
-`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name.|publish
-`queue.accessType`|Enum|'exclusive' or 'nonexclusive'. This is documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.|publish
-`topic.topicSubscriptions`|List of String|A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name.|publish
+`destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions.
+`deliveryMode`|Enum|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.
+`queue.name`|String|The name of the queue, only applicable when destinationType is 'queue'.
+`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name.
+`queue.accessType`|Enum|'exclusive' or 'nonexclusive'. This is documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.
+`topic.topicSubscriptions`|List of String|A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name.
 
 
 
