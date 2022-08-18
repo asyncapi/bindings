@@ -35,7 +35,7 @@ Field Name | Type | Description
 ---|:---:|---
 <a name="operationBindingObjectType"></a>`type` | string | **Required**. Type of operation. Its value MUST be either `request` or `response`.
 <a name="operationBindingObjectMethod"></a>`method` | string | When `type` is `request`, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `CONNECT`, and `TRACE`.
-<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
+<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -74,7 +74,7 @@ This object contains information about the message representation in HTTP.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
+<a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -96,4 +96,5 @@ channels:
             bindingVersion: '0.1.0'
 ```
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject
+[schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
+[referenceObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject
