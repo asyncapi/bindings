@@ -27,10 +27,23 @@
       "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
       "description": "A Schema object containing the definitions of the HTTP headers to use when establishing the connection. This schema MUST be of type 'object' and have a 'properties' key."
     },
+    "headerValues": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "queryValues": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.1.0"
+        "0.1.0",
+        "0.2.0"
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
@@ -38,7 +51,10 @@
   "examples": [
     {
       "method": "POST",
-      "bindingVersion": "0.1.0"
+      "bindingVersion": "0.2.0",
+      "headerValues": {
+        "Authorization": "bearer token"
+      }
     }
   ]
 }

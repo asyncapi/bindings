@@ -6,7 +6,7 @@ This document defines how to describe WebSockets-specific information on AsyncAP
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -36,6 +36,56 @@ Field Name | Type | Description
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
+
+
+## Example
+
+Using binding to send headers and query value 
+```yaml
+channles:
+    /employees
+        bindings:
+            ws:
+                bindingVersion: 0.2.0
+                headerValues:
+                    Authentication: 'bearer Token'
+                queryValues:
+                    employeeId: '234xrf'
+        publish:
+            message:
+                $ref: '#/components/messages/employeeData'
+```
+
+Using binding to define headers and query schema 
+
+```yaml
+channels:
+    /employees
+        bindings:
+            ws:
+                bindingVersion: 0.2.0
+                headers:
+                    type: object
+                    required: [
+                        'Authorization'
+                    ]
+                    properties:
+                        Authorization:
+                            type: string
+                query:
+                    type: object
+                    requried: [
+                        'empployeeId'
+                    ]
+                    properties:
+                        employeeId: string
+        subscribe:
+            message:
+                $ref: '#/components/messages/employeeData'
+
+
+
+```
 
 <a name="operation"></a>
 
