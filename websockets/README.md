@@ -40,27 +40,9 @@ This object MUST contain only the properties defined above.
 
 ## Example
 
-Using binding to send headers and query value 
-```yaml
-channles:
-    /employees
-        bindings:
-            ws:
-                bindingVersion: 0.2.0
-                headerValues:
-                    Authentication: 'bearer Token'
-                queryValues:
-                    employeeId: '234xrf'
-        publish:
-            message:
-                $ref: '#/components/messages/employeeData'
-```
-
-Using binding to define headers and query schema 
-
 ```yaml
 channels:
-    /employees
+    /employees:
         bindings:
             ws:
                 bindingVersion: 0.2.0
@@ -75,16 +57,20 @@ channels:
                 query:
                     type: object
                     requried: [
-                        'empployeeId'
+                        'employeeId'
                     ]
                     properties:
                         employeeId: string
+                headerValues:
+                    Authentication: 'bearer $TOKEN'
+                queryValues:
+                    employeeId: '$EMP_UD'
+        publish:
+            message:
+                $ref: '#/components/messages/employeeData'
         subscribe:
             message:
                 $ref: '#/components/messages/employeeData'
-
-
-
 ```
 
 <a name="operation"></a>

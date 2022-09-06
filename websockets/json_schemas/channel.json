@@ -29,15 +29,11 @@
     },
     "headerValues": {
       "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
+      "additionalProperties": true
     },
     "queryValues": {
       "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
+      "additionalProperties": true
     },
     "bindingVersion": {
       "type": "string",
@@ -53,7 +49,7 @@
       "method": "POST",
       "bindingVersion": "0.2.0",
       "headerValues": {
-        "Authorization": "bearer token"
+        "Authorization": "bearer $TOKEN"
       }
     }
   ]
