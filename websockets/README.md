@@ -24,7 +24,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 When using WebSockets, the channel represents the connection. Unlike other protocols that support multiple virtual channels (topics, routing keys, etc.) per connection, WebSockets doesn't support virtual channels or, put it another way, there's only one channel and its characteristics are strongly related to the protocol used for the handshake, i.e., HTTP.
 
-##### Fixed Fields
+#### Fixed Fields
 
 Field Name | Type | Description
 ---|:---:|---
@@ -32,10 +32,13 @@ Field Name | Type | Description
 <a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] | A Schema object containing the definitions of the HTTP headers to use when establishing the connection. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectQueryValues"></a>`queryValues`| object| An object containing query values.
-<a name="operationBindingObjectHeaderValues"></a>`headerValues`| object | An object containing header values
+<a name="operationBindingObjectHeaderValues"></a>`headerValues`| object | An object containing header values.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
+
+#### Passing ENV variables to headers and query 
+You can pass in enviornment variables to `queryValues` and `headerValues` using `$<variable>` format. Tools will resovle this value using `.env` files. 
 
 
 ## Example
@@ -64,7 +67,7 @@ channels:
                 headerValues:
                     Authentication: 'bearer $TOKEN'
                 queryValues:
-                    employeeId: '$EMP_UD'
+                    employeeId: '$EMP_ID'
         publish:
             message:
                 $ref: '#/components/messages/employeeData'
