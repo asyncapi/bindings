@@ -40,14 +40,39 @@ servers:
 
 ## Channel Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object contains information about the channel representation in Kafka (eg. a Kafka topic).
 
+##### Fixed Fields
+
+Field Name | Type | Description | Applicability [default] | Constraints
+---|:---:|:---:|:---:|---
+<a name="channelBindingObjectTopic"></a>`topic` | string | Kafka topic name if different from channel name. | OPTIONAL | -
+<a name="channelBindingObjectPartitions"></a>`partitions` | integer | Number of partitions configured on this topic (useful to know how many parallel consumers you may run). | OPTIONAL | Must be positive
+<a name="channelBindingObjectReplicas"></a>`replicas` | integer | Number of replicas configured on this topic. | OPTIONAL | MUST be positive
+<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
+
+This object MUST contain only the properties defined above.
+
+##### Example
+
+This example is valid for any Confluent compatible schema registry. Here we describe the implementation using the first 4 bytes in payload to store schema identifier.
+
+```yaml
+channels:
+  user-signedup:
+    bindings:
+      kafka:
+        topic: 'my-specific-topic-name'
+        partitions: 20
+        replicas: 3
+        bindingVersion: '0.3.0'
+```
 
 <a name="operation"></a>
 
 ## Operation Binding Object
 
-This object contains information about the operation representation in Kafka.
+This object contains information about the operation representation in Kafka (eg. the way to consume messages)
 
 ##### Fixed Fields
 
@@ -55,9 +80,6 @@ Field Name | Type | Description | Applicability [default] | Constraints
 ---|:---:|:---:|:---:|---
 <a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] | Id of the consumer group. | OPTIONAL | -
 <a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group. | OPTIONAL | -
-<a name="operationBindingObjectSchemaIdLocation"></a>`schemaIdLocation` | string | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. `header` or `payload`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
-<a name="operationBindingObjectSchemaIdPayloadEncoding"></a>`schemaIdPayloadEncoding` | string | Number of bytes or vendor specific values when schema id is encoded in payload (e.g `confluent`/ `apicurio-legacy` / `apicurio-new`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
-<a name="operationBindingObjectSchemaLookupStrategy"></a>`schemaLookupStrategy` | string | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
 
 This object MUST contain only the properties defined above.
@@ -67,7 +89,7 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user-signedup:
-    publish:
+    subscribe:
       bindings:
         kafka:
           groupId:
@@ -76,9 +98,6 @@ channels:
           clientId:
             type: string
             enum: ['myClientId']
-          schemaIdLocation: 'payload'
-          schemaIdPayloadEncoding: 'apicurio-new'
-          schemaLookupStrategy: 'TopicIdStrategy'
           bindingVersion: '0.3.0'
 ```
 
@@ -94,10 +113,14 @@ This object contains information about the message representation in Kafka.
 Field Name | Type | Description
 ---|:---:|---
 <a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object](https://asyncapi.io/docs/specifications/v2.4.0#referenceObject) way.
+<a name="messageBindingObjectSchemaIdLocation"></a>`schemaIdLocation` | string | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. `header` or `payload`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
+<a name="messageBindingObjectSchemaIdPayloadEncoding"></a>`schemaIdPayloadEncoding` | string | Number of bytes or vendor specific values when schema id is encoded in payload (e.g `confluent`/ `apicurio-legacy` / `apicurio-new`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
+<a name="messageBindingObjectSchemaLookupStrategy"></a>`schemaLookupStrategy` | string | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
 
+This example is valid for any Confluent compatible schema registry. Here we describe the implementation using the first 4 bytes in payload to store schema identifier.
 
 ```yaml
 channels:
@@ -109,6 +132,26 @@ channels:
             key:
               type: string
               enum: ['myKey']
+            schemaIdLocation: 'payload'
+            schemaIdPayloadEncoding: '4'
+            bindingVersion: '0.3.0'
+```
+
+This is another example that describes the use if Apicurio schema registry. We describe the `apicurio-new` way of serializing without details on how it's implemented. We reference a [specific lookup strategy](https://www.apicur.io/registry/docs/apicurio-registry/2.2.x/getting-started/assembly-using-kafka-client-serdes.html#registry-serdes-concepts-strategy_registry) that may be used to retrieve schema Id from registry during serialization.
+
+```yaml
+channels:
+  test:
+    publish:
+      message:
+        bindings:
+          kafka:
+            key:
+              type: string
+              enum: ['myKey']
+            schemaIdLocation: 'payload'
+            schemaIdPayloadEncoding: 'apicurio-new'
+            schemaLookupStrategy: 'TopicIdStrategy'
             bindingVersion: '0.3.0'
 ```
 
