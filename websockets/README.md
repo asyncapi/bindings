@@ -38,7 +38,21 @@ Field Name | Type | Description
 This object MUST contain only the properties defined above.
 
 #### Passing ENV variables to headers and query 
-You can pass in enviornment variables to `queryValues` and `headerValues` using `$<variable>` format. Tools will resovle this value using `.env` files. 
+
+All string values containting words starting from '$' sign, MUST be replaced with enviornment variables of the same name at runtime. The following variable naming scheme would be followed -
+
+- Only uppercase, underscore (_) and digits are allowed for naming the env variable 
+- Enviornment variable should not start with a digit or underscore
+
+##### Do's 
+- `$TOKEN`
+- `$GITHUB_TOKEN`
+- `$TOKEN1`
+##### Don'ts 
+- `$ TOKEN`
+- `$1TOKEN`
+- `$token`
+- `$_TOKEN`
 
 
 ## Example
