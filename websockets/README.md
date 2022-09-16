@@ -39,10 +39,10 @@ This object MUST contain only the properties defined above.
 
 #### Passing ENV variables to headers and query 
 
-All string values containting words starting from '$' sign, MUST be replaced with enviornment variables of the same name at runtime. The following variable naming scheme would be followed -
+All string values containing words starting with the '$' sign, MUST be replaced with environment variables of the same name at runtime. The following rules MUST be applied:
 
-- Only uppercase, underscore (_) and digits are allowed for naming the env variable 
-- Enviornment variable should not start with a digit or underscore
+- Environment variables' names MUST use uppercase letters (A-Z), underscore characters (_), or digits (0-9).
+- Environment variables' names SHALL NOT start with a digit (0-9) or an underscore character (_).
 
 ##### Do's 
 - `$TOKEN`
