@@ -15,7 +15,7 @@
         "type": "string",
         "description": "Kafka topic name if different from channel name."
       },
-      "partition": {
+      "partitions": {
         "type": "integer",
         "minimum": 1,
         "description": "Number of partitions configured on this topic."
