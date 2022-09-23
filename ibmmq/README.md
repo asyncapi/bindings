@@ -142,6 +142,8 @@ servers:
         bindingVersion: 0.1.0
 ```
 
+
+
 <a name="channel"></a>
 
 ## Channel Binding Object
@@ -202,8 +204,17 @@ channels:
         bindingVersion: 0.1.0
 ```
 
+
+
 <a name="operation"></a>
 
+## Operation Binding Object
+
+This object MUST NOT contain any properties. Its name is reserved for future use.
+
+
+
+<a name="message"></a>
 
 ## Message Binding Object
 
@@ -252,7 +263,7 @@ channels:
             bindingVersion: 0.1.0
 ```
 
-# AsyncAPI  example with IBM MQ binding
+# AsyncAPI example with IBM MQ binding
 
 ##### Example for AsyncAPI user signup
 
