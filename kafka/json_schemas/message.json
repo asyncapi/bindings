@@ -11,7 +11,16 @@
   },
   "properties": {
     "key": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.14.0/schemas/2.4.0.json#/definitions/schema",
+      "oneOf": [
+        {
+          "description": "Constant value of key.",
+          "type": "string"
+        },
+        {
+          "description": "Schema that describes the allowed values of key.",
+          "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.14.0/schemas/2.4.0.json#/definitions/schema"
+        }
+      ],
       "description": "The message key."
     },
     "schemaIdLocation": {
@@ -53,6 +62,12 @@
       "key": {
         "$ref": "path/to/user-create.avsc#/UserCreate"
       },
+      "schemaIdLocation": "payload",
+      "schemaIdPayloadEncoding": "4",
+      "bindingVersion": "0.3.0"
+    },
+    {
+      "key": "myKey",
       "schemaIdLocation": "payload",
       "schemaIdPayloadEncoding": "4",
       "bindingVersion": "0.3.0"

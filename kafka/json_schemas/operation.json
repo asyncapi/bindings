@@ -12,11 +12,29 @@
   },
   "properties": {
     "groupId": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema",
+      "oneOf": [
+        {
+          "description": "Constant value of groupId.",
+          "type": "string"
+        },
+        {
+          "description": "Schema that describes the allowed values of groupId.",
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema"
+        }
+      ],
       "description": "Id of the consumer group."
     },
     "clientId": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema",
+      "oneOf": [
+        {
+          "description": "Constant value of clientId.",
+          "type": "string"
+        },
+        {
+          "description": "Schema that describes the allowed values of clientId.",
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema"
+        }
+      ],
       "description": "Id of the consumer inside a consumer group."
     },
     "bindingVersion": {
@@ -42,6 +60,22 @@
           "myClientId"
         ]
       },
+      "bindingVersion": "0.3.0"
+    },
+    {
+      "groupId": "myGroupId",
+      "clientId": "myClientId",
+      "bindingVersion": "0.3.0"
+    },
+    {
+      "groupId": {
+        "type": "string",
+        "pattern": "^[\\w\\d]+-[\\w\\d]+-[\\w\\d]+$",
+        "examples": [
+          "departmentName-teamName-serviceId"
+        ]
+      },
+      "clientId": "myClientId",
       "bindingVersion": "0.3.0"
     }
   ]
