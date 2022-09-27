@@ -6,6 +6,7 @@ This repository contains the specifications for each AsyncAPI protocol binding.
 
 * [AMQP binding](./amqp)
 * [AMQP 1.0 binding](./amqp1)
+* [Google Cloud Pub/Sub binding](./googlepubsub)
 * [HTTP binding](./http)
 * [IBM MQ binding](./ibmmq)
 * [JMS binding](./jms)
