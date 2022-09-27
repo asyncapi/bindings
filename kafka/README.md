@@ -79,7 +79,7 @@ This object contains information about the operation representation in Kafka (eg
 Field Name | Type | Description | Applicability [default] | Constraints
 ---|:---:|:---:|:---:|---
 <a name="operationBindingObjectGroupId"></a>`groupId` | string \| [Schema Object][schemaObject] | Id of the consumer group or a [Schema Object][schemaObject] that validates it. | OPTIONAL | -
-<a name="operationBindingObjectClientId"></a>`clientId` | [string \| [Schema Object][schemaObject] | Id of the consumer inside a consumer group or a [Schema Object][schemaObject] that validates it. | OPTIONAL | -
+<a name="operationBindingObjectClientId"></a>`clientId` | string \| [Schema Object][schemaObject] | Id of the consumer inside a consumer group or a [Schema Object][schemaObject] that validates it. | OPTIONAL | -
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
 
 This object MUST contain only the properties defined above.
