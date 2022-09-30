@@ -21,13 +21,27 @@
       ],
       "description": "The message key."
     },
+    "schemaIdLocation": {
+      "type": "string",
+      "description": "If a Schema Registry is used when performing this operation, tells where the id of schema is stored.",
+      "enum": ["header", "payload"]
+    },
+    "schemaIdPayloadEncoding": {
+      "type": "string",
+      "description": "Number of bytes or vendor specific values when schema id is encoded in payload."
+    },
+    "schemaLookupStrategy": {
+      "type": "string",
+      "description": "Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied."
+    },
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.1.0"
+        "0.3.0"
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
+
   },
   "examples": [
     {
@@ -37,13 +51,18 @@
           "myKey"
         ]
       },
-      "bindingVersion": "0.1.0"
+      "schemaIdLocation": "payload",
+      "schemaIdPayloadEncoding": "apicurio-new",
+      "schemaLookupStrategy": "TopicIdStrategy",
+      "bindingVersion": "0.3.0"
     },
     {
       "key": {
         "$ref": "path/to/user-create.avsc#/UserCreate"
       },
-      "bindingVersion": "0.2.0"
+      "schemaIdLocation": "payload",
+      "schemaIdPayloadEncoding": "4",
+      "bindingVersion": "0.3.0"
     }
   ]
 }
