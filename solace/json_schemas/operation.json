@@ -66,19 +66,19 @@
                 "items": {
                   "type": "string"
                 }
-          }
+              }
             }
           }
         ]
       }
+    },
+    "bindingVersion": {
+      "type": "string",
+      "enum": [
+        "0.2.0"
+      ],
+      "description": "The version of this binding. If omitted, \"latest\" MUST be assumed."
     }
-  },
-  "bindingVersion": {
-    "type": "string",
-    "enum": [
-      "0.2.0"
-    ],
-    "description": "The version of this binding. If omitted, \"latest\" MUST be assumed."
   },
   "examples": [
     {
