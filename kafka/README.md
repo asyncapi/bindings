@@ -6,7 +6,7 @@ This document defines how to describe Kafka-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.3.0`.
+Current version is `0.4.0`.
 
 
 <a name="server"></a>
@@ -32,7 +32,7 @@ servers:
       kafka:
         schemaRegistryUrl: 'https://my-schema-registry.com'
         schemaRegistryVendor: 'confluent'
-        bindingVersion: '0.3.0'
+        bindingVersion: '0.4.0'
 ```
 
 
@@ -65,7 +65,7 @@ channels:
         topic: 'my-specific-topic-name'
         partitions: 20
         replicas: 3
-        bindingVersion: '0.3.0'
+        bindingVersion: '0.4.0'
 ```
 
 <a name="operation"></a>
@@ -98,7 +98,7 @@ channels:
           clientId:
             type: string
             enum: ['myClientId']
-          bindingVersion: '0.3.0'
+          bindingVersion: '0.4.0'
 ```
 
 
@@ -133,7 +133,7 @@ channels:
               enum: ['myKey']
             schemaIdLocation: 'payload'
             schemaIdPayloadEncoding: '4'
-            bindingVersion: '0.3.0'
+            bindingVersion: '0.4.0'
 ```
 
 This is another example that describes the use if Apicurio schema registry. We describe the `apicurio-new` way of serializing without details on how it's implemented. We reference a [specific lookup strategy](https://www.apicur.io/registry/docs/apicurio-registry/2.2.x/getting-started/assembly-using-kafka-client-serdes.html#registry-serdes-concepts-strategy_registry) that may be used to retrieve schema Id from registry during serialization.
@@ -151,7 +151,7 @@ channels:
             schemaIdLocation: 'payload'
             schemaIdPayloadEncoding: 'apicurio-new'
             schemaLookupStrategy: 'TopicIdStrategy'
-            bindingVersion: '0.3.0'
+            bindingVersion: '0.4.0'
 ```
 
 [schemaObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#schemaObject

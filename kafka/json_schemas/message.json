@@ -39,7 +39,7 @@
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.3.0"
+        "0.4.0"
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
@@ -56,7 +56,7 @@
       "schemaIdLocation": "payload",
       "schemaIdPayloadEncoding": "apicurio-new",
       "schemaLookupStrategy": "TopicIdStrategy",
-      "bindingVersion": "0.3.0"
+      "bindingVersion": "0.4.0"
     },
     {
       "key": {
@@ -64,13 +64,13 @@
       },
       "schemaIdLocation": "payload",
       "schemaIdPayloadEncoding": "4",
-      "bindingVersion": "0.3.0"
+      "bindingVersion": "0.4.0"
     },
     {
       "key": "myKey",
       "schemaIdLocation": "payload",
       "schemaIdPayloadEncoding": "4",
-      "bindingVersion": "0.3.0"
+      "bindingVersion": "0.4.0"
     }
   ]
 }

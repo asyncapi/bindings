@@ -28,7 +28,7 @@
       "bindingVersion": {
         "type": "string",
         "enum": [
-          "0.3.0"
+          "0.4.0"
         ],
         "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
       }
@@ -39,7 +39,7 @@
         "topic": "my-specific-topic",
         "partitions": 20,
         "replicas": 3,
-        "bindingVersion": "0.3.0"
+        "bindingVersion": "0.4.0"
       }
     ]
   }

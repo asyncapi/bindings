@@ -22,7 +22,7 @@
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.3.0"
+        "0.4.0"
       ],
       "description": "The version of this binding."
     }
@@ -31,7 +31,7 @@
     {
       "schemaRegistryUrl": "https://my-schema-registry.com",
       "schemaRegistryVendor": "confluent",
-      "bindingVersion": "0.3.0"
+      "bindingVersion": "0.4.0"
     }
   ]
 }
