@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://asyncapi.com/bindings/mqtt5/server.json",
+  "title": "Server Schema",
+  "description": "This object contains information about the server representation in MQTT5.",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
+    }
+  },
+  "properties": {
+
+    "sessionExpiryInterval": {
+      "type": "integer",
+      "description": "Session Expiry Interval in seconds."
+    },
+    "bindingVersion": {
+      "type": "string",
+      "enum": [
+        "0.1.0"
+      ],
+      "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
+    }
+  },
+  "examples": [
+    {
+      "sessionExpiryInterval": 60,
+      "bindingVersion": "0.1.0"
+    }
+  ]
+}
+  

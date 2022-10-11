@@ -13,9 +13,27 @@ Current version is `0.1.0`.
 
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object contains information about the server representation in MQTT5.
 
+##### Fixed Fields
 
+Field Name | Type | Description
+---|:---:|---
+<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | integer | Session Expiry Interval in seconds.
+<a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
+
+This object MUST contain only the properties defined above.
+
+##### Example
+
+```yaml
+servers:
+  production:
+    bindings:
+      mqtt5:
+        sessionExpiryInterval: 60
+        bindingVersion: 0.1.0
+```
 
 <a name="channel"></a>
 
