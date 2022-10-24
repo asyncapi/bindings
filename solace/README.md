@@ -6,7 +6,7 @@ This document defines how to describe Solace-specific information with AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.2.1`.
 
 <a name="server"></a>
 
@@ -14,7 +14,7 @@ Current version is `0.2.0`.
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.2.0
+`bindingVersion`|String|The current version is 0.2.1
 `msgVpn`|String|The Virtual Private Network name on the Solace broker.
 
 
@@ -34,7 +34,7 @@ We need the ability to support several bindings for each operation, see the [Exa
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.2.0
+`bindingVersion`|String|The current version is 0.2.1
 `destinations`|List of Destination Objects|Destination Objects are described next.
 
 ### Destination Object
@@ -92,7 +92,7 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.2.0
+          bindingVersion: 0.2.1
           destinations:
             - destinationType: queue
               queue:
@@ -142,7 +142,7 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.2.0
+          bindingVersion: 0.2.1
           destinations:
             - destinationType: topic
               topicSubscriptions:
