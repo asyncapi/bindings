@@ -27,7 +27,7 @@
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.1.0"
+        "0.2.0"
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
@@ -35,7 +35,7 @@
   "examples": [
     {
       "sessionExpiryInterval": 60,
-      "bindingVersion": "0.1.0"
+      "bindingVersion": "0.2.0"
     }
   ]
 }
