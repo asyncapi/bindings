@@ -13,7 +13,15 @@
   "properties": {
 
     "sessionExpiryInterval": {
-      "type": "integer",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema"
+        }
+      ],
       "description": "Session Expiry Interval in seconds."
     },
     "bindingVersion": {
