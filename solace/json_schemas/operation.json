@@ -48,6 +48,14 @@
                       "exclusive",
                       "nonexclusive"
                     ]
+                  },
+                  "maxTtl": {
+                    "type": "string",
+                    "description": "The maximum TTL to apply to messages to be spooled."
+                  },
+                  "maxMsgSpoolUsage": {
+                    "type": "string",
+                    "description": "The maximum amount of message spool that the given queue may use"
                   }
                 }
               }

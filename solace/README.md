@@ -6,7 +6,7 @@ This document defines how to describe Solace-specific information with AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 <a name="server"></a>
 
@@ -14,7 +14,7 @@ Current version is `0.2.0`.
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.2.0
+`bindingVersion`|String|The current version is 0.3.0
 `msgVpn`|String|The Virtual Private Network name on the Solace broker.
 
 
@@ -34,23 +34,23 @@ We need the ability to support several bindings for each operation, see the [Exa
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.2.0
+`bindingVersion`|String|The current version is 0.3.0
 `destinations`|List of Destination Objects|Destination Objects are described next.
 
 ### Destination Object
 
 Each destination has the following structure:
 
-Field Name | Type | Description
----|---|---|---
-`destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions.
-`deliveryMode`|Enum|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.
-`queue.name`|String|The name of the queue, only applicable when destinationType is 'queue'.
-`queue.topicSubscriptions`|List of String|A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name.
-`queue.accessType`|Enum|'exclusive' or 'nonexclusive'. This is documented [here.](https://docs.solace.com/PubSub-Basics/Endpoints.htm) Only applicable when destinationType is 'queue'.
-`topic.topicSubscriptions`|List of String|A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name.
-
-
+| Field Name                 | Type           | Description                                                                                                                                                                                                                          |
+| -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `destinationType`          | Enum           | 'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions.                             |
+| `deliveryMode`             | Enum           | 'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/Get-Started/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.                |
+| `queue.name`               | String         | The name of the queue, only applicable when destinationType is 'queue'.                                                                                                                                                              |
+| `queue.topicSubscriptions` | List of String | A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name.                                              |
+| `queue.accessType`         | Enum           | 'exclusive' or 'nonexclusive'. This is documented [here.](https://docs.solace.com/Messaging/Guaranteed-Msg/Endpoints.htm#Queues) Only applicable when destinationType is 'queue'.                                                    |
+| `queue.maxMsgSpoolSize`    | String         | The maximum amount of message spool that the given queue may use. This is documented [here.](https://docs.solace.com/Messaging/Guaranteed-Msg/Message-Spooling.htm#max-spool-usage) Only applicable when destinationType is 'queue'. |
+| `queue.maxTtl`             | String         | The maximum TTL to apply to messages to be spooled. This is documented [here.](https://docs.solace.com/Messaging/Guaranteed-Msg/Configuring-Queues.htm) Only applicable when destinationType is 'queue'.                             |
+| `topic.topicSubscriptions` | List of String | A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name.                                            |
 
 <a name="message"></a>
 
@@ -92,7 +92,7 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.2.0
+          bindingVersion: 0.3.0
           destinations:
             - destinationType: queue
               queue:
@@ -142,7 +142,7 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.2.0
+          bindingVersion: 0.3.0
           destinations:
             - destinationType: topic
               topicSubscriptions:
