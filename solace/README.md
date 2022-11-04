@@ -42,7 +42,7 @@ Field Name | Type | Description
 Each destination has the following structure:
 
 Field Name | Type | Description
----|---|---|---
+---|---|---
 `destinationType`|Enum|'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions.
 `deliveryMode`|Enum|'direct' or 'persistent'. This determines the quality of service for publishing messages as documented [here.](https://docs.solace.com/PubSub-Basics/Core-Concepts-Message-Delivery-Modes.htm) Default is 'persistent'.
 `queue.name`|String|The name of the queue, only applicable when destinationType is 'queue'.
