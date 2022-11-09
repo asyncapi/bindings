@@ -33,7 +33,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="operationBindingObjectType"></a>`type` | string | **Required**. Type of operation. Its value MUST be either `request` or `response`.
+<a name="operationBindingObjectType"></a>`type` | string | **REQUIRED**. Type of operation. Its value MUST be either `request` or `response`.
 <a name="operationBindingObjectMethod"></a>`method` | string | When `type` is `request`, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `CONNECT`, and `TRACE`.
 <a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
