@@ -1,0 +1,69 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://asyncapi.com/bindings/pulsar/channel.json",
+    "title": "Channel Schema",
+    "description": "This object contains information about the channel representation in Pulsar.",
+    "type": "object",
+    "additionalProperties": false,
+    "patternProperties": {
+      "^x-[\\w\\d\\.\\-\\_]+$": {
+        "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+      }
+    },
+    "properties": {
+      "persistence": {
+        "type": "string",
+        "enum": [
+          "persistent",
+          "non-persistent"
+        ],
+        "description": "persistence of the topic in Pulsar."
+      },
+      "compaction": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Topic compaction threshold given in MB"
+      },
+      "retention": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "time": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Time given in Minutes. `0` = Disable message retention (by default)"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Size given in MegaBytes. `0` = Disable message retention (by default)"
+          }
+        }
+      },
+      "deduplication": {
+        "type": "boolean",
+        "description": "Whether deduplication of events is enabled or not."
+      },
+      "bindingVersion": {
+        "type": "string",
+        "enum": [
+          "0.1.0"
+        ],
+        "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
+      }
+  
+    },
+    "examples": [
+      {
+        "persistence": "persistent",
+        "compaction": 1000,
+        "retention": {
+          "time": 15,
+          "size": 1000
+        },
+        "deduplication": true,
+        "bindingVersion": "0.1.0"
+      }
+    ]
+  }
+  

@@ -9,14 +9,32 @@ Current version is `0.1.0`.
 
 <a name="server"></a>
 ## Server Binding Object
+
+This object contains information about the server representation in Pulsar.
+
 ##### Fixed Fields
 
 Field Name | Type | Description |
 ---|:---:|:---:|
 `retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy  |
 `deduplication` | Boolean | When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once |
+`bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
+
+##### Example
+
+```yaml
+servers:
+  production:
+    bindings:
+      pulsar:
+        retention:
+          time: 30
+          size: 5000
+        deduplication: true
+        bindingVersion: '0.1.0'
+```
 
 <a name="channel"></a>
 ## Channel Binding Object
@@ -27,11 +45,28 @@ This object contains information about the channel representation in Pulsar
 Field Name | Type | Description |
 ---|:---:|:---:|
 `persistence` | String | persistence of the topic in Pulsar `persistent` or `non-persistent` |
-`compaction`| Integer64 | Topic compaction threshold given in bytes |
+`compaction`| Integer | Topic compaction threshold given in Megabytes |
 `retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy  |
 `deduplication` | Boolean | When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once |
+`bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
+
+##### Example
+
+```yaml
+channels:
+  user-signedup:
+    bindings:
+      pulsar:
+        persistence: 'persistent'
+        compaction: 1000
+        retention:
+          time: 7
+          size: 1000
+        deduplication: false
+        bindingVersion: '0.1.0'
+```
 
 <a name="operation"></a>
 ## Operation binding fields
