@@ -56,7 +56,7 @@ channels:
   user-signedup:
     bindings:
       pulsar:
-        
+        namespace: 'staging'
         persistence: 'persistent'
         compaction: 1000
         retention:
