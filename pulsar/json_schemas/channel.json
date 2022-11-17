@@ -11,6 +11,10 @@
       }
     },
     "properties": {
+      "namespace": {
+        "type": "string",
+        "description": "The namespace, the channel is associated with. If omitted, 'public' MUST be assumed."
+      },
       "persistence": {
         "type": "string",
         "enum": [

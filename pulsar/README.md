@@ -16,8 +16,7 @@ This object contains information about the server representation in Pulsar.
 
 Field Name | Type | Description |
 ---|:---:|:---:|
-`retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy  |
-`deduplication` | Boolean | When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once |
+`tenant` | String | The pulsar tenant. If omitted, "public" must be assumed. |
 `bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
@@ -29,10 +28,7 @@ servers:
   production:
     bindings:
       pulsar:
-        retention:
-          time: 30
-          size: 5000
-        deduplication: true
+        tenant: contoso
         bindingVersion: '0.1.0'
 ```
 
@@ -44,10 +40,11 @@ This object contains information about the channel representation in Pulsar
 
 Field Name | Type | Description |
 ---|:---:|:---:|
-`persistence` | String | persistence of the topic in Pulsar `persistent` or `non-persistent` |
-`compaction`| Integer | Topic compaction threshold given in Megabytes |
-`retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy  |
-`deduplication` | Boolean | When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once |
+`namespace` | String | The namespace, the channel is associated with. If omitted, "public" MUST be assumed. |
+`persistence` | String | persistence of the topic in Pulsar `persistent` or `non-persistent`. |
+`compaction`| Integer | Topic compaction threshold given in Megabytes. |
+`retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy.  |
+`deduplication` | Boolean | When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
 `bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
@@ -59,6 +56,7 @@ channels:
   user-signedup:
     bindings:
       pulsar:
+        
         persistence: 'persistent'
         compaction: 1000
         retention:

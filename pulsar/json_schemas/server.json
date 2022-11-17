@@ -11,23 +11,9 @@
     }
   },
   "properties": {
-    "retention": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "time": {
-          "type": "integer",
-          "description": "Time given in Minutes. `0` = Disable message retention (by default)"
-        },
-        "size": {
-          "type": "integer",
-          "description": "Size given in MegaBytes. `0` = Disable message retention (by default)"
-        }
-      }
-    },
-    "deduplication": {
-      "type": "boolean",
-      "description": "Whether deduplication of events is enabled or not."
+    "tenant": {
+      "type": "string",
+      "description": "The pulsar tenant. If omitted, 'public' must be assumed."
     },
     "bindingVersion": {
       "type": "string",
