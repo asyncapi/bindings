@@ -25,11 +25,7 @@
   },
   "examples": [
     {
-      "retention": {
-        "time": 15,
-        "size": 1000
-      },
-      "deduplication": true,
+      "tenant": "contoso",
       "bindingVersion": "0.1.0"
     }
   ]
