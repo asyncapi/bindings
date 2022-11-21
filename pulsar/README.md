@@ -16,8 +16,8 @@ This object contains information about the server representation in Pulsar.
 
 Field Name | Type | Description |
 ---|:---:|:---:|
-`tenant` | String | The pulsar tenant. If omitted, "public" must be assumed. |
-`bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. |
+`tenant` | String | **Optional**. The pulsar tenant. If omitted, "public" must be assumed. |
+`bindingVersion` | String | **Required**. The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
 
@@ -40,12 +40,13 @@ This object contains information about the channel representation in Pulsar
 
 Field Name | Type | Description |
 ---|:---:|:---:|
-`namespace` | String | The namespace, the channel is associated with. If omitted, "public" MUST be assumed. |
-`persistence` | String | persistence of the topic in Pulsar `persistent` or `non-persistent`. |
-`compaction`| Integer | Topic compaction threshold given in Megabytes. |
-`retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy.  |
-`deduplication` | Boolean | When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
-`bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. |
+`namespace` | String | **Optional**. The namespace, the channel is associated with. If omitted, "public" MUST be assumed. |
+`persistence` | String | **Required**. persistence of the topic in Pulsar `persistent` or `non-persistent`. |
+`compaction`| Integer | **Optional**. Topic compaction threshold given in Megabytes. |
+`retention` | **Optional**. [Retention Definition Object](#retention-definition-object) | Topic retention policy.  |
+`ttl` | Integer | **Optional**. Message Time-to-live in seconds. |
+`deduplication` | Boolean | **Optional**. When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
+`bindingVersion` | String | **Required**. The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
 
@@ -62,6 +63,7 @@ channels:
         retention:
           time: 7
           size: 1000
+        ttl: 360
         deduplication: false
         bindingVersion: '0.1.0'
 ```
@@ -76,9 +78,9 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 <a name="retention-definition-object"></a>
 ## Retention Definition Object
-The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy 
+The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy. If retention is specified, both fields are mandatory.
 
 Field Name | Type | Description
 ---|---|---
-`time`|Integer| Time given in Minutes. `0` = Disable message retention (by default)|
-`size`|Integer| Size given in MegaBytes. `0` = Disable message retention (by default)|
+`time`|Integer| **Required**. Time given in Minutes. `0` = Disable message retention (by default)|
+`size`|Integer| **Required**. Size given in MegaBytes. `0` = Disable message retention (by default)|

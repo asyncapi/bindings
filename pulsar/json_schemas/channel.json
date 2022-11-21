@@ -44,6 +44,10 @@
           }
         }
       },
+      "ttl": {
+        "type": "integer",
+        "description": "TTL in seconds for the specified topic"
+      },
       "deduplication": {
         "type": "boolean",
         "description": "Whether deduplication of events is enabled or not."
