@@ -43,6 +43,7 @@ Field Name | Type | Description |
 `namespace` | String | **Optional**. The namespace, the channel is associated with. If omitted, "public" MUST be assumed. |
 `persistence` | String | **Required**. persistence of the topic in Pulsar `persistent` or `non-persistent`. |
 `compaction`| Integer | **Optional**. Topic compaction threshold given in Megabytes. |
+`geo-replication` | String[] | **Optional**. A list of clusters the topic is replicated to. |
 `retention` | **Optional**. [Retention Definition Object](#retention-definition-object) | Topic retention policy.  |
 `ttl` | Integer | **Optional**. Message Time-to-live in seconds. |
 `deduplication` | Boolean | **Optional**. When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
