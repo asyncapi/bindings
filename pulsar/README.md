@@ -61,6 +61,9 @@ channels:
         namespace: 'staging'
         persistence: 'persistent'
         compaction: 1000
+        geo-replication:
+          - 'us-east1'
+          - 'us-west1'
         retention:
           time: 7
           size: 1000
