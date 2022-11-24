@@ -44,7 +44,7 @@ Field Name | Type | Description |
 `persistence` | String | **Required**. persistence of the topic in Pulsar `persistent` or `non-persistent`. |
 `compaction`| Integer | **Optional**. Topic compaction threshold given in Megabytes. |
 `geo-replication` | String[] | **Optional**. A list of clusters the topic is replicated to. |
-`retention` | **Optional**. [Retention Definition Object](#retention-definition-object) | Topic retention policy.  |
+`retention` | [Retention Definition Object](#retention-definition-object) | **Optional**. Topic retention policy.  |
 `ttl` | Integer | **Optional**. Message Time-to-live in seconds. |
 `deduplication` | Boolean | **Optional**. When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
 `bindingVersion` | String | **Required**. The version of this binding. If omitted, "latest" MUST be assumed. |
