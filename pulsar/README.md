@@ -17,7 +17,7 @@ This object contains information about the server representation in Pulsar.
 Field Name | Type | Description |
 ---|:---:|:---:|
 `tenant` | String | **Optional**. The pulsar tenant. If omitted, "public" must be assumed. |
-`bindingVersion` | String | **Required**. The version of this binding. If omitted, "latest" MUST be assumed. |
+`bindingVersion` | String | **Optional**. The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
 
@@ -47,7 +47,7 @@ Field Name | Type | Description |
 `retention` | [Retention Definition Object](#retention-definition-object) | **Optional**. Topic retention policy.  |
 `ttl` | Integer | **Optional**. Message Time-to-live in seconds. |
 `deduplication` | Boolean | **Optional**. When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
-`bindingVersion` | String | **Required**. The version of this binding. If omitted, "latest" MUST be assumed. |
+`bindingVersion` | String | **Optional**. The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
 
