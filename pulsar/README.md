@@ -15,9 +15,9 @@ This object contains information about the server representation in Pulsar.
 ##### Fixed Fields
 
 Field Name | Type | Description |
----|:---:|:---|
-`tenant` | String | **Optional**. The pulsar tenant. If omitted, "public" must be assumed. |
-`bindingVersion` | String | **Optional**. The version of this binding. If omitted, "latest" MUST be assumed. |
+---|:---:|:---|:---|
+`tenant` | String | The pulsar tenant. If omitted, "public" must be assumed. | OPTIONAL [`public`] |
+`bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] |
 
 This object MUST contain only the properties defined above.
 
@@ -38,16 +38,16 @@ This object contains information about the channel representation in Pulsar
 
 ##### Fixed Fields
 
-Field Name | Type | Description |
----|:---:|:---|
-`namespace` | String | **Optional**. The namespace the channel is associated with. If omitted, "public" MUST be assumed. |
-`persistence` | String | **Required**. Persistence of the topic in Pulsar. It MUST be either `persistent` or `non-persistent`. |
-`compaction`| Integer | **Optional**. Topic compaction threshold given in Megabytes. |
-`geo-replication` | String[] | **Optional**. A list of clusters the topic is replicated to. |
-`retention` | [Retention Definition Object](#retention-definition-object) | **Optional**. Topic retention policy.  |
-`ttl` | Integer | **Optional**. Message time-to-live in seconds. |
-`deduplication` | Boolean | **Optional**. Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
-`bindingVersion` | String | **Optional**. The version of this binding. If omitted, "latest" MUST be assumed. |
+Field Name | Type | Description | Applicability [default] |
+---|:---:|:---|:---|
+`namespace` | String |  The namespace the channel is associated with. | REQUIRED |
+`persistence` | String | Persistence of the topic in Pulsar. It MUST be either `persistent` or `non-persistent`. | REQUIRED |
+`compaction`| Integer | Topic compaction threshold given in Megabytes. | OPTIONAL |
+`geo-replication` | String[] | A list of clusters the topic is replicated to. | OPTIONAL |
+`retention` | [Retention Definition Object](#retention-definition-object) | Topic retention policy.  | OPTIONAL |
+`ttl` | Integer |  Message time-to-live in seconds. | OPTIONAL |
+`deduplication` | Boolean | Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. | OPTIONAL |
+`bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] |
 
 This object MUST contain only the properties defined above.
 
@@ -84,7 +84,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 ### Retention Definition Object
 The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy. If retention is specified, both fields are mandatory.
 
-Field Name | Type | Description
----|---|---
-`time`|Integer| **Required**. Time given in Minutes. `0` = Disable message retention (by default)|
-`size`|Integer| **Required**. Size given in MegaBytes. `0` = Disable message retention (by default)|
+Field Name | Type | Description | Applicability [default] |
+---|:---:|:---|:---|
+`time`|Integer| Time given in Minutes. `0` = Disable message retention | OPTIONAL [`0`]
+`size`|Integer| Size given in MegaBytes. `0` = Disable message retention| OPTIONAL [`0`]
