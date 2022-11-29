@@ -15,7 +15,7 @@ This object contains information about the server representation in Pulsar.
 ##### Fixed Fields
 
 Field Name | Type | Description |
----|:---:|:---:|
+---|:---:|:---|
 `tenant` | String | **Optional**. The pulsar tenant. If omitted, "public" must be assumed. |
 `bindingVersion` | String | **Optional**. The version of this binding. If omitted, "latest" MUST be assumed. |
 
@@ -39,14 +39,14 @@ This object contains information about the channel representation in Pulsar
 ##### Fixed Fields
 
 Field Name | Type | Description |
----|:---:|:---:|
-`namespace` | String | **Optional**. The namespace, the channel is associated with. If omitted, "public" MUST be assumed. |
-`persistence` | String | **Required**. persistence of the topic in Pulsar `persistent` or `non-persistent`. |
+---|:---:|:---|
+`namespace` | String | **Optional**. The namespace the channel is associated with. If omitted, "public" MUST be assumed. |
+`persistence` | String | **Required**. Persistence of the topic in Pulsar. It MUST be either `persistent` or `non-persistent`. |
 `compaction`| Integer | **Optional**. Topic compaction threshold given in Megabytes. |
 `geo-replication` | String[] | **Optional**. A list of clusters the topic is replicated to. |
 `retention` | [Retention Definition Object](#retention-definition-object) | **Optional**. Topic retention policy.  |
-`ttl` | Integer | **Optional**. Message Time-to-live in seconds. |
-`deduplication` | Boolean | **Optional**. When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
+`ttl` | Integer | **Optional**. Message time-to-live in seconds. |
+`deduplication` | Boolean | **Optional**. Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. |
 `bindingVersion` | String | **Optional**. The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
@@ -81,7 +81,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
 <a name="retention-definition-object"></a>
-## Retention Definition Object
+### Retention Definition Object
 The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy. If retention is specified, both fields are mandatory.
 
 Field Name | Type | Description

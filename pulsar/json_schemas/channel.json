@@ -30,7 +30,10 @@
       },
       "geo-replication": {
         "type": "array",
-        "description": "A list of clusters the topic is replicated to."
+        "description": "A list of clusters the topic is replicated to.",
+        "items": {
+          "type": "string"
+        }
       },
       "retention": {
         "type": "object",
