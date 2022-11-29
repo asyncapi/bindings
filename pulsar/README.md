@@ -19,8 +19,6 @@ Field Name | Type | Description | Applicability [default] |
 `tenant` | String | The pulsar tenant. If omitted, "public" must be assumed. | OPTIONAL [`public`] |
 `bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] |
 
-This object MUST contain only the properties defined above.
-
 ##### Example
 
 ```yaml
@@ -49,7 +47,14 @@ Field Name | Type | Description | Applicability [default] |
 `deduplication` | Boolean | Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. | OPTIONAL |
 `bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] |
 
-This object MUST contain only the properties defined above.
+<a name="retention-definition-object"></a>
+### Retention Definition Object
+The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy. If retention is specified, both fields are mandatory.
+
+Field Name | Type | Description | Applicability [default] |
+---|:---:|:---|:---|
+`time`|Integer| Time given in Minutes. | OPTIONAL [`0`]
+`size`|Integer| Size given in MegaBytes. | OPTIONAL [`0`]
 
 ##### Example
 
@@ -79,12 +84,3 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 <a name="message"></a>
 ## Message binding fields
 This object MUST NOT contain any properties. Its name is reserved for future use.
-
-<a name="retention-definition-object"></a>
-### Retention Definition Object
-The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy. If retention is specified, both fields are mandatory.
-
-Field Name | Type | Description | Applicability [default] |
----|:---:|:---|:---|
-`time`|Integer| Time given in Minutes. `0` = Disable message retention | OPTIONAL [`0`]
-`size`|Integer| Size given in MegaBytes. `0` = Disable message retention| OPTIONAL [`0`]
