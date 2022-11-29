@@ -7,7 +7,7 @@
     "additionalProperties": false,
     "patternProperties": {
       "^x-[\\w\\d\\.\\-\\_]+$": {
-        "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v4.0.0/schemas/2.5.0.json#/definitions/http://asyncapi.com/definitions/2.5.0/specificationExtension.json"
       }
     },
     "required": [ "namespace", "persistence" ],
