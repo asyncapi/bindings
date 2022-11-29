@@ -13,7 +13,7 @@
   "properties": {
     "tenant": {
       "type": "string",
-      "description": "The pulsar tenant. If omitted, 'public' must be assumed."
+      "description": "The pulsar tenant. If omitted, 'public' MUST be assumed."
     },
     "bindingVersion": {
       "type": "string",
