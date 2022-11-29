@@ -16,7 +16,7 @@ This object contains information about the server representation in Pulsar.
 
 Field Name | Type | Description | Applicability [default] |
 ---|:---:|:---|:---|
-`tenant` | String | The pulsar tenant. If omitted, "public" must be assumed. | OPTIONAL [`public`] |
+`tenant` | String | The pulsar tenant. If omitted, "public" MUST be assumed. | OPTIONAL [`public`] |
 `bindingVersion` | String | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] |
 
 ##### Example
