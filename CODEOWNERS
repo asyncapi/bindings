@@ -13,4 +13,5 @@
 /kafka/        @lbroudoux @dalelane
 /googlepubsub/ @whitlockjc
 /solace/       @damaru-inc @CameronRushton
+/pulsar/       @VisualBean
 *.json         @KhudaDad414
