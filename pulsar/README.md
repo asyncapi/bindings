@@ -49,7 +49,7 @@ Field Name | Type | Required | Description | Default value |
 
 <a name="retention-definition-object"></a>
 ### Retention Definition Object
-The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy. If retention is specified, both fields are mandatory.
+The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy.
 
 Field Name | Type | Required | Description | Default value |
 ---|:---:|:---:|:---|:---|
