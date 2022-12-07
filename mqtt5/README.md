@@ -19,7 +19,7 @@ This object contains information about the server representation in MQTT5.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | [Schema Object][schemaObject] \| integer | Session Expiry Interval in seconds.
+<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | [Schema Object][schemaObject] \| integer | Session Expiry Interval in seconds or a Schema Object containing the definition of the interval.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -32,6 +32,16 @@ servers:
     bindings:
       mqtt5:
         sessionExpiryInterval: 60
+        bindingVersion: 0.2.0
+```
+```yaml
+servers:
+  production:
+    bindings:
+      mqtt5:
+        sessionExpiryInterval:
+          type: integer
+          minimum: 100
         bindingVersion: 0.2.0
 ```
 

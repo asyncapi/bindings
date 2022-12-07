@@ -22,7 +22,7 @@
           "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema"
         }
       ],
-      "description": "Session Expiry Interval in seconds."
+      "description": "Session Expiry Interval in seconds or a Schema Object containing the definition of the interval."
     },
     "bindingVersion": {
       "type": "string",
@@ -35,6 +35,13 @@
   "examples": [
     {
       "sessionExpiryInterval": 60,
+      "bindingVersion": "0.2.0"
+    },
+    {
+      "sessionExpiryInterval": {
+        "type": "integer",
+        "minimum": 100
+      },
       "bindingVersion": "0.2.0"
     }
   ]
