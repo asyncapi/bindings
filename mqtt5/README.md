@@ -19,7 +19,7 @@ This object contains information about the server representation in MQTT5.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | [Schema Object][schemaObject] \| integer | Session Expiry Interval in seconds or a Schema Object containing the definition of the interval.
+<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) \| integer | Session Expiry Interval in seconds or a Schema Object containing the definition of the interval.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -68,4 +68,5 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#schemaObject
+[schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
+[referenceObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject

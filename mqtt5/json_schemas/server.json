@@ -19,7 +19,10 @@
           "minimum": 0
         },
         {
-          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/schema"
+          "$ref": "https://asyncapi.com/definitions/2.4.0/schema.json"
+        },
+        {
+          "$ref": "https://asyncapi.com/definitions/2.4.0/Reference.json"
         }
       ],
       "description": "Session Expiry Interval in seconds or a Schema Object containing the definition of the interval."
