@@ -14,6 +14,7 @@ This repository contains the specifications for each AsyncAPI protocol binding.
 * [MQTT binding](./mqtt)
 * [MQTT5 binding](./mqtt5)
 * [NATS binding](./nats)
+* [Pulsar](./pulsar)
 * [Redis binding](./redis)
 * [SNS binding](./sns)
 * [Solace binding](./solace)
