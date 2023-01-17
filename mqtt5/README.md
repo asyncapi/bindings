@@ -6,7 +6,7 @@ This document defines how to describe MQTT 5-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 
 <a name="server"></a>
@@ -22,7 +22,7 @@ Field Name | Type | Description
 <a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) \| integer | Session Expiry Interval in seconds or a Schema Object containing the definition of the interval.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -32,7 +32,7 @@ servers:
     bindings:
       mqtt5:
         sessionExpiryInterval: 60
-        bindingVersion: 0.2.0
+        bindingVersion: 0.3.0
 ```
 ```yaml
 servers:
@@ -42,7 +42,7 @@ servers:
         sessionExpiryInterval:
           type: integer
           minimum: 100
-        bindingVersion: 0.2.0
+        bindingVersion: 0.3.0
 ```
 
 <a name="channel"></a>

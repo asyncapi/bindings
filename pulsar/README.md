@@ -5,9 +5,10 @@ This document defines how to describe Apache Pulsar specific information with As
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 <a name="server"></a>
+
 ## Server Binding Object
 
 This object contains information about the server representation in Pulsar.
@@ -19,6 +20,8 @@ Field Name | Type | Required | Description | Default value |
 `tenant` | String | No | The pulsar tenant. If omitted, "public" MUST be assumed. | `public` |
 `bindingVersion` | String | No | The version of this binding. If omitted, "latest" MUST be assumed. | `latest` |
 
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
+
 ##### Example
 
 ```yaml
@@ -27,10 +30,11 @@ servers:
     bindings:
       pulsar:
         tenant: contoso
-        bindingVersion: '0.1.0'
+        bindingVersion: '0.2.0'
 ```
 
 <a name="channel"></a>
+
 ## Channel Binding Object
 This object contains information about the channel representation in Pulsar
 
@@ -47,7 +51,10 @@ Field Name | Type | Required | Description | Default value |
 `deduplication` | Boolean | No | Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. | N/A |
 `bindingVersion` | String | No | The version of this binding. If omitted, "latest" MUST be assumed. | `latest` |
 
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
+
 <a name="retention-definition-object"></a>
+
 ### Retention Definition Object
 The `Retention Definition Object` is used to describe the Pulsar [Retention](https://pulsar.apache.org/docs/cookbooks-retention-expiry/) policy.
 

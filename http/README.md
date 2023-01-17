@@ -6,7 +6,7 @@ This document defines how to describe HTTP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -38,7 +38,7 @@ Field Name | Type | Description
 <a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -60,7 +60,7 @@ channels:
                 minimum: 1
                 description: The Id of the company.
             additionalProperties: false
-          bindingVersion: '0.1.0'
+          bindingVersion: '0.2.0'
 ```
 
 
@@ -77,8 +77,7 @@ Field Name | Type | Description
 <a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
-
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ```yaml
 channels:
@@ -93,7 +92,7 @@ channels:
                 Content-Type:
                   type: string
                   enum: ['application/json']
-            bindingVersion: '0.1.0'
+            bindingVersion: '0.2.0'
 ```
 
 [schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject

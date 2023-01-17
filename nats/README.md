@@ -27,7 +27,10 @@ Field Name | Type | Description
 | <a name="operationBindingObjectQueue"></a>`queue` | string | Defines the name of the queue to use. It MUST NOT exceed 255 characters. |
 | <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. |
 
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
+
 <a name="Message"></a>
+
 ## Message Binding Object
 
 This object MUST NOT contain any properties. Its name is reserved for future use.

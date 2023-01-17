@@ -22,7 +22,7 @@
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.4.0"
+        "0.5.0"
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
@@ -42,7 +42,7 @@
           "myClientId"
         ]
       },
-      "bindingVersion": "0.3.0"
+      "bindingVersion": "0.5.0"
     }
   ]
 }

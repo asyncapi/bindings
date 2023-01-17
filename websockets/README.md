@@ -6,7 +6,7 @@ This document defines how to describe WebSockets-specific information on AsyncAP
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -33,7 +33,7 @@ Field Name | Type | Description
 <a name="operationBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] | A Schema object containing the definitions of the HTTP headers to use when establishing the connection. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 <a name="operation"></a>
 

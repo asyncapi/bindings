@@ -6,7 +6,7 @@ This document defines how to describe MQTT-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -29,7 +29,7 @@ Field Name | Type | Description
 <a name="serverBindingObjectKeepAlive"></a>`keepAlive` | integer | Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -46,7 +46,7 @@ servers:
           message: Guest gone offline.
           retain: false
         keepAlive: 60
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
 
 
@@ -72,7 +72,7 @@ Field Name | Type | Applies To | Description
 <a name="operationBindingObjectRetain"></a>`retain` | boolean | Publish, Subscribe | Whether the broker should retain the message or not.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -84,7 +84,7 @@ channels:
         mqtt:
           qos: 2
           retain: true
-          bindingVersion: 0.1.0
+          bindingVersion: 0.2.0
 ```
 
 
@@ -100,7 +100,7 @@ Field Name | Type | Description
 ---|:---:|---
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ```yaml
 channels:
@@ -109,5 +109,5 @@ channels:
       message:
         bindings:
           mqtt:
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 ```

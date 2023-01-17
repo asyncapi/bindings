@@ -6,7 +6,7 @@ This document defines how to describe IBM MQ specific information with AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 ## Terminology
 
@@ -35,6 +35,8 @@ URI Component | IBM MQ reference | Applicability | Description |
 <a name="uriObjectAuthority>"></a>`authority` | `<hostname or ipAddress>:port` | REQUIRED | The network IP address or hostname and port of the queue manager endpoint. |
 <a name="uriObjectQueueManager>"></a>`path` | `queueManager` | OPTIONAL | The queue manager name. If no queue manager name is specified this segment is left undefined, for example `ibmmq://hostname:{port}//CHANNEL.NAME`
 <a name="uriObjectChannelName>"></a>`path` | `mqChannelName` | REQUIRED | The `SVRCONN` channel to use for communication with an IBM MQ queue manager. When connecting to a queue manager, IBM MQ partitions this communication into logical channels.
+
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 URI `query` or `fragment` components MUST NOT be used within the `ibmmq://` scheme. Path components that contain characters reserved by RFC2936 such as `/` MUST be percent encoded as defined in [Section 2.2 of RFC2936](https://tools.ietf.org/html/rfc3986#section-2.2). `port` MUST be specified as part of the authority component in the `ibmmq://` scheme.
 
@@ -96,7 +98,7 @@ Field Name | Type | Description | Applicability \[default\] | Constraints
 <a name="serverObjectEndpointHeartBeatInterval"></a>`heartBeatInterval` | integer | The recommended value (in seconds) for the heartbeat sent to the queue manager during periods of inactivity. A value of zero means that no heart beats are sent. A value of `1` means that the client will use the value defined by the queue manager. More information on heart beat interval can be found on this [page](https://www.ibm.com/support/knowledgecenter/SSFKSJ_latest/com.ibm.mq.ref.dev.doc/q108450_.html) in the IBM MQ Knowledge Center. | OPTIONAL [`300`] | MUST be `0-999999`
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`] | -
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example for multiple endpoints defined in the AsyncAPI configuration
 
@@ -110,7 +112,7 @@ servers:
       ibmmq: 
         groupId: PRODCLSTR1
         cipherSpec: ANY_TLS12_OR_HIGHER
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
   production2:
     url: ibmmq://qmgr2host:1414/qm2/DEV.APP.SVRCONN
     protocol: ibmmq-secure
@@ -118,7 +120,7 @@ servers:
     bindings:
       ibmmq: 
         groupId: PRODCLSTR1
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
 
 ##### Example using combined strategy 
@@ -139,7 +141,7 @@ servers:
     bindings:
       ibmmq: 
         cipherSpec: ANY_TLS12_OR_HIGHER
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
 
 
@@ -167,8 +169,7 @@ Field Name | Type | Description | Applicability [default] | Constraints
 <a name="channelBindingObjectMaxMsgLength"></a>`maxMsgLength` | integer | The maximum length of the physical message (in bytes) accepted by the Topic or Queue. Messages produced that are greater in size than this value may fail to be delivered. More information on the maximum message length can be found on this [page](https://www.ibm.com/support/knowledgecenter/SSFKSJ_latest/com.ibm.mq.ref.adm.doc/q085520_.html#q085520___maxmsgl) in the IBM MQ Knowledge Center. | OPTIONAL [negotiated on IBM MQ channel]| MUST be  `0-104,857,600` bytes (100 MB).
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`] | -
 
-
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example for an IBM MQ Topic where topic string is defined by AsyncAPI channel
 
@@ -187,7 +188,7 @@ channels:
         destinationType: topic
         topic:
           objectName: myTopicName
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
 
 ##### Example for AsyncAPI channel mapping to an IBM MQ Queue
@@ -201,7 +202,7 @@ channels:
         queue:
           objectName: myQueueName
           exclusive: true
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
 
 
@@ -230,7 +231,7 @@ Field Name | Type  | Description | Applicability [default] | Constraints
 <a name="messageBindingObjectExpiry"></a>`expiry` |  integer | The recommended setting the client should use for the TTL (Time-To-Live) of the message. This is a period of time expressed in milliseconds and set by the application that puts the message. `expiry` values are API dependant e.g., MQI and JMS use different units of time and default values for *`unlimited`*. General information on IBM MQ message expiry can be found on this [page](https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_latest/com.ibm.mq.ref.dev.doc/q097490_.html) in the IBM MQ Knowledge Center. | OPTIONAL [*`unlimited`*] | `expiry` value MUST be either `zero` (*`unlimited`*) or greater than zero. 
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`] | - 
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ### Rich Text Formatting
 
@@ -246,7 +247,7 @@ channels:
         bindings:
           ibmmq:
             type: string
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 ```
 
 ##### Example for IBM MQ message using JMS
@@ -260,7 +261,7 @@ channels:
           ibmmq:
             type: jms
             description: JMS stream message
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 ```
 
 # AsyncAPI example with IBM MQ binding
@@ -282,7 +283,7 @@ servers:
       ibmmq: 
         groupId: PRODCLSTR1
         cipherSpec: ANY_TLS12_OR_HIGHER
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
   production2:
     url: ibmmq://qmgr2host:1414/qm2/DEV.APP.SVRCONN
     protocol: ibmmq-secure
@@ -291,14 +292,14 @@ servers:
       ibmmq: 
         groupId: PRODCLSTR1
         cipherSpec: ANY_TLS12_OR_HIGHER
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 channels:
   user/signedup:
     bindings:
       ibmmq:
         topic:
           durablePermitted: true
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
     subscribe:
       message:
         $ref: '#/components/messages/UserSignedUp'
@@ -306,7 +307,7 @@ channels:
           ibmmq:
             type: jms
             description: JMS bytes message
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 components:
   messages:
     UserSignedUp:

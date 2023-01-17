@@ -14,7 +14,7 @@
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.1.0"
+        "0.2.0"
       ],
       "description": "The version of this binding."
     },

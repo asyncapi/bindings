@@ -7,7 +7,7 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 <a name="version"></a>
 ## Versions
 
-The version of this bindings specification is `0.0.1`.
+The version of this bindings specification is `0.0.2`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
 In any given binding object, `latest` MAY alternatively be used to refer to the currently latest published version of this bindings specification.
 
@@ -50,6 +50,8 @@ Field Name | Type | Description
 <a name="channelBindingObjectType"></a>`destinationType`          | string | **OPTIONAL**, defaults to `queue`. The type of destination, which MUST be either `exchange` or `queue` or `fifo-queue`. SHOULD be specified to document the messaging model (publish/subscribe, point-to-point, strict message ordering) supported by this channel.
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **OPTIONAL**, defaults to `latest`. The version of this binding.
 
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
+
 Note that an Anypoint MQ exchange can only be sent to, not received from. To receive messages sent to an exchange, [an intermediary queue must be defined and bound to the exchange](https://docs.mulesoft.com/mq/mq-understanding#message-exchanges). In this bindings specification, these intermediary queues are not exposed in the AsyncAPI document. Instead, it is simply assumed that whenever messages must be received from an exchange, such an intermediary queue is involved yet invisible in the AsyncAPI document.
 
 ### Examples
@@ -72,7 +74,7 @@ channels:
       anypointmq:
         destination:     user-signup-exchg
         destinationType: exchange
-        bindingVersion:  '0.0.1'
+        bindingVersion:  '0.0.2'
     subscribe:
       #...
 ```
@@ -91,6 +93,8 @@ Field Name | Type | Description
 ---|:---:|---
 <a name="messageBindingObjectHeaders"></a>`headers`               | [Schema Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) | **OPTIONAL**. A Schema object containing the definitions for Anypoint MQ-specific headers (so-called protocol headers). This schema MUST be of type `object` and have a `properties` key. Examples of Anypoint MQ protocol headers are `messageId` and `messageGroupId`.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | **OPTIONAL**, defaults to `latest`. The version of this binding.
+
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 Note that application headers must be specified in the [`headers` field of the standard Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObjectHeaders) and are transmitted in the [`properties` section of the Anypoint MQ message](https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/anypoint-mq-broker/).
 In contrast, protocol headers such as `messageId` must be specified in the [`headers` field of the message binding object](#messageBindingObjectHeaders) and are transmitted in the [`headers` section of the Anypoint MQ message](https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/anypoint-mq-broker/).
@@ -128,7 +132,7 @@ channels:
               properties:
                 messageId:
                   type: string
-            bindingVersion: '0.0.1'
+            bindingVersion: '0.0.2'
 ```
 
 ## Complete Example
@@ -162,7 +166,7 @@ servers:
       - oauthProd: []
     bindings:
       anypointmq:
-        bindingVersion: '0.0.1'
+        bindingVersion: '0.0.2'
   
 channels:
   user/signup:
@@ -201,7 +205,7 @@ channels:
               properties:
                 messageId:
                   type: string
-            bindingVersion: '0.0.1'
+            bindingVersion: '0.0.2'
 
 components:
   securitySchemes:

@@ -6,7 +6,7 @@ This document defines how to describe Google Cloud Pub/Sub specific information 
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 <a name="channel"></a>
 
@@ -17,12 +17,14 @@ The `Channel Bindings Object` is used to describe the Google Cloud Pub/Sub speci
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is `0.1.0`
+`bindingVersion`|String|The current version is `0.2.0`
 `labels`|Object|An object of key-value pairs _(These are used to categorize Cloud Resources like Cloud Pub/Sub Topics.)_
 `messageRetentionDuration`|String|Indicates the minimum duration to retain a message after it is published to the topic _(Must be a valid [Duration](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration).)_
 `messageStoragePolicy`|[Message Storage Policy Object](#message-storage-policy-object)|Policy constraining the set of Google Cloud Platform regions where messages published to the topic may be stored
 `schemaSettings`|[Schema Settings Object](#schema-settings-object)|Settings for validating messages published against a schema
 `topic`|String|The Google Cloud Pub/Sub Topic name
+
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 <a name="message-storage-policy-object"></a>
 
@@ -106,6 +108,8 @@ Field Name | Type | Description
 `attributes`|Object|Attributes for this message _(If this field is empty, the message must contain non-empty data. This can be used to filter messages on the subscription.)_
 `orderingKey`|String|If non-empty, identifies related messages for which publish order should be respected _(For more information, see [ordering messages](https://cloud.google.com/pubsub/docs/ordering).)_
 `schema`|[Schema Definition Object](#schema-definition-object)|Describes the schema used to validate the payload of this message
+
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 <a name="schema-definition-object"></a>
 

@@ -6,7 +6,7 @@ This document defines how to describe AMQP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 
 <a name="server"></a>
@@ -43,7 +43,7 @@ Field Name | Type | Description
 <a name="channelBindingObjectQueueVHost"></a>`queue.vhost` | string | The virtual host of the queue. Defaults to `/`.
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -65,7 +65,7 @@ channels:
           durable: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.2.0
+        bindingVersion: 0.3.0
 ```
 
 
@@ -91,7 +91,7 @@ Field Name | Type | Applies To | Description
 <a name="operationBindingObjectAck"></a>`ack` | boolean | Subscribe | Whether the consumer should ack the message or not.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -111,7 +111,7 @@ channels:
           replyTo: user.signedup
           timestamp: true
           ack: false
-          bindingVersion: 0.2.0
+          bindingVersion: 0.3.0
 ```
 
 
@@ -140,5 +140,5 @@ channels:
           amqp:
             contentEncoding: gzip
             messageType: 'user.signup'
-            bindingVersion: 0.2.0
+            bindingVersion: 0.3.0
 ```

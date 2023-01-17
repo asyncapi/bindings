@@ -6,7 +6,7 @@ This document defines how to describe Kafka-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.4.0`.
+Current version is `0.5.0`.
 
 
 <a name="server"></a>
@@ -23,6 +23,8 @@ Field Name | Type | Description | Applicability [default] | Constraints
 `schemaRegistryVendor` | string | The vendor of Schema Registry and Kafka serdes library that should be used (e.g. `apicurio`, `confluent`, `ibm`, or `karapace`) | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. | OPTIONAL [`latest`]
 
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
+
 ##### Example
 
 ```yaml
@@ -32,7 +34,7 @@ servers:
       kafka:
         schemaRegistryUrl: 'https://my-schema-registry.com'
         schemaRegistryVendor: 'confluent'
-        bindingVersion: '0.4.0'
+        bindingVersion: '0.5.0'
 ```
 
 
@@ -52,8 +54,7 @@ Field Name |                       Type                       |                 
 <a name="channelBindingObjectTopicConfiguration"></a>`topicConfiguration` | [TopicConfiguration Object](#topicConfiguration) |                   Topic configuration properties that are relevant for the API.                    |       OPTIONAL       | -
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` |                      string                      |                   The version of this binding. If omitted, "latest" MUST be assumed.                    |   OPTIONAL [`latest`]   | -
 
-
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -73,7 +74,7 @@ channels:
           retention.bytes: 1000000000
           delete.retention.ms: 86400000
           max.message.bytes: 1048588
-        bindingVersion: '0.4.0'
+        bindingVersion: '0.5.0'
 ```
 <a name="topicConfiguration"></a>
 ## TopicConfiguration Object
@@ -88,7 +89,7 @@ Field Name |  Type   |                                                          
 <a name="topicConfigurationDeleteRetentionBytes"></a>`delete.retention.ms` | integer |             The [`delete.retention.ms`](https://kafka.apache.org/documentation/#topicconfigs_delete.retention.ms) configuration option.                                               |        OPTIONAL         | see kafka documentation
 <a name="topicConfigurationMaxMessageBytes"></a>`max.message.bytes` | integer |                    The [`max.message.bytes`](https://kafka.apache.org/documentation/#topicconfigs_max.message.bytes) configuration option.                                      |        OPTIONAL         | see kafka documentation
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -115,7 +116,7 @@ Field Name | Type | Description | Applicability [default] | Constraints
 <a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] | Id of the consumer inside a consumer group. | OPTIONAL | -
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 ##### Example
 
@@ -131,7 +132,7 @@ channels:
           clientId:
             type: string
             enum: ['myClientId']
-          bindingVersion: '0.4.0'
+          bindingVersion: '0.5.0'
 ```
 
 
@@ -151,7 +152,7 @@ Field Name | Type | Description
 <a name="messageBindingObjectSchemaLookupStrategy"></a>`schemaLookupStrategy` | string | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
-This object MUST contain only the properties defined above.
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 This example is valid for any Confluent compatible schema registry. Here we describe the implementation using the first 4 bytes in payload to store schema identifier.
 
@@ -167,7 +168,7 @@ channels:
               enum: ['myKey']
             schemaIdLocation: 'payload'
             schemaIdPayloadEncoding: '4'
-            bindingVersion: '0.4.0'
+            bindingVersion: '0.5.0'
 ```
 
 This is another example that describes the use if Apicurio schema registry. We describe the `apicurio-new` way of serializing without details on how it's implemented. We reference a [specific lookup strategy](https://www.apicur.io/registry/docs/apicurio-registry/2.2.x/getting-started/assembly-using-kafka-client-serdes.html#registry-serdes-concepts-strategy_registry) that may be used to retrieve schema Id from registry during serialization.
@@ -185,7 +186,7 @@ channels:
             schemaIdLocation: 'payload'
             schemaIdPayloadEncoding: 'apicurio-new'
             schemaLookupStrategy: 'TopicIdStrategy'
-            bindingVersion: '0.4.0'
+            bindingVersion: '0.5.0'
 ```
 
 [schemaObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#schemaObject
