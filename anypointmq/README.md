@@ -37,7 +37,9 @@ Note that the choice of a particular Anypoint MQ client app (via its client ID a
 <a name="server"></a>
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object does not contain any fixed fields. Its name is reserved for future use.
+
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 <a name="channel"></a>
 ## Channel Binding Object
@@ -82,7 +84,9 @@ channels:
 <a name="operation"></a>
 ## Operation Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object does not contain any fixed fields. Its name is reserved for future use.
+
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 <a name="message"></a>
 ## Message Binding Object

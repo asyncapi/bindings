@@ -13,10 +13,9 @@ Current version is `0.3.0`.
 
 ## Server Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+This object does not contain any fixed fields. Its name is reserved for future use.
 
-
-
+This object MAY be extended with [Specification Extensions](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#specification-extensions).
 
 <a name="channel"></a>
 
