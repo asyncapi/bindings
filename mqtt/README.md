@@ -69,7 +69,7 @@ This object contains information about the operation representation in MQTT.
 Field Name | Type | Applies To | Description
 ---|:---:|:---:|---
 <a name="operationBindingObjectQoS"></a>`qos` | integer | Publish, Subscribe | Defines the Quality of Service (QoS) levels for the message flow between client and server. Its value MUST be either 0 (At most once delivery), 1 (At least once delivery), or 2 (Exactly once delivery).
-<a name="operationBindingObjectRetain"></a>`retain` | boolean | Publish, Subscribe | Whether the broker should retain the message or not.
+<a name="operationBindingObjectRetain"></a>`retain` | boolean | Publish | Whether the broker should retain the message or not.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
