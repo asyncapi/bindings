@@ -122,7 +122,7 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user-signedup:
-    subscribe:
+    publish:
       bindings:
         kafka:
           groupId:
