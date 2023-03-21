@@ -71,7 +71,7 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 #### Redrive Policy
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| **Required.** The SQS queue to use as a dead letter queue (DLQ) |
+| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| The SQS queue to use as a dead letter queue (DLQ) |
 | <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The SQS queue to use as a dead letter queue (DLQ) 
 
 #### Statement
