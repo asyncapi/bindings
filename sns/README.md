@@ -224,7 +224,7 @@ channels:
               attributes:
                 reason: 
                   anything-but: password-reset
-            reDrivePolicy:
+            redrivePolicy:
               deadLetterQueue:
                 name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
 ```
@@ -293,7 +293,7 @@ channels:
             numMaxDelayRetries: 25
             backoffFunction: exponential
             maxReceivesPerSecond: 20
-          reDrivePolicy:
+          redrivePolicy:
             deadLetterQueue:
               name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
 ```

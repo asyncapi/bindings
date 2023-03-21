@@ -130,7 +130,7 @@ channels:
           name: user-signedup-queue
           type: standard
           receiveMessageWaitTime: 4
-          reDrivePolicy:
+          redrivePolicy:
             deadLetterQueue:
               name: user-signedup-dlq
           policy:
@@ -213,7 +213,7 @@ channels:
               attributes:
                 reason: 
                   anything-but: password-reset
-            reDrivePolicy:
+            redrivePolicy:
               deadLetterQueue:
               name: user-signedup-queue-dlq
         sqs:
