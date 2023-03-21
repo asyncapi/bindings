@@ -78,7 +78,7 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingPolicyStatementObjectEffect"></a>`effect` | string |**Required.** Either "Allow" or "Deny"|
-| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or IAM user to whom this statement applies|
+| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or resource ARN that this statement applies to|
 | <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SNS permission being allowed or denied e.g. sns:Publish|
 
 
