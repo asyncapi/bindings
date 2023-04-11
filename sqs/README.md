@@ -48,7 +48,7 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |---|:---:|---|
 |<a name="queueObjectRef"></a>$ref | `string` | Allows for an external definition of a queue. The referenced structure MUST be in the format of a [Queue](#queue). If there are conflicts between the referenced definition and this Queue's definition, the behavior is *undefined*.|
 | <a name="queueObjectName"></a>`name` | string | **Required.** The name of the queue. When an [SNS Operation Binding Object]() references an SQS queue by name, the identifier should be the one in this field.|
-| <a name="queueObjectType"></a>`type` | string one of: fifo, standard | **Required.**  Is this a FIFO queue or a standard queue? |
+| <a name="queueObjectType"></a>`type` | boolean | **Required.**  Is this a FIFO queue or a standard queue? |
 | <a name="queueObjectDeliveryDelay"></a>`deliveryDelay` | integer | **Optional.** The number of seconds to delay before a message sent to the queue can be received. used to create a *delay queue*. Range is 0 to 15 minutes. Defaults to 0. |
 | <a name="queueObjectVisbilityTimeout"></a>`visibilityTimeout` |integer| **Optional.** The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again. Range from 0 to 12 hours. Defaults to 30 seconds. |
 | <a name="queueObjectRecieveMessageWaitTime"></a>`receiveMessageWaitTime` |integer| **Optional.** Determines if the queue uses [short polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html) or [long polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html). On a 0 (the default) the queue reads available messages and returns immediately. On a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning.  |
@@ -71,14 +71,14 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 #### Redrive Policy
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| **Required.** The SQS queue to use as a dead letter queue (DLQ) |
+| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| The SQS queue to use as a dead letter queue (DLQ) |
 | <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The SQS queue to use as a dead letter queue (DLQ) 
 
 #### Statement
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingPolicyStatementObjectEffect"></a>`effect` | string |**Required.** Either "Allow" or "Deny"|
-| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or IAM user to whom this statement applies|
+| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or resource ARN that this statement applies to|
 | <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SNS permission being allowed or denied e.g. sns:Publish|
 
 
@@ -130,7 +130,7 @@ channels:
           name: user-signedup-queue
           type: standard
           receiveMessageWaitTime: 4
-          reDrivePolicy:
+          redrivePolicy:
             deadLetterQueue:
               name: user-signedup-dlq
           policy:
@@ -213,7 +213,7 @@ channels:
               attributes:
                 reason: 
                   anything-but: password-reset
-            reDrivePolicy:
+            redrivePolicy:
               deadLetterQueue:
               name: user-signedup-queue-dlq
         sqs:
