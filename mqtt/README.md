@@ -20,7 +20,7 @@ This object contains information about the server representation in MQTT.
 Field Name | Type | Description
 ---|:---:|---
 <a name="serverBindingObjectClientId"></a>`clientId` | string | The client identifier.
-<a name="serverBindingObjectCleanSession"></a>`cleanSession` | boolean | Whether to create a persisten connection or not. When `false`, the connection will be persistent.
+<a name="serverBindingObjectCleanSession"></a>`cleanSession` | boolean | Whether to create a persistent connection or not. When `false`, the connection will be persistent.
 <a name="serverBindingObjectLastWill"></a>`lastWill` | object | Last Will and Testament configuration.
 <a name="serverBindingObjectLastWillTopic"></a>`lastWill.topic` | string | The topic where the Last Will and Testament message will be sent.
 <a name="serverBindingObjectLastWillQoS"></a>`lastWill.qos` | integer | Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received. Its value MUST be either 0, 1 or 2.
