@@ -45,6 +45,26 @@ Field Name | Type | Description
 <a name="serverBindingObjectJMSClientID"></a>`clientID` | string | **OPTIONAL**. A client identifier for applications that use this JMS connection factory. If the Client ID Policy is set to 'Restricted' (the default), then configuring a Client ID on the [ConnectionFactory](https://docs.oracle.com/javaee/7/api/javax/jms/ConnectionFactory.html) prevents more than one JMS client from using a connection from this factory.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | **OPTIONAL**, defaults to `latest`. The version of this binding.
 
+### Examples
+
+The following example shows a `servers` object with a server binding object for `jms` with JMS specific properties:
+
+```yaml
+servers:
+  production:
+    url: jms://my-activemq-broker:61616
+    protocol: jms
+    protocolVersion: '1.1'
+    description: The production ActiveMQ broker accessed via JMS.
+    bindings:
+      jms:
+        # JMS protocol specific server details
+        jmsConnectionFactory: org.apache.activemq.ActiveMQConnectionFactory
+        properties:
+          - name: disableTimeStampsByDefault
+            value: false
+        clientID: my-application-1
+```
 
 
 <a name="channel"></a>
