@@ -54,8 +54,8 @@ The JMS [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/sp
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="channelBindingObjectDestinationType"></a>`destinationType`          | string | **OPTIONAL**, defaults to `queue`. The type of destination, which MUST be either `queue`, or `fifo-queue`. SHOULD be specified to document the messaging model (point-to-point, or strict message ordering) supported by this channel.
 <a name="channelBindingObjectDestination"></a>`destination`       | string | **OPTIONAL**, defaults to the channel name. The destination (queue) name for this channel. SHOULD only be specified if the channel name differs from the actual destination name, such as when the channel name is not a valid destination name according to the JMS Provider.
+<a name="channelBindingObjectDestinationType"></a>`destinationType`          | string | **OPTIONAL**, defaults to `queue`. The type of destination, which MUST be either `queue`, or `fifo-queue`. SHOULD be specified to document the messaging model (point-to-point, or strict message ordering) supported by this channel.
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **OPTIONAL**, defaults to `latest`. The version of this binding.
 
 ### Examples
