@@ -85,21 +85,13 @@ The following example shows a `channels` object with two channels, the second ha
 ```yaml
 channels:
   user.signup:
-    description: |
-      This application receives command messages from this channel about users to sign up.
-      Minimal configuration, omitting a channel binding object.
-    publish:
-      #...
-  user.signedup:
-    description: |
-      This application sends events to this channel about users that have signed up.
-      Explicitly provides a channel binding object.
+    description: This application receives command messages from this channel about users to sign up.
     bindings:
       jms:
-        destination:     user-signed-up
+        destination:     user-sign-up
         destinationType: fifo-queue
         bindingVersion:  '0.0.1'
-    subscribe:
+    publish:
       #...
 ```
 
