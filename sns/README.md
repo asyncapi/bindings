@@ -127,7 +127,7 @@ We support an array of consumers via the **consumers** field. This allows you to
 | <a name="channelBindingDeliverPolicyObjectMaxDelayTarget"></a>`maxDelayTarget` | integer | **Optional.** The maximum delay for a retry in seconds |
 | <a name="channelBindingDeliveryPolicyObjectNumRetries"></a>`numRetries` | integer | **Optional.** The total number of retries, including immediate, pre-backoff, backoff, and post-backoff retries |
 | <a name="channelBindingDeliveryPolicyObjectNumNoDelayRetries"></a>`numNoDelayRetries` | integer | **Optional.** The number of immediate retries (with no delay) |
-| <a name="channelBindingDeliveryPolicyObjectNumMinDelayRetries"></a>`numMinDelayRetries` | integer | **Optional.** The number of immediate retries (with no delay) |
+| <a name="channelBindingDeliveryPolicyObjectNumMinDelayRetries"></a>`numMinDelayRetries` | integer | **Optional.** The number of immediate retries (with delay) |
 | <a name="channelBindingDeliveryPolicyObjectNumMaxDelayRetries"></a>`numMaxDelayRetries` | integer | **Optional.** The number of post-backoff phase retries, with the maximum delay between retries |
 | <a name="channelBindingDeliveryPolicyObjectBackoffFunction"></a>`backoffFunction` | string, one of: arithmetic, exponential, geometric or linear | **Optional.** The algorithm for backoff between retries |
 | <a name="channelBindingDeliveryPolicyObjectMaxReceivesPerSecond"></a>`maxReceivesPerSecond` | integer | **Optional.** The maximum number of deliveries per second, per subscription |
