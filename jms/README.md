@@ -106,3 +106,41 @@ Field Name | Type | Description
 
 Note that application headers must be specified in the [`headers` field of the standard Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObjectHeaders) and are set as [Message Properties](https://docs.oracle.com/javaee/7/api/javax/jms/Message.html#Message%20Properties) of the JMS Message; how they are transmitted is defined by the JMS Provider and need not be considered here.
 In contrast, protocol headers such as `JMSMessageID` must be specified in the [`headers` field of the message binding object](#messageBindingObjectHeaders) and are transmitted in the [`headers` section of the JMS message](https://docs.oracle.com/javaee/7/api/javax/jms/Message.html#Message%20Headers).
+
+### Examples
+
+The following example shows a `message` object with both application specific headers, and a message binding object for `jms` with JMS specific headers:
+
+```yaml
+message:
+  messageId: my-message-1
+  bindings:
+    jms:
+      headers:
+        # JMS protocol specific message headers
+        required:
+          - JMSMessageID
+      properties:
+        JMSMessageID:
+          name: JMSMessageID
+          description: A unique message identifier. This may be set by your JMS Provider on your behalf.
+          type: string
+        JMSReplyTo:
+          name: JMSReplyTo
+          description: The queue or topic that the message sender expects replies to.
+          type: string
+  headers:
+    # Application specific message headers
+    required:
+      - MyToken
+      - MyOperationID
+    properties:
+      MyToken:
+        name: MyToken
+        description: Some sort of identificaton token for the publishing application.
+        type: string
+      MyOperationID:
+        name: MyOperationID
+        description: Some sort of unique identifier for the application operation to perform.
+        type: string
+```
