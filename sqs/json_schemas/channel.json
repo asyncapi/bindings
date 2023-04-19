@@ -67,7 +67,10 @@
         },
         "messageRetentionPeriod": {
           "type": "integer",
-          "description": "How long to retain a message on the queue, unless deleted, in days. The rang is 1 minute to 14 days. The default is 4 days."
+          "description": "How long to retain a message on the queue in seconds, unless deleted.",
+          "minimum": 60,
+          "maximum": 1209600,
+          "default": 345600
         },
         "redrivePolicy": {
           "$ref": "#/definitions/redrivePolicy"
