@@ -43,7 +43,8 @@
         },
         "fifoQueue": {
           "type": "boolean",
-          "description": "Default is standard queue. If set to true, creates a FIFO queue."
+          "description": "Is this a FIFO queue?",
+          "default": false
         },
         "deliveryDelay": {
           "type": "integer",
