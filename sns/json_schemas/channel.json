@@ -47,7 +47,7 @@
             "FIFO"
           ]
         },
-        "contentBasedDepulication": {
+        "contentBasedDeduplication": {
           "type": "boolean",
           "description": "True to turn on de-duplication of messages for a channel."
         }
