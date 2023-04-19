@@ -58,7 +58,7 @@
           "description": "The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again.",
           "minimum": 0,
           "maximum": 43200,
-          "default": 0
+          "default": 30
         },
         "receiveMessageWaitTime": {
           "type": "integer",
