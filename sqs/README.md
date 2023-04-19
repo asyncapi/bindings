@@ -38,7 +38,7 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingObjectQueue"></a>`queue` | [Queue](#queue)| **Required.** A definition of the queue that will be used as the channel. |
-| <a name="channelBindingObjectDLQ"></a>`deadLetterQueue` | [Queue](#queue)| **Optional.** A definition of the queue that will be used for errors. |
+| <a name="channelBindingObjectDLQ"></a>`deadLetterQueue` | [Queue](#queue)| **Optional.** A definition of the queue that will be used for un-processable messages. |
 |<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.|
 
 ### Schemas
