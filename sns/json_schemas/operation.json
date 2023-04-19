@@ -81,8 +81,8 @@
           ]
         },
         "endpoint": {
+          "description": "Where are messages being delivered to?",
           "$ref": "#/definitions/identifier",
-          "description": "Where are messages being delivered to?"
         },
         "filterPolicy": {
           "$ref": "#/definitions/filterPolicy"
