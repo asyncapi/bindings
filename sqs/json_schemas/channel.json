@@ -159,7 +159,7 @@
           ]
         },
         "action": {
-          "description": "The SNS permission being allowed or denied e.g. sns:Publish",
+          "description": "The SQS permission being allowed or denied e.g. sqs:ReceiveMessage",
           "oneOf": [
             {
               "type": "string"
