@@ -96,7 +96,8 @@
         },
         "maxReceiveCount": {
           "type": "integer",
-          "description": "The SQS queue to use as a dead letter queue (DLQ)."
+          "description": "The number of times a message is delivered to the source queue before being moved to the dead-letter queue.",
+          "default": 10
         }
       },
       "required": [
