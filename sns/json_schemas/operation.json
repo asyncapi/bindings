@@ -64,9 +64,9 @@
     },
     "consumer": {
       "type": "object",
-      "description": "What protocol will this endpoint receive messages by.",
       "properties": {
         "protocol": {
+          "description": "What protocol will this endpoint receive messages by?",
           "type": "string",
           "enum": [
             "http",
