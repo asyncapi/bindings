@@ -29,7 +29,8 @@
     },
     "bindingVersion": {
       "type": "string",
-      "description": "Defaults to latest. The version of this binding."
+      "description": "The version of this binding.",
+      "default": "latest"
     }
   },
   "definitions": {
