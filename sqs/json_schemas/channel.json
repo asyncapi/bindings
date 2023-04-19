@@ -62,7 +62,8 @@
         },
         "receiveMessageWaitTime": {
           "type": "integer",
-          "description": "Determines if the queue uses short polling or long polling. On a 0 (the default) the queue reads available messages and returns immediately. On a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning."
+          "description": "Determines if the queue uses short polling or long polling. Set to zero the queue reads available messages and returns immediately. Set to a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning.",
+          "default": 0
         },
         "messageRetentionPeriod": {
           "type": "integer",
