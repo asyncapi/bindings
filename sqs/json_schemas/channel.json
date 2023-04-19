@@ -12,9 +12,11 @@
   },
   "properties": {
     "queue": {
+      "description": "A definition of the queue that will be used as the channel.",
       "$ref": "#/definitions/queue"
     },
     "deadLetterQueue": {
+      "description": "A definition of the queue that will be used for errors.",
       "$ref": "#/definitions/queue"
     },
     "bindingVersion": {
