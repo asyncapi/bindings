@@ -29,6 +29,7 @@
   "definitions": {
     "queue": {
       "type": "object",
+      "description": "A definition of a queue.",
       "properties": {
         "$ref": {
           "type": "string",
@@ -40,23 +41,34 @@
         },
         "fifoQueue": {
           "type": "boolean",
-          "description": "Default is standard queue. If set to true, creates a FIFO queue."
+          "description": "Is this a FIFO queue?",
+          "default": false
         },
         "deliveryDelay": {
           "type": "integer",
-          "description": "The number of seconds to delay before a message sent to the queue can be received. used to create a delay queue. Range is 0 to 15 minutes. Defaults to 0."
+          "description": "The number of seconds to delay before a message sent to the queue can be received. used to create a delay queue.",
+          "minimum": 0,
+          "maximum": 15,
+          "default": 0
         },
         "visibilityTimeout": {
           "type": "integer",
-          "description": "The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again. Range from 0 to 12 hours. Defaults to 30 seconds."
+          "description": "The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again.",
+          "minimum": 0,
+          "maximum": 43200,
+          "default": 30
         },
         "receiveMessageWaitTime": {
           "type": "integer",
-          "description": "Determines if the queue uses short polling or long polling. On a 0 (the default) the queue reads available messages and returns immediately. On a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning."
+          "description": "Determines if the queue uses short polling or long polling. Set to zero the queue reads available messages and returns immediately. Set to a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning.",
+          "default": 0
         },
         "messageRetentionPeriod": {
           "type": "integer",
-          "description": "How long to retain a message on the queue, unless deleted, in days. The range is 1 minute to 14 days. The default is 4 days."
+          "description": "How long to retain a message on the queue in seconds, unless deleted.",
+          "minimum": 60,
+          "maximum": 1209600,
+          "default": 345600
         },
         "redrivePolicy": {
           "$ref": "#/definitions/redrivePolicy"
@@ -78,11 +90,12 @@
       "description": "Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.",
       "properties": {
         "deadLetterQueue": {
-          "$ref": "#/definitions/identifier"
+          "$ref": "#/definitions/identifier"          
         },
         "maxReceiveCount": {
           "type": "integer",
-          "description": "The SQS queue to use as a dead letter queue (DLQ)."
+          "description": "The number of times a message is delivered to the source queue before being moved to the dead-letter queue.",
+          "default": 10
         }
       },
       "required": [
@@ -105,11 +118,11 @@
     },
     "policy": {
       "type": "object",
-      "description": "The security policy for the SQS Queue.",
+      "description": "The security policy for the SQS Queue",
       "properties": {
         "statements": {
           "type": "array",
-          "description": "An array of Statement objects, each of which controls a permission for this topic.",
+          "description": "An array of statement objects, each of which controls a permission for this queue.",
           "items": {
             "$ref": "#/definitions/statement"
           }
@@ -144,7 +157,7 @@
           ]
         },
         "action": {
-          "description": "The SNS permission being allowed or denied e.g. sns:Publish",
+          "description": "The SQS permission being allowed or denied e.g. sqs:ReceiveMessage",
           "oneOf": [
             {
               "type": "string"
