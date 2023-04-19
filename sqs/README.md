@@ -66,7 +66,7 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 #### Policy
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingPolicyObjectPolicyStatements"></a>`Statements` | [Statement](#statement) | **Required.** An array of Statement objects, each of which controls a permission for this topic |
+| <a name="channelBindingPolicyObjectPolicyStatements"></a>`Statements` | [Statement](#statement) | **Required.** An array of Statement objects, each of which controls a permission for this queue. |
 
 #### Redrive Policy
 |Field Name | Type | Description|
