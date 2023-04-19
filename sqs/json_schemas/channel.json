@@ -16,7 +16,7 @@
       "$ref": "#/definitions/queue"
     },
     "deadLetterQueue": {
-      "description": "A definition of the queue that will be used for errors.",
+      "description": "A definition of the queue that will be used for un-processable messages.",
       "$ref": "#/definitions/queue"
     },
     "bindingVersion": {
