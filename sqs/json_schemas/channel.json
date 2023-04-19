@@ -28,7 +28,7 @@
   "definitions": {
     "queue": {
       "type": "object",
-      "description": "A definition of the queue that will be used as the channel.",
+      "description": "A definition of a queue.",
       "properties": {
         "$ref": {
           "type": "string",
