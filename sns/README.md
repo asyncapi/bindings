@@ -111,7 +111,7 @@ We support an array of consumers via the **consumers** field. This allows you to
 
 | Field Name | Type | Description |
 |---|:---:|---|
-| <a name="operationBindingObjectProtocol"></a>`protocol` |string, one of: http, https, email, email-json, sms, sqs, application, lambda, firehose | **Required.** What protocol will this endpoint receive messages by.|
+| <a name="operationBindingObjectProtocol"></a>`protocol` |string, one of: http, https, email, email-json, sms, sqs, application, lambda, firehose | **Required.** What protocol will this endpoint receive messages by? |
 | <a name="operationBindingObjectEndpoint"></a>`endpoint` |[identifier](#identifier)| **Required.** Where are messages being delivered to?|
 | <a name="operationBindingObjectFilerPolicy"></a>`filterPolicy` | [filterPolicy](#filter-policy) | **Optional.** Only receive a subset of messages from the channel, determined by this policy.|
 | <a name="operationBindingObjectRawMessageDelivery"></a>`rawMessageDelivery` | boolean | **Required.** If *true* AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If *false* the SNS attributes are included in the body. |
