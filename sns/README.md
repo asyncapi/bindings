@@ -152,8 +152,8 @@ We provide an Identifer Object to support providing the identifier of an externa
 
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| **Required.** The SQS queue to use as a dead letter queue (DLQ) |
-| <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The SQS queue to use as a dead letter queue (DLQ). Note that you may have a Redrive Policy to put messages that cannot be delivered to an SQS queue, even if you use another protocol to consume messages from the queue, so it is defined at the level of the SNS Operation Binding Object in a Consumer Object (and is applied as part of an [SNS Subscription](https://docs.aws.amazon.com/sns/latest/dg/sns-create-subscribe-endpoint-to-topic.html)). The SQS Binding describes how to define an SQS Binding that supports defining the target SQS of the Redrive Policy. |
+| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| **Required.** The SQS queue to use as a dead letter queue (DLQ). Note that you may have a Redrive Policy to put messages that cannot be delivered to an SQS queue, even if you use another protocol to consume messages from the queue, so it is defined at the level of the SNS Operation Binding Object in a Consumer Object (and is applied as part of an [SNS Subscription](https://docs.aws.amazon.com/sns/latest/dg/sns-create-subscribe-endpoint-to-topic.html)). The SQS Binding describes how to define an SQS Binding that supports defining the target SQS of the Redrive Policy. |
+| <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The number of times a message is delivered to the source queue before being moved to the dead-letter queue. Defaults to 10. |
 
 ### Examples
 
