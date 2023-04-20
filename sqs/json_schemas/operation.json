@@ -47,7 +47,7 @@
         },
         "deliveryDelay": {
           "type": "integer",
-          "description": "The number of seconds to delay before a message sent to the queue can be received. used to create a delay queue.",
+          "description": "The number of seconds to delay before a message sent to the queue can be received. Used to create a delay queue.",
           "minimum": 0,
           "maximum": 15,
           "default": 0
