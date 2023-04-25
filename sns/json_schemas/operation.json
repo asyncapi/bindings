@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://asyncapi.com/bindings/sns/operation.json",
+  "title": "Operation Schema",
+  "description": "This object contains information about the operation representation in SNS.",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-[\\w\\d\\.\\-\\_]+$": {
+      "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+    }
+  },
+  "properties": {
+    "topic": {
+      "$ref": "#/definitions/identifier",
+      "description": "Often we can assume that the SNS Topic is the channel name-we provide this field in case the you need to supply the ARN, or the Topic name is not the channel name in the AsyncAPI document."
+    },
+    "consumers": {
+      "type": "array",
+      "description": "The protocols that listen to this topic and their endpoints.",
+      "items": {
+        "$ref": "#/definitions/consumer"
+      },
+      "minItems": 1
+    },
+    "deliveryPolicy": {
+      "$ref": "#/definitions/deliveryPolicy",
+      "description": "Policy for retries to HTTP. The field is the default for HTTP receivers of the SNS Topic which may be overridden by a specific consumer."
+    },
+    "bindingVersion": {
+      "type": "string",
+      "description": "The version of this binding.",
+      "default": "latest"
+    }
+  },
+  "required": [
+    "consumers"
+  ],
+  "definitions": {
+    "identifier": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The endpoint is a URL."
+        },
+        "email": {
+          "type": "string",
+          "description": "The endpoint is an email adress."
+        },
+        "phone": {
+          "type": "string",
+          "description": "The endpoint is a phone number."
+        },
+        "arn": {
+          "type": "string",
+          "description": "The target is an ARN. For example, for SQS, the identifier may be an ARN, which will be of the form: arn:aws:sqs:{region}:{account-id}:{queueName}"
+        },
+        "name": {
+          "type": "string",
+          "description": "The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this publish Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field sqs binding. We don't use $ref because we are referring, not including."
+        }
+      }
+    },
+    "consumer": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "What protocol will this endpoint receive messages by?",
+          "type": "string",
+          "enum": [
+            "http",
+            "https",
+            "email",
+            "email-json",
+            "sms",
+            "sqs",
+            "application",
+            "lambda",
+            "firehose"
+          ]
+        },
+        "endpoint": {
+          "description": "Where are messages being delivered to?",
+          "$ref": "#/definitions/identifier",
+        },
+        "filterPolicy": {
+          "$ref": "#/definitions/filterPolicy"
+        },
+        "rawMessageDelivery": {
+          "type": "boolean",
+          "description": "If true AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If false the SNS attributes are included in the body."
+        },
+        "redrivePolicy": {
+          "$ref": "#/definitions/redrivePolicy"
+        },
+        "deliveryPolicy": {
+          "$ref": "#/definitions/deliveryPolicy",
+          "description": "Policy for retries to HTTP. The parameter is for that SNS Subscription and overrides any policy on the SNS Topic."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name to use with an SNS subscription"
+        }
+      },
+      "required": [
+        "protocol",
+        "endpoint",
+        "rawMessageDelivery"
+      ]
+    },
+    "deliveryPolicy": {
+      "type": "object",
+      "properties": {
+        "minDelayTarget": {
+          "type": "integer",
+          "description": "The minimum delay for a retry in seconds."
+        },
+        "maxDelayTarget": {
+          "type": "integer",
+          "description": "The maximum delay for a retry in seconds."
+        },
+        "numRetries": {
+          "type": "integer",
+          "description": "The total number of retries, including immediate, pre-backoff, backoff, and post-backoff retries."
+        },
+        "numNoDelayRetries": {
+          "type": "integer",
+          "description": "The number of immediate retries (with no delay)."
+        },
+        "numMinDelayRetries": {
+          "type": "integer",
+          "description": "The number of immediate retries (with delay)."
+        },
+        "numMaxDelayRetries": {
+          "type": "integer",
+          "description": "The number of post-backoff phase retries, with the maximum delay between retries."
+        },
+        "backoffFunction": {
+          "type": "string",
+          "description": "The algorithm for backoff between retries.",
+          "enum": [
+            "arithmetic",
+            "exponential",
+            "geometric",
+            "linear"
+          ]
+        },
+        "maxReceivesPerSecond": {
+          "type": "integer",
+          "description": "The maximum number of deliveries per second, per subscription."
+        }
+      }
+    },
+    "filterPolicy": {
+      "type": "object",
+      "description": "Only receive a subset of messages from the channel, determined by this policy.",
+      "properties": {
+        "attributes": {
+          "type": "object",
+          "description": "A map of a message attribute to an array of possible matches. The match may be a simple string for an exact match, but it may also be an object that represents a constraint and values for that constraint.",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "attributes"
+      ]
+    },
+    "redrivePolicy": {
+      "type": "object",
+      "description": "Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.",
+      "properties": {
+        "deadLetterQueue": {
+          "$ref": "#/definitions/identifier",
+          "description": "The SQS queue to use as a dead letter queue (DLQ)."
+        },
+        "maxReceiveCount": {
+          "type": "integer",
+          "description": "The number of times a message is delivered to the source queue before being moved to the dead-letter queue.",
+          "default": 10
+        }
+      },
+      "required": [
+        "deadLetterQueue"
+      ]
+    }
+  }
+}

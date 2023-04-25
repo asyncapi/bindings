@@ -38,7 +38,7 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingObjectQueue"></a>`queue` | [Queue](#queue)| **Required.** A definition of the queue that will be used as the channel. |
-| <a name="channelBindingObjectDLQ"></a>`deadLetterQueue` | [Queue](#queue)| **Optional.** A definition of the queue that will be used as the channel. |
+| <a name="channelBindingObjectDLQ"></a>`deadLetterQueue` | [Queue](#queue)| **Optional.** A definition of the queue that will be used for un-processable messages. |
 |<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.|
 
 ### Schemas
@@ -48,12 +48,12 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |---|:---:|---|
 |<a name="queueObjectRef"></a>$ref | `string` | Allows for an external definition of a queue. The referenced structure MUST be in the format of a [Queue](#queue). If there are conflicts between the referenced definition and this Queue's definition, the behavior is *undefined*.|
 | <a name="queueObjectName"></a>`name` | string | **Required.** The name of the queue. When an [SNS Operation Binding Object]() references an SQS queue by name, the identifier should be the one in this field.|
-| <a name="queueObjectType"></a>`type` | boolean | **Required.**  Is this a FIFO queue or a standard queue? |
-| <a name="queueObjectDeliveryDelay"></a>`deliveryDelay` | integer | **Optional.** The number of seconds to delay before a message sent to the queue can be received. used to create a *delay queue*. Range is 0 to 15 minutes. Defaults to 0. |
-| <a name="queueObjectVisbilityTimeout"></a>`visibilityTimeout` |integer| **Optional.** The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again. Range from 0 to 12 hours. Defaults to 30 seconds. |
-| <a name="queueObjectRecieveMessageWaitTime"></a>`receiveMessageWaitTime` |integer| **Optional.** Determines if the queue uses [short polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html) or [long polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html). On a 0 (the default) the queue reads available messages and returns immediately. On a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning.  |
-| <a name="queueObjectMessageRetentionPeriod"></a>`messageRetentionPeriod` |integer| **Optional.** How long to retain a message on the queue, unless deleted, in days. The rang is 1 minute to 14 days. The default is 4 days. |
-| <a name="queueObjectRedrivePolicy"></a>`reDrivePolicy` | [Redrive Policy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.|
+| <a name="fifoQueue"></a>`fifoQueue` | boolean | **Required.**  Is this a FIFO queue? |
+| <a name="queueObjectDeliveryDelay"></a>`deliveryDelay` | integer | **Optional.** The number of seconds to delay before a message sent to the queue can be received. Used to create a *delay queue*. Range is 0 to 15 minutes. Defaults to 0. |
+| <a name="queueObjectVisbilityTimeout"></a>`visibilityTimeout` |integer| **Optional.** The length of time, in seconds, that a consumer locks a message - hiding it from reads - before it is unlocked and can be read again. Range from 0 to 12 hours (43200 seconds). Defaults to 30 seconds. |
+| <a name="queueObjectRecieveMessageWaitTime"></a>`receiveMessageWaitTime` |integer| **Optional.** Determines if the queue uses [short polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html) or [long polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html). Set to zero (the default) the queue reads available messages and returns immediately. Set to a non-zero integer, long polling waits the specified number of seconds for messages to arrive before returning.  |
+| <a name="queueObjectMessageRetentionPeriod"></a>`messageRetentionPeriod` |integer| **Optional.** How long to retain a message on the queue in seconds, unless deleted. The range is 60 (1 minute) to 1,209,600 (14 days). The default is 345,600 (4 days). |
+| <a name="queueObjectRedrivePolicy"></a>`redrivePolicy` | [Redrive Policy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.|
 | <a name="queueObjectPolicy"></a>`policy` |[Policy](#policy) | **Optional.** The security policy for the SQS Queue | 
 | <a name="queueObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the queue. |
 
@@ -66,20 +66,20 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 #### Policy
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingPolicyObjectPolicyStatements"></a>`Statements` | [Statement](#statement) | **Required.** An array of Statement objects, each of which controls a permission for this topic |
+| <a name="channelBindingPolicyObjectPolicyStatements"></a>`Statements` | [Statement](#statement) | **Required.** An array of Statement objects, each of which controls a permission for this queue. |
 
 #### Redrive Policy
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| The SQS queue to use as a dead letter queue (DLQ) |
-| <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The SQS queue to use as a dead letter queue (DLQ) 
+| <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The number of times a message is delivered to the source queue before being moved to the dead-letter queue. Default is 10. | 
 
 #### Statement
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingPolicyStatementObjectEffect"></a>`effect` | string |**Required.** Either "Allow" or "Deny"|
 | <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or resource ARN that this statement applies to|
-| <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SNS permission being allowed or denied e.g. sns:Publish|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SQS permission being allowed or denied e.g. sqs:ReceiveMessage |
 
 
 <a name="operation"></a>

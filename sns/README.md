@@ -41,7 +41,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingFifoObjectChannelType"></a>`type` | string one of: standard or FIFO | **Required.** What type of SNS Topic is this? |
-| <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDepulication` | boolean | **Optional.** True to turn on de-duplication of messages for a channel.|
+| <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDeduplication` | boolean | **Optional.** True to turn on de-duplication of messages for a channel.|
 
 #### Policy
 |Field Name | Type | Description|
@@ -111,12 +111,12 @@ We support an array of consumers via the **consumers** field. This allows you to
 
 | Field Name | Type | Description |
 |---|:---:|---|
-| <a name="operationBindingObjectProtocol"></a>`protocol` |string, one of: http, https, email, email-json, sms, sqs, application, lambda, firehose | **Required.** What protocol will this endpoint receive messages by.|
+| <a name="operationBindingObjectProtocol"></a>`protocol` |string, one of: http, https, email, email-json, sms, sqs, application, lambda, firehose | **Required.** What protocol will this endpoint receive messages by? |
 | <a name="operationBindingObjectEndpoint"></a>`endpoint` |[identifier](#identifier)| **Required.** Where are messages being delivered to?|
 | <a name="operationBindingObjectFilerPolicy"></a>`filterPolicy` | [filterPolicy](#filter-policy) | **Optional.** Only receive a subset of messages from the channel, determined by this policy.|
 | <a name="operationBindingObjectRawMessageDelivery"></a>`rawMessageDelivery` | boolean | **Required.** If *true* AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If *false* the SNS attributes are included in the body. |
-| <a name="operationBindingObjectRedrivePolicy"></a>`reDrivePolicy` | [redrivePolicy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue. |
-| <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) | **Optional.** Policy for retries to HTTP. The parameter is for that [SNS Subscription](https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html)and overrides any policy on the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html).|
+| <a name="operationBindingObjectRedrivePolicy"></a>`redrivePolicy` | [redrivePolicy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue. |
+| <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) | **Optional.** Policy for retries to HTTP. The parameter is for that [SNS Subscription](https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html) and overrides any policy on the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html). |
 | <a name="channelBindingObjectDisplayName"></a>`displayName` | string |**Optional.** The display name to use with an SMS subscription |
 
 
@@ -127,7 +127,7 @@ We support an array of consumers via the **consumers** field. This allows you to
 | <a name="channelBindingDeliverPolicyObjectMaxDelayTarget"></a>`maxDelayTarget` | integer | **Optional.** The maximum delay for a retry in seconds |
 | <a name="channelBindingDeliveryPolicyObjectNumRetries"></a>`numRetries` | integer | **Optional.** The total number of retries, including immediate, pre-backoff, backoff, and post-backoff retries |
 | <a name="channelBindingDeliveryPolicyObjectNumNoDelayRetries"></a>`numNoDelayRetries` | integer | **Optional.** The number of immediate retries (with no delay) |
-| <a name="channelBindingDeliveryPolicyObjectNumMinDelayRetries"></a>`numMinDelayRetries` | integer | **Optional.** The number of immediate retries (with no delay) |
+| <a name="channelBindingDeliveryPolicyObjectNumMinDelayRetries"></a>`numMinDelayRetries` | integer | **Optional.** The number of immediate retries (with delay) |
 | <a name="channelBindingDeliveryPolicyObjectNumMaxDelayRetries"></a>`numMaxDelayRetries` | integer | **Optional.** The number of post-backoff phase retries, with the maximum delay between retries |
 | <a name="channelBindingDeliveryPolicyObjectBackoffFunction"></a>`backoffFunction` | string, one of: arithmetic, exponential, geometric or linear | **Optional.** The algorithm for backoff between retries |
 | <a name="channelBindingDeliveryPolicyObjectMaxReceivesPerSecond"></a>`maxReceivesPerSecond` | integer | **Optional.** The maximum number of deliveries per second, per subscription |
@@ -152,8 +152,8 @@ We provide an Identifer Object to support providing the identifier of an externa
 
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| **Required.** The SQS queue to use as a dead letter queue (DLQ) |
-| <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The SQS queue to use as a dead letter queue (DLQ). Note that you may have a Redrive Policy to put messages that cannot be delivered to an SQS queue, even if you use another protocol to consume messages from the queue, so it is defined at the level of the SNS Operation Binding Object in a Consumer Object (and is applied as part of an [SNS Subscription](https://docs.aws.amazon.com/sns/latest/dg/sns-create-subscribe-endpoint-to-topic.html)). The SQS Binding describes how to define an SQS Binding that supports defining the target SQS of the Redrive Policy. |
+| <a name="redrivePolicyObjectDeadLetterQueue"></a>`deadLetterQueue` |[Identifier](#identifier)| **Required.** The SQS queue to use as a dead letter queue (DLQ). Note that you may have a Redrive Policy to put messages that cannot be delivered to an SQS queue, even if you use another protocol to consume messages from the queue, so it is defined at the level of the SNS Operation Binding Object in a Consumer Object (and is applied as part of an [SNS Subscription](https://docs.aws.amazon.com/sns/latest/dg/sns-create-subscribe-endpoint-to-topic.html)). The SQS Binding describes how to define an SQS Binding that supports defining the target SQS of the Redrive Policy. |
+| <a name="redrivePolicyObjectMaxReceiveCount"></a>`maxReceiveCount` |integer| **Optional.** The number of times a message is delivered to the source queue before being moved to the dead-letter queue. Defaults to 10. |
 
 ### Examples
 
