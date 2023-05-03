@@ -19,6 +19,7 @@ These bindings use the `jms` [protocol](https://github.com/asyncapi/spec/blob/ma
 
 JMS is not technically a protocol, rather it is an API. A JMS Provider implements the JMS API and may define a protocol for implementing JMS API operations. Regardless, for the purposes of AsyncAPI we can treat it like a "protocol" to enable AsyncAPI definitions that are somewhat portable between various JMS Providers. If necessary, the user is free to combine this binding with other bindings that implement a JMS Provider (e.g. [Apache Pulsar](https://github.com/asyncapi/bindings/tree/master/pulsar), [Amazon SQS](https://github.com/asyncapi/bindings/tree/master/sqs), [IBM MQ](https://github.com/asyncapi/bindings/tree/master/ibmmq), etc.) to detail JMS Provider specific configuration.
 
+**NOTE** that from protocol version 3.0, this binding is compatible with [Jakarta Messaging](https://jakarta.ee/specifications/messaging).
 
 ## Server Object
 
