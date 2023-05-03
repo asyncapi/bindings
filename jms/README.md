@@ -28,7 +28,7 @@ Server Object Field Name | Values for JMS Protocol | Description
 ---|:---|:---
 <a name="serverObjectProtocolFieldValueJMS"></a>`protocol`               | `jms`                                                 | **REQUIRED**. MUST be `jms` for the scope of this specification.
 <a name="serverObjectUrlFieldValueJMS"></a>`url`                         | e.g., `jms://host:port`       | **REQUIRED**. MUST be a URL containing the hostname and port of a JMS Broker.
-<a name="serverObjectProtocolVersionFieldValueJMS"></a>`protocolVersion` | e.g., `2.0`                                                   | **OPTIONAL**, defaults to `2.0`. If present MUST be the version indicator of the JMS API. Valid values are `1.0`, `1.0.1`, `1.0.1a`, `1.0.2`, `1.0.2a`, `1.0.2b`, `1.1`, `2.0`, `2.0a`, `2.1`, or `3.0`.
+<a name="serverObjectProtocolVersionFieldValueJMS"></a>`protocolVersion` | e.g., `3.1`                                                   | **OPTIONAL**, defaults to `3.1`. If present MUST be the version indicator of the JMS API. Valid values are `1.0`, `1.0.1`, `1.0.1a`, `1.0.2`, `1.0.2a`, `1.0.2b`, `1.1`, `2.0`, `2.0a`, `2.1`, or `3.0`, `3.1.`.
 
 
 <a name="server"></a>
