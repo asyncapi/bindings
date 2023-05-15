@@ -40,7 +40,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 #### Ordering
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingFifoObjectChannelType"></a>`type` | string one of: standard or FIFO | **Required.** What type of SNS Topic is this? |
+| <a name="channelBindingFifoObjectChannelType"></a>`type` | string | **Required.** Defines the type of SNS Topic. Can be either `standard` or `FIFO`. |
 | <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDeduplication` | boolean | **Optional.** True to turn on de-duplication of messages for a channel.|
 
 #### Policy
