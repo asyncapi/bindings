@@ -41,7 +41,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingFifoObjectChannelType"></a>`type` | string | **Required.** Defines the type of SNS Topic. Can be either `standard` or `FIFO`. |
-| <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDeduplication` | boolean | **Optional.** True to turn on de-duplication of messages for a channel.|
+| <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDeduplication` | boolean | **Optional.** Whether the de-duplication of messages should be turned on. Defaults to `false`|
 
 #### Policy
 |Field Name | Type | Description|
