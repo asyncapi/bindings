@@ -15,7 +15,7 @@
       "type": "string",
       "description": "The name of the topic. Can be different from the channel name to allow flexibility around AWS resource naming limitations."
     },
-    "type": {
+    "ordering": {
       "$ref": "#/definitions/ordering"
     },
     "policy": {
@@ -41,7 +41,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "What type of SNS Topic is this?",
+          "description": "Defines the type of SNS Topic.",
           "enum": [
             "standard",
             "FIFO"
@@ -51,7 +51,10 @@
           "type": "boolean",
           "description": "True to turn on de-duplication of messages for a channel."
         }
-      }
+      },
+      "required": [
+        "type"
+      ]
     },
     "policy": {
       "type": "object",

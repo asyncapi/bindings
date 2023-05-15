@@ -30,7 +30,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingObjectName"></a>`name` | string | **Required.** The name of the topic. Can be different from the channel name to allow flexibility around AWS resource naming limitations.|
-| <a name="channelBindingObjectFifo"></a>`type` | [ordering](#ordering)| **Optional.** By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.  |
+| <a name="channelBindingObjectFifo"></a>`ordering` | [ordering](#ordering)| **Optional.** By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.  |
 | <a name="channelBindingObjectPolicy"></a>`policy` |[policy](#policy) | **Optional.** The security policy for the SNS Topic |
 | <a name="channelBindingObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the topic. |
 |<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.|
@@ -40,13 +40,13 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 #### Ordering
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingFifoObjectChannelType"></a>`type` | string one of: standard or FIFO | **Required.** What type of SNS Topic is this? |
-| <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDeduplication` | boolean | **Optional.** True to turn on de-duplication of messages for a channel.|
+| <a name="channelBindingFifoObjectChannelType"></a>`type` | string | **Required.** Defines the type of SNS Topic. Can be either `standard` or `FIFO`. |
+| <a name="channelBindingContentBasedDeduplication"></a>`contentBasedDeduplication` | boolean | **Optional.** Whether the de-duplication of messages should be turned on. Defaults to `false`|
 
 #### Policy
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingPolicyObjectPolicyStatements"></a>`statements` | [Statement](#statement) | **Required.** An array of Statement objects, each of which controls a permission for this topic |
+| <a name="channelBindingPolicyObjectPolicyStatements"></a>`statements` | [[Statement](#statement)] | **Required.** An array of Statement objects, each of which controls a permission for this topic |
 
 #### Statement
 |Field Name | Type | Description|
@@ -111,7 +111,7 @@ We support an array of consumers via the **consumers** field. This allows you to
 
 | Field Name | Type | Description |
 |---|:---:|---|
-| <a name="operationBindingObjectProtocol"></a>`protocol` |string, one of: http, https, email, email-json, sms, sqs, application, lambda, firehose | **Required.** What protocol will this endpoint receive messages by? |
+| <a name="operationBindingObjectProtocol"></a>`protocol` | string | **Required.** The protocol that this endpoint receives messages by. Can be `http`, `https`, `email`, `email-json`, `sms`, `sqs`, `application`, `lambda` or `firehose` |
 | <a name="operationBindingObjectEndpoint"></a>`endpoint` |[identifier](#identifier)| **Required.** Where are messages being delivered to?|
 | <a name="operationBindingObjectFilerPolicy"></a>`filterPolicy` | [filterPolicy](#filter-policy) | **Optional.** Only receive a subset of messages from the channel, determined by this policy.|
 | <a name="operationBindingObjectRawMessageDelivery"></a>`rawMessageDelivery` | boolean | **Required.** If *true* AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If *false* the SNS attributes are included in the body. |

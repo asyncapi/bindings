@@ -92,7 +92,7 @@
       "description": "Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.",
       "properties": {
         "deadLetterQueue": {
-          "$ref": "#/definitions/identifier"          
+          "$ref": "#/definitions/identifier"
         },
         "maxReceiveCount": {
           "type": "integer",
@@ -179,5 +179,46 @@
         "action"
       ]
     }
-  }
+  },
+  "examples": [
+    {
+      "queue": {
+        "name": "myQueue",
+        "fifoQueue": true,
+        "deliveryDelay": 30,
+        "visibilityTimeout": 60,
+        "receiveMessageWaitTime": 0,
+        "messageRetentionPeriod": 86400,
+        "redrivePolicy": {
+          "deadLetterQueue": {
+            "arn": "arn:aws:SQS:eu-west-1:0000000:123456789"
+          },
+          "maxReceiveCount": 15
+        },
+        "policy": {
+          "statements": [
+            {
+              "effect": "deny",
+              "principal": "arn:aws:iam::123456789012:user/dec.kolakowski",
+              "action": [
+                "sqs:SendMessage",
+                "sqs:ReceiveMessage"
+              ]
+            }
+          ]
+        },
+        "tags": {
+          "owner": "AsyncAPI.NET",
+          "platform": "AsyncAPIOrg"
+        }
+      },
+      "deadLetterQueue": {
+        "name": "myQueue_error",
+        "deliveryDelay": 0,
+        "visibilityTimeout": 0,
+        "receiveMessageWaitTime": 0,
+        "messageRetentionPeriod": 604800
+      }
+    }
+  ]
 }
