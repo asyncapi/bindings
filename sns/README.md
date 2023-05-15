@@ -30,7 +30,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingObjectName"></a>`name` | string | **Required.** The name of the topic. Can be different from the channel name to allow flexibility around AWS resource naming limitations.|
-| <a name="channelBindingObjectFifo"></a>`type` | [ordering](#ordering)| **Optional.** By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.  |
+| <a name="channelBindingObjectFifo"></a>`ordering` | [ordering](#ordering)| **Optional.** By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.  |
 | <a name="channelBindingObjectPolicy"></a>`policy` |[policy](#policy) | **Optional.** The security policy for the SNS Topic |
 | <a name="channelBindingObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the topic. |
 |<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.|

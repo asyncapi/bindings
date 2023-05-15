@@ -15,7 +15,7 @@
       "type": "string",
       "description": "The name of the topic. Can be different from the channel name to allow flexibility around AWS resource naming limitations."
     },
-    "type": {
+    "ordering": {
       "$ref": "#/definitions/ordering"
     },
     "policy": {
