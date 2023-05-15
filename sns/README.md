@@ -46,7 +46,7 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 #### Policy
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingPolicyObjectPolicyStatements"></a>`statements` | [Statement](#statement) | **Required.** An array of Statement objects, each of which controls a permission for this topic |
+| <a name="channelBindingPolicyObjectPolicyStatements"></a>`statements` | [[Statement](#statement)] | **Required.** An array of Statement objects, each of which controls a permission for this topic |
 
 #### Statement
 |Field Name | Type | Description|
