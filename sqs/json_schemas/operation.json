@@ -178,5 +178,37 @@
         "action"
       ]
     }
-  }
+  },
+  "examples": [
+    {
+      "queues": [
+        {
+         "name": "myQueue",
+         "deliveryDelay": 10,
+         "redrivePolicy": {
+            "deadLetterQueue": {
+              "name": "myQueue_error"
+            },
+            "maxReceiveCount": 15
+         },
+         "policy": {
+            "statements": [
+              {
+                "effect": "deny",
+                "principal": "arn:aws:iam::123456789012:user/dec.kolakowski",
+                "action": [
+                    "sqs:SendMessage",
+                    "sqs:ReceiveMessage"
+                ]
+              }
+            ]
+         }
+        },
+        {
+          "name": "myQueue_error",
+          "deliveryDelay": 10
+        }
+      ]
+    }
+  ]
 }
