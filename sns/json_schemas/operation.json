@@ -39,6 +39,11 @@
   "definitions": {
     "identifier": {
       "type": "object",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "url": {
           "type": "string",
@@ -64,6 +69,11 @@
     },
     "consumer": {
       "type": "object",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "protocol": {
           "description": "What protocol will this endpoint receive messages by?",
@@ -111,6 +121,11 @@
     },
     "deliveryPolicy": {
       "type": "object",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "minDelayTarget": {
           "type": "integer",
@@ -155,6 +170,11 @@
     "filterPolicy": {
       "type": "object",
       "description": "Only receive a subset of messages from the channel, determined by this policy.",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "attributes": {
           "type": "object",
@@ -184,6 +204,11 @@
     "redrivePolicy": {
       "type": "object",
       "description": "Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "deadLetterQueue": {
           "$ref": "#/definitions/identifier",

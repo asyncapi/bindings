@@ -32,6 +32,11 @@
     "queue": {
       "type": "object",
       "description": "A definition of a queue.",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "$ref": {
           "type": "string",
@@ -90,6 +95,11 @@
     "redrivePolicy": {
       "type": "object",
       "description": "Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "deadLetterQueue": {
           "$ref": "#/definitions/identifier"
@@ -107,6 +117,11 @@
     "identifier": {
       "type": "object",
       "description": "The SQS queue to use as a dead letter queue (DLQ).",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "arn": {
           "type": "string",
@@ -121,6 +136,11 @@
     "policy": {
       "type": "object",
       "description": "The security policy for the SQS Queue",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "statements": {
           "type": "array",
@@ -136,6 +156,11 @@
     },
     "statement": {
       "type": "object",
+      "patternProperties": {
+        "^x-[\\w\\d\\.\\-\\_]+$": {
+          "$ref": "https://raw.githubusercontent.com/asyncapi/spec-json-schemas/v2.14.0/schemas/2.4.0.json#/definitions/specificationExtension"
+        }
+      },
       "properties": {
         "effect": {
           "type": "string",
