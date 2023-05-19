@@ -174,11 +174,11 @@ channels:
       description: send messages to the topic
       bindings:
         sns:
-          policy:
-            statements: 
-            - effect : Allow
-              principal: *
-              action: SNS:Publish
+          consumers:
+            - protocol: sqs
+              endpoint:
+                name: myQueue
+              rawMessageDelivery: false
 ```
 
 We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
