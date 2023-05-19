@@ -219,7 +219,7 @@
          "policy": {
             "statements": [
               {
-                "effect": "deny",
+                "effect": "Deny",
                 "principal": "arn:aws:iam::123456789012:user/dec.kolakowski",
                 "action": [
                     "sqs:SendMessage",

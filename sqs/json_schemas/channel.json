@@ -89,7 +89,8 @@
         }
       },
       "required": [
-        "name"
+        "name",
+        "fifoQueue"
       ]
     },
     "redrivePolicy": {
@@ -210,7 +211,7 @@
       "queue": {
         "name": "myQueue",
         "fifoQueue": true,
-        "deliveryDelay": 30,
+        "deliveryDelay": 15,
         "visibilityTimeout": 60,
         "receiveMessageWaitTime": 0,
         "messageRetentionPeriod": 86400,
@@ -223,7 +224,7 @@
         "policy": {
           "statements": [
             {
-              "effect": "deny",
+              "effect": "Deny",
               "principal": "arn:aws:iam::123456789012:user/dec.kolakowski",
               "action": [
                 "sqs:SendMessage",
