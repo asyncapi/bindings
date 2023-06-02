@@ -18,7 +18,7 @@
     },
     "cleanSession": {
       "type": "boolean",
-      "description": "Whether to create a persistent connection or not. When 'false', the connection will be persistent."
+      "description": "Whether to create a persistent connection or not. When 'false', the connection will be persistent. This is called clean start in MQTTv5."
     },
     "lastWill": {
       "type": "object",
@@ -47,10 +47,41 @@
       "type": "integer",
       "description": "Interval in seconds of the longest period of time the broker and the client can endure without sending a message."
     },
+    "sessionExpiryInterval": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "$ref": "https://asyncapi.com/definitions/2.6.0/schema.json"
+        },
+        {
+          "$ref": "https://asyncapi.com/definitions/2.6.0/Reference.json"
+        }
+      ],
+      "description": "Interval time in seconds or a Schema Object containing the definition of the interval.  The broker maintains a session for a disconnected client until this interval expires."
+    },
+    "maximumPacketSize": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        {
+          "$ref": "https://asyncapi.com/definitions/2.6.0/schema.json"
+        },
+        {
+          "$ref": "https://asyncapi.com/definitions/2.6.0/Reference.json"
+        }
+      ],
+      "description": "Number of bytes or a Schema Object representing the Maximum Packet Size the Client is willing to accept."
+    },
     "bindingVersion": {
       "type": "string",
       "enum": [
-        "0.1.0"
+        "0.2.0"
       ],
       "description": "The version of this binding. If omitted, 'latest' MUST be assumed."
     }
@@ -66,7 +97,9 @@
         "retain": false
       },
       "keepAlive": 60,
-      "bindingVersion": "0.1.0"
+      "sessionExpiryInterval": 120,
+      "maximumPacketSize": 1024,
+      "bindingVersion": "0.2.0"
     }
   ]
 }
