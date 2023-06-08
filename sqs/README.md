@@ -46,7 +46,6 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 #### Queue
 |Field Name | Type | Description|
 |---|:---:|---|
-|<a name="queueObjectRef"></a>$ref | `string` | Allows for an external definition of a queue. The referenced structure MUST be in the format of a [Queue](#queue). If there are conflicts between the referenced definition and this Queue's definition, the behavior is *undefined*.|
 | <a name="queueObjectName"></a>`name` | string | **Required.** The name of the queue. When an [SNS Operation Binding Object]() references an SQS queue by name, the identifier should be the one in this field.|
 | <a name="fifoQueue"></a>`fifoQueue` | boolean | **Required.**  Is this a FIFO queue? |
 | <a name="queueObjectDeliveryDelay"></a>`deliveryDelay` | integer | **Optional.** The number of seconds to delay before a message sent to the queue can be received. Used to create a *delay queue*. Range is 0 to 15 minutes. Defaults to 0. |
