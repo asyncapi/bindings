@@ -38,10 +38,6 @@
         }
       },
       "properties": {
-        "$ref": {
-          "type": "string",
-          "description": "Allows for an external definition of a queue. The referenced structure MUST be in the format of a Queue. If there are conflicts between the referenced definition and this Queue's definition, the behavior is undefined."
-        },
         "name": {
           "type": "string",
           "description": "The name of the queue. When an SNS Operation Binding Object references an SQS queue by name, the identifier should be the one in this field."
