@@ -7,7 +7,7 @@ This document defines how to describe Anypoint MQ-specific information in AsyncA
 <a name="version"></a>
 ## Versions
 
-The version of this bindings specification is `0.0.1`.
+The version of this bindings specification is `1.0.0`.
 This is also the `bindingVersion` for all binding objects defined by this specification.
 In any given binding object, `latest` MAY alternatively be used to refer to the currently latest published version of this bindings specification.
 
@@ -28,7 +28,8 @@ The fields of the standard [Server Object](https://github.com/asyncapi/spec/blob
 Server Object Field Name | Values for Anypoint MQ Protocol | Description
 ---|:---|:---
 <a name="serverObjectProtocolFieldValueAnypointMQ"></a>`protocol`               | `anypointmq`                                                 | **REQUIRED**. MUST be `anypointmq` for the scope of this specification.
-<a name="serverObjectUrlFieldValueAnypointMQ"></a>`url`                         | e.g., `https://mq-us-east-1.anypoint.mulesoft.com/api`       | **REQUIRED**. MUST be the endpoint URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`). Valid examples are `https://mq-us-east-1.anypoint.mulesoft.com/api` and `https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api` (and _not_ `https://.../api/v1`).
+<a name="serverObjectUrlFieldValueAnypointMQ"></a>`host`                         | e.g., `https://mq-us-east-1.anypoint.mulesoft.com`       | **REQUIRED**. MUST be the endpoint HOST part of the URL of the Anypoint MQ Broker REST API. Valid examples are `https://mq-us-east-1.anypoint.mulesoft.com` and `https://mq-eu-central-1.eu1.anypoint.mulesoft.com` (and _not_ `https://mq-us-east-1.anypoint.mulesoft.com/api`, or `https://.../api/v1`).
+<a name="serverObjectUrlFieldValueAnypointMQ"></a>`pathname`                         | e.g., `/api`       | **REQUIRED**. MUST be the endpoint path part of the URL of the Anypoint MQ Broker REST API _excluding_ the final major version indicator (e.g., `v1`). Valid examples are `/api` and (and _not_ `https://.../api/v1`).
 <a name="serverObjectProtocolVersionFieldValueAnypointMQ"></a>`protocolVersion` | e.g., `v1`                                                   | **OPTIONAL**, defaults to `v1`. If present MUST be the major version indicator of the Anypoint MQ Broker REST API omitted from the `url`, e.g. `v1`.
 <a name="serverObjectSecurityFieldValueAnypointMQ"></a>`security`               | suitably configured OAuth 2.0 client credentials grant type  | **REQUIRED**. Authentication against the MuleSoft-hosted Anypoint MQ message brokers uses the OAuth 2.0 client credentials grant type. At runtime, the client ID and client secret values of an Anypoint MQ client app must be supplied. Also, the OAuth 2.0 scopes are currently not client-configurable. The `security` field of the server object MUST correctly match these constraints.
 
@@ -72,7 +73,7 @@ channels:
       anypointmq:
         destination:     user-signup-exchg
         destinationType: exchange
-        bindingVersion:  '0.0.1'
+        bindingVersion:  '1.0.0'
     subscribe:
       #...
 ```
@@ -128,7 +129,7 @@ channels:
               properties:
                 messageId:
                   type: string
-            bindingVersion: '0.0.1'
+            bindingVersion: '1.0.0'
 ```
 
 ## Complete Example
@@ -162,7 +163,7 @@ servers:
       - oauthProd: []
     bindings:
       anypointmq:
-        bindingVersion: '0.0.1'
+        bindingVersion: '1.0.0'
   
 channels:
   user/signup:
@@ -172,7 +173,7 @@ channels:
       anypointmq:
         destination:     user-signup-queue
         destinationType: fifo-queue
-        bindingVersion:  '0.0.1'
+        bindingVersion:  '1.0.0'
     publish:
       operationId: signUpUser
       description: |
@@ -201,7 +202,7 @@ channels:
               properties:
                 messageId:
                   type: string
-            bindingVersion: '0.0.1'
+            bindingVersion: '1.0.0'
 
 components:
   securitySchemes:
