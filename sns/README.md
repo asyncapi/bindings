@@ -112,8 +112,8 @@ We support an array of consumers via the **consumers** field. This allows you to
 | Field Name | Type | Description |
 |---|:---:|---|
 | <a name="operationBindingObjectProtocol"></a>`protocol` | string | **Required.** The protocol that this endpoint receives messages by. Can be `http`, `https`, `email`, `email-json`, `sms`, `sqs`, `application`, `lambda` or `firehose` |
-| <a name="operationBindingObjectEndpoint"></a>`endpoint` |[identifier](#identifier)| **Required.** Where are messages being delivered to?|
-| <a name="operationBindingObjectFilerPolicy"></a>`filterPolicy` | [filterPolicy](#filter-policy) | **Optional.** Only receive a subset of messages from the channel, determined by this policy.|
+| <a name="operationBindingObjectEndpoint"></a>`endpoint` |[identifier](#identifier)| **Required.** The endpoint messages are delivered to. |
+| <a name="operationBindingObjectFilerPolicy"></a>`filterPolicy` | [filterPolicy](#filter-policy) | **Optional.** Only receive a subset of messages from the channel, determined by this policy. |
 | <a name="operationBindingObjectRawMessageDelivery"></a>`rawMessageDelivery` | boolean | **Required.** If *true* AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If *false* the SNS attributes are included in the body. |
 | <a name="operationBindingObjectRedrivePolicy"></a>`redrivePolicy` | [redrivePolicy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue. |
 | <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) | **Optional.** Policy for retries to HTTP. The parameter is for that [SNS Subscription](https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html) and overrides any policy on the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html). |

@@ -76,7 +76,7 @@
       },
       "properties": {
         "protocol": {
-          "description": "What protocol will this endpoint receive messages by?",
+          "description": "The protocol that this endpoint receives messages by.",
           "type": "string",
           "enum": [
             "http",
@@ -91,7 +91,7 @@
           ]
         },
         "endpoint": {
-          "description": "Where are messages being delivered to?",
+          "description": "The endpoint messages are delivered to.",
           "$ref": "#/definitions/identifier"
         },
         "filterPolicy": {
