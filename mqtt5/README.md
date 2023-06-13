@@ -6,7 +6,7 @@ This document defines how to describe MQTT 5-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `1.0.0`.
 
 
 <a name="server"></a>
@@ -32,7 +32,7 @@ servers:
     bindings:
       mqtt5:
         sessionExpiryInterval: 60
-        bindingVersion: 0.2.0
+        bindingVersion: 1.0.0
 ```
 ```yaml
 servers:
@@ -42,7 +42,7 @@ servers:
         sessionExpiryInterval:
           type: integer
           minimum: 100
-        bindingVersion: 0.2.0
+        bindingVersion: 1.0.0
 ```
 
 <a name="channel"></a>
