@@ -6,7 +6,7 @@ This document defines how to describe WebSockets-specific information on AsyncAP
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `1.0.0`.
 
 
 <a name="server"></a>
@@ -49,4 +49,4 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject
+[schemaObject]: https://www.asyncapi.com/docs/specificationsv3.0.0-next-major-spec.12/#schemaObject
