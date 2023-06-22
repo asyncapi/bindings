@@ -235,5 +235,5 @@ components:
       flows:
         clientCredentials:
           tokenUrl: 'https://mq-eu-central-1.eu1.anypoint.mulesoft.com/api/v1/authorize'
-          availableScopes: {}
+          scopes: {}
 ```
