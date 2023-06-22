@@ -6,7 +6,7 @@ This document defines how to describe MQTT-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -46,17 +46,14 @@ servers:
           message: Guest gone offline.
           retain: false
         keepAlive: 60
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
-
 
 <a name="channel"></a>
 
 ## Channel Binding Object
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
-
-
 
 <a name="operation"></a>
 
@@ -79,12 +76,14 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user/signup:
-    publish:
-      bindings:
-        mqtt:
-          qos: 2
-          retain: true
-          bindingVersion: 0.1.0
+operations:
+  userSignup:
+    action: receive
+    bindings:
+      mqtt:
+        qos: 2
+        retain: true
+        bindingVersion: 0.2.0
 ```
 
 
@@ -104,10 +103,11 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  user/signup:
-    publish:
-      message:
+  userSignup:
+    address: user/signup
+    messages:
+      userSignup:
         bindings:
           mqtt:
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 ```
