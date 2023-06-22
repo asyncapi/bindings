@@ -49,7 +49,7 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  'user/signup':
+  userSignup:
     address: 'user/signup'
     bindings:
       amqp:
@@ -96,22 +96,22 @@ This object MUST contain only the properties defined above.
 ##### Example
 
 ```yaml
-channels:
-  'user/signup':
-    address: 'user/signup'
-    publish:
-      bindings:
-        amqp:
-          expiration: 100000
-          userId: guest
-          cc: ['user.logs']
-          priority: 10
-          deliveryMode: 2
-          mandatory: false
-          bcc: ['external.audit']
-          timestamp: true
-          ack: false
-          bindingVersion: 0.3.0
+operations:
+  userSignup:
+    channel: 
+      $ref: '#/channels/userSignup'
+    bindings:
+      amqp:
+        expiration: 100000
+        userId: guest
+        cc: ['user.logs']
+        priority: 10
+        deliveryMode: 2
+        mandatory: false
+        bcc: ['external.audit']
+        timestamp: true
+        ack: false
+        bindingVersion: 0.3.0
 ```
 
 
@@ -133,10 +133,10 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  'user/signup':
+  userSignup:
     address: 'user/signup'
-    publish:
-      message:
+    messages:
+      userSignupMessage:
         bindings:
           amqp:
             contentEncoding: gzip
