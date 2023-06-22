@@ -229,7 +229,7 @@ components:
       flows:
         clientCredentials:
           tokenUrl: 'https://mq-us-east-1.anypoint.mulesoft.com/api/v1/authorize'
-          availableScopes: {}
+          scopes: {}
     oauthProd:
       type: oauth2
       flows:
