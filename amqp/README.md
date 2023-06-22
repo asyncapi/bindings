@@ -6,7 +6,7 @@ This document defines how to describe AMQP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 
 <a name="server"></a>
@@ -49,7 +49,8 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  user/signedup:
+  'user/signup':
+    address: 'user/signup'
     bindings:
       amqp:
         is: routingKey
@@ -65,7 +66,7 @@ channels:
           durable: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.2.0
+        bindingVersion: 0.3.0
 ```
 
 
@@ -96,7 +97,8 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  user/signup:
+  'user/signup':
+    address: 'user/signup'
     publish:
       bindings:
         amqp:
@@ -107,10 +109,9 @@ channels:
           deliveryMode: 2
           mandatory: false
           bcc: ['external.audit']
-          replyTo: user.signedup
           timestamp: true
           ack: false
-          bindingVersion: 0.2.0
+          bindingVersion: 0.3.0
 ```
 
 
@@ -132,12 +133,13 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  user/signup:
+  'user/signup':
+    address: 'user/signup'
     publish:
       message:
         bindings:
           amqp:
             contentEncoding: gzip
             messageType: 'user.signup'
-            bindingVersion: 0.2.0
+            bindingVersion: 0.3.0
 ```
