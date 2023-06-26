@@ -89,7 +89,7 @@ Field Name | Type | Applies To Action | Description
 <a name="operationBindingObjectBCC"></a>`bcc` | [string] | `receive` | Like [cc](#operationBindingObjectCC) but consumers will not receive this information.
 <a name="operationBindingObjectTimestamp"></a>`timestamp` | boolean | `receive`, `send` | Whether the message should include a timestamp or not.
 <a name="operationBindingObjectAck"></a>`ack` | boolean | Subscribe | Whether the consumer should ack the message or not.
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | `receive`, `sent` | The version of this binding. If omitted, "latest" MUST be assumed.
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | `receive`, `send` | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
 
