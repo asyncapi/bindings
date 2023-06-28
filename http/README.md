@@ -47,7 +47,6 @@ operations:
     action: send:
     bindings:
       http:
-        type: request
         method: GET
         query:
           type: object
