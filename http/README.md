@@ -31,7 +31,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 Field Name | Type | Description
 ---|:---:|---
 <a name="operationBindingObjectMethod"></a>`method` | string | The HTTP method for the request. Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `CONNECT`, and `TRACE`.
-<a name="operationBindingObjectQuery"></a>`query` | [Parameters Object][parametersObject] | A Parameters object containing the definitions for each query parameter.
+<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type object and have a properties key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -72,7 +72,7 @@ This object contains information about the message representation in HTTP.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectHeaders"></a>`headers` | [Parameters Object][parametersObject] | A Parameters object containing the definitions for HTTP-specific headers.
+<a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -96,4 +96,3 @@ channels:
 ```
 
 [schemaObject]: https://www.asyncapi.com/docs/specifications/latest/#schemaObject
-[parametersObject]: https://www.asyncapi.com/docs/specifications/latest/#parametersObject
