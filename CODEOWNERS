@@ -10,6 +10,7 @@
 
 /anypointmq/   @GeraldLoeffler
 /ibmmq/        @rcoppen
+/jms/          @rcoppen @SrfHead
 /kafka/        @lbroudoux @dalelane
 /googlepubsub/ @whitlockjc
 /solace/       @damaru-inc @CameronRushton
