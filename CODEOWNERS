@@ -15,6 +15,6 @@
 /googlepubsub/ @whitlockjc
 /solace/       @damaru-inc @CameronRushton
 /pulsar/       @VisualBean
-/sns/          @dpwdec
-/sqs/          @dpwdec
+/sns/          @dpwdec @iancooper
+/sqs/          @dpwdec @iancooper
 *.json         @KhudaDad414
