@@ -127,7 +127,7 @@ channels:
       sqs:
         queue:
           name: user-signedup-queue
-          type: standard
+          fifoQueue: false
           receiveMessageWaitTime: 4
           redrivePolicy:
             deadLetterQueue:
@@ -143,7 +143,7 @@ channels:
         deadLetterQueue: 
           name: user-signedup-dlq 
           messageRetentionPeriod: 1209600 
-	        type: standard
+	        fifoQueue: false
     subscribe:
       operationId: sendMessage
       description: sends messages when a user has signed up
@@ -218,7 +218,7 @@ channels:
         sqs:
           queues:
           - name: user-signedup-queue
-            type: standard
+            fifoQueue: false
             receiveMessageWaitTime: 4
             policy:
               statements: 
@@ -230,7 +230,7 @@ channels:
                 action: Sqs:ReceiveMessage 
           - name: user-signedup-dlq 
             messageRetentionPeriod: 1209600 
-            type: standard
+            fifoQueue: false
 ```
 
 <a name="message"></a>
