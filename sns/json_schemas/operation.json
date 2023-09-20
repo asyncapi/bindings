@@ -123,10 +123,10 @@
           "type": "string",
           "description": "Determines whether the FilterPolicy applies to MessageAttributes or MessageBody.",
           "enum": [
-            "messageAttributes",
-            "messageBody"
+            "MessageAttributes",
+            "MessageBody"
           ],
-          "default": "messageAttributes"
+          "default": "MessageAttributes"
         },
         "rawMessageDelivery": {
           "type": "boolean",
@@ -234,22 +234,21 @@
             "name": "someQueue"
           },
           "filterPolicy": {
-            "attributes": {
-              "store": [
-                "asyncapi_corp"
-              ],
-              "event": [
-                {
-                  "anything-but": "order_cancelled"
-                }
-              ],
-              "customer_interests": [
-                "rugby",
-                "football",
-                "baseball"
-              ]
-            }
+            "store": [
+              "asyncapi_corp"
+            ],
+            "event": [
+              {
+                "anything-but": "order_cancelled"
+              }
+            ],
+            "customer_interests": [
+              "rugby",
+              "football",
+              "baseball"
+            ]
           },
+          "filterPolicyScope": "MessageAttributes",
           "rawMessageDelivery": false,
           "redrivePolicy": {
             "deadLetterQueue": {
