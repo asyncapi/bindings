@@ -113,7 +113,8 @@ We support an array of consumers via the **consumers** field. This allows you to
 |---|:---:|---|
 | <a name="operationBindingObjectProtocol"></a>`protocol` | string | **Required.** The protocol that this endpoint receives messages by. Can be `http`, `https`, `email`, `email-json`, `sms`, `sqs`, `application`, `lambda` or `firehose` |
 | <a name="operationBindingObjectEndpoint"></a>`endpoint` |[identifier](#identifier)| **Required.** The endpoint messages are delivered to. |
-| <a name="operationBindingObjectFilerPolicy"></a>`filterPolicy` | [filterPolicy](#filter-policy) | **Optional.** Only receive a subset of messages from the channel, determined by this policy. |
+| <a name="operationBindingObjectFilterPolicy"></a>`filterPolicy` | object | **Optional.** Only receive a subset of messages from the channel, determined by this policy. |
+| <a name="operationBindingObjectFilterPolicyScope"></a>`filterPolicyScope` | string | **Optional.** Determines whether the FilterPolicy applies to MessageAttributes (default) or MessageBody. |
 | <a name="operationBindingObjectRawMessageDelivery"></a>`rawMessageDelivery` | boolean | **Required.** If *true* AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If *false* the SNS attributes are included in the body. |
 | <a name="operationBindingObjectRedrivePolicy"></a>`redrivePolicy` | [redrivePolicy](#redrive-policy) | **Optional.** Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue. |
 | <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) | **Optional.** Policy for retries to HTTP. The parameter is for that [SNS Subscription](https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html) and overrides any policy on the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html). |
@@ -131,11 +132,6 @@ We support an array of consumers via the **consumers** field. This allows you to
 | <a name="channelBindingDeliveryPolicyObjectNumMaxDelayRetries"></a>`numMaxDelayRetries` | integer | **Optional.** The number of post-backoff phase retries, with the maximum delay between retries |
 | <a name="channelBindingDeliveryPolicyObjectBackoffFunction"></a>`backoffFunction` | string, one of: arithmetic, exponential, geometric or linear | **Optional.** The algorithm for backoff between retries |
 | <a name="channelBindingDeliveryPolicyObjectMaxReceivesPerSecond"></a>`maxReceivesPerSecond` | integer | **Optional.** The maximum number of deliveries per second, per subscription |
-
-#### Filter Policy
-|Field Name | Type | Description|
-|---|:---:|---|
-| <a name="filterPolicyObjectAttributes"></a>`attributes` |Map(string, array or string or object) | **Required.** A map of a message attribute to an array of possible matches. The match may be a simple string for an exact match, but it may also be an object that represents a constraint and values for that constraint  |
 
 #### Identifier
 |Field Name | Type | Description|
@@ -221,9 +217,8 @@ channels:
               name: user-signedup-queue # refers to a queue defined in this file, but not shown in this example
             rawMessageDelivery: true  
             filterPolicy:
-              attributes:
-                reason: 
-                  anything-but: password-reset
+              reason: 
+                anything-but: password-reset
             redrivePolicy:
               deadLetterQueue:
                 name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
@@ -281,9 +276,9 @@ channels:
           endpoint:
             url: http://login.my.com/user/new
           filterPolicy:
-            attributes:
-              reason: 
-                anything-but: password-reset
+            reason: 
+              anything-but: password-reset
+          filterPolicyScope: MessageBody
           deliveryPolicy:
             minDelayTarget: 1
             maxDelayTarget: 120
