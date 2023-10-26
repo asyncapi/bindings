@@ -221,6 +221,9 @@
       "queues": [
         {
          "name": "myQueue",
+         "fifoQueue": true,
+         "deduplicationScope": "messageGroup",
+         "fifoThroughputLimit": "perMessageGroupId",
          "deliveryDelay": 10,
          "redrivePolicy": {
             "deadLetterQueue": {
