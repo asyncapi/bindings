@@ -49,11 +49,13 @@
         },
         "deduplicationScope": {
           "type": "string",
+          "enum": ["queue", "messageGroup"],
           "description": "Specifies whether message deduplication occurs at the message group or queue level. Valid values are messageGroup and queue (default).",
           "default": "queue"
         },
         "fifoThroughputLimit": {
           "type": "string",
+          "enum": ["perQueue", "perMessageGroupId"],
           "description": "Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId.",
           "default": "perQueue"
         },
