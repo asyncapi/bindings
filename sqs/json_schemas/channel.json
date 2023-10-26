@@ -47,6 +47,16 @@
           "description": "Is this a FIFO queue?",
           "default": false
         },
+        "deduplicationScope": {
+          "type": "string",
+          "description": "Specifies whether message deduplication occurs at the message group or queue level. Valid values are messageGroup and queue (default).",
+          "default": "queue"
+        },
+        "fifoThroughputLimit": {
+          "type": "string",
+          "description": "Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId.",
+          "default": "perQueue"
+        },
         "deliveryDelay": {
           "type": "integer",
           "description": "The number of seconds to delay before a message sent to the queue can be received. used to create a delay queue.",
@@ -207,6 +217,8 @@
       "queue": {
         "name": "myQueue",
         "fifoQueue": true,
+        "deduplicationScope": "messageGroup",
+        "fifoThroughputLimit": "perMessageGroupId",
         "deliveryDelay": 15,
         "visibilityTimeout": 60,
         "receiveMessageWaitTime": 0,
