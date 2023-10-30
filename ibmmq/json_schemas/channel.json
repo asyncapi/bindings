@@ -84,9 +84,6 @@
       "properties": {
         "destinationType": { "const": "topic" }
       },
-      "required": [
-        "topic"
-      ],
       "not": {
         "required": [
           "queue"
