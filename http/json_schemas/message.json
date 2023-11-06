@@ -7,12 +7,19 @@
   "additionalProperties": false,
   "patternProperties": {
     "^x-[\\w\\d\\.\\-\\_]+$": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/specificationExtension"
+      "$ref": "https://asyncapi.com/definitions/2.4.0/specificationExtension.json"
     }
   },
   "properties": {
     "headers": {
-      "$ref": "https://raw.githubusercontent.com/asyncapi/asyncapi-node/v2.7.7/schemas/2.0.0.json#/definitions/schema",
+      "oneOf": [
+        {
+          "$ref": "https://asyncapi.com/definitions/2.4.0/schema.json"
+        },
+        {
+          "$ref": "https://asyncapi.com/definitions/2.4.0/Reference.json"
+        }
+      ],
       "description": "\tA Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type 'object' and have a 'properties' key."
     },
     "bindingVersion": {
