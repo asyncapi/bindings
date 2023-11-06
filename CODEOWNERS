@@ -8,11 +8,13 @@
 
 * @derberg @fmvilas @dalelane @smoya @char0n @asyncapi-bot-eve
 
-/anypointmq/   @GeraldLoeffler
+/anypointmq/   @mboss37 @GeraldLoeffler
 /ibmmq/        @rcoppen
 /jms/          @rcoppen @SrfHead
 /kafka/        @lbroudoux @dalelane
 /googlepubsub/ @whitlockjc
 /solace/       @damaru-inc @CameronRushton
 /pulsar/       @VisualBean
+/sns/          @dpwdec @iancooper
+/sqs/          @dpwdec @iancooper
 *.json         @KhudaDad414
