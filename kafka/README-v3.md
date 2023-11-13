@@ -58,7 +58,6 @@ This object MUST contain only the properties defined above.
 
 ##### Example
 
-This example is valid for any Confluent compatible schema registry. Here we describe the implementation using the first 4 bytes in payload to store schema identifier.
 
 ```yaml
 channels:
