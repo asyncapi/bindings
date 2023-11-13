@@ -8,7 +8,7 @@ This document defines how to describe Kafka-specific information on AsyncAPI v3.
 
 Current version is `v3-0.4.0` and is applicable to AsyncAPI v3.x only. For a version of Kafka binding applicable to AsyncAPI 2.x and examples on how to use it, please check this [README](./README-v2.md). 
 
-> `v3-0.4.0` is just a renmaing of previous `0.4.0` in order to better track future changes that could be only applicable into an AsyncAPI v3.x context.
+> `v3-0.4.0` is just a renaming of previous `0.4.0` in order to better track future changes that could be only applicable into an AsyncAPI v3.x context.
 
 <a name="server"></a>
 
