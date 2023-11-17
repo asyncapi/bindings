@@ -89,7 +89,7 @@ The Anypoint MQ [Message Binding Object](https://github.com/asyncapi/spec/blob/m
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectHeaders"></a>`headers`               | [Schema Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) | **OPTIONAL**. A Schema object containing the definitions for Anypoint MQ-specific headers (so-called protocol headers). This schema MUST be of type `object` and have a `properties` key. Examples of Anypoint MQ protocol headers are `messageId` and `messageGroupId`.
+<a name="messageBindingObjectHeaders"></a>`headers`               | [Schema Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) \| [Reference Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject) | **OPTIONAL**. A Schema object containing the definitions for Anypoint MQ-specific headers (so-called protocol headers). This schema MUST be of type `object` and have a `properties` key. Examples of Anypoint MQ protocol headers are `messageId` and `messageGroupId`.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | **OPTIONAL**, defaults to `latest`. The version of this binding.
 
 Note that application headers must be specified in the [`headers` field of the standard Message Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#messageObjectHeaders) and are transmitted in the [`properties` section of the Anypoint MQ message](https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/anypoint-mq-broker/).
