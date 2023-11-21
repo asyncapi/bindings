@@ -31,7 +31,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 Field Name | Type | Description
 ---|:---:|---
 <a name="operationBindingObjectMethod"></a>`method` | string | The HTTP method for the request. Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `CONNECT`, and `TRACE`.
-<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] | A Schema object containing the definitions for each query parameter. This schema MUST be of type object and have a properties key.
+<a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -72,7 +72,7 @@ This object contains information about the message representation in HTTP.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
+<a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -95,4 +95,5 @@ channels:
             bindingVersion: '0.2.0'
 ```
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/latest/#schemaObject
+[schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
+[referenceObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject
