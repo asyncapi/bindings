@@ -21,7 +21,11 @@
     },
     "bindingVersion": {
       "type": "string",
-      "description": "The version of this binding.",
+      "enum": [
+        "0.1.0",
+        "0.2.0"
+      ],
+      "description": "The version of this binding. If omitted, 'latest' MUST be assumed.",
       "default": "latest"
     }
   },
@@ -46,6 +50,18 @@
           "type": "boolean",
           "description": "Is this a FIFO queue?",
           "default": false
+        },
+        "deduplicationScope": {
+          "type": "string",
+          "enum": ["queue", "messageGroup"],
+          "description": "Specifies whether message deduplication occurs at the message group or queue level. Valid values are messageGroup and queue (default).",
+          "default": "queue"
+        },
+        "fifoThroughputLimit": {
+          "type": "string",
+          "enum": ["perQueue", "perMessageGroupId"],
+          "description": "Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId.",
+          "default": "perQueue"
         },
         "deliveryDelay": {
           "type": "integer",
@@ -207,6 +223,8 @@
       "queue": {
         "name": "myQueue",
         "fifoQueue": true,
+        "deduplicationScope": "messageGroup",
+        "fifoThroughputLimit": "perMessageGroupId",
         "deliveryDelay": 15,
         "visibilityTimeout": 60,
         "receiveMessageWaitTime": 0,
