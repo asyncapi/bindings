@@ -122,16 +122,18 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user-signedup:
-    subscribe:
-      bindings:
-        kafka:
-          groupId:
-            type: string
-            enum: ['myGroupId']
-          clientId:
-            type: string
-            enum: ['myClientId']
-          bindingVersion: '0.4.0'
+operations:
+  userSignup:
+    action: receive
+    bindings:
+      kafka:
+        groupId:
+        type: string
+        enum: ['myGroupId']
+        clientId:
+        type: string
+        enum: ['myClientId']
+        bindingVersion: '0.4.0'
 ```
 
 
@@ -158,16 +160,17 @@ This example is valid for any Confluent compatible schema registry. Here we desc
 ```yaml
 channels:
   test:
-    publish:
-      message:
+    address: test-topic
+    messages:
+      testMessage:
         bindings:
           kafka:
             key:
               type: string
               enum: ['myKey']
-            schemaIdLocation: 'payload'
-            schemaIdPayloadEncoding: '4'
-            bindingVersion: '0.4.0'
+          schemaIdLocation: 'payload'
+          schemaIdPayloadEncoding: '4'
+          bindingVersion: '0.4.0'
 ```
 
 This is another example that describes the use if Apicurio schema registry. We describe the `apicurio-new` way of serializing without details on how it's implemented. We reference a [specific lookup strategy](https://www.apicur.io/registry/docs/apicurio-registry/2.2.x/getting-started/assembly-using-kafka-client-serdes.html#registry-serdes-concepts-strategy_registry) that may be used to retrieve schema Id from registry during serialization.
@@ -175,8 +178,9 @@ This is another example that describes the use if Apicurio schema registry. We d
 ```yaml
 channels:
   test:
-    publish:
-      message:
+    address: test-topic
+    messages:
+      testMessage:
         bindings:
           kafka:
             key:
@@ -188,5 +192,5 @@ channels:
             bindingVersion: '0.4.0'
 ```
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#schemaObject
-[referenceObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#referenceObject
+[schemaObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#schemaObject
+[referenceObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#referenceObject
