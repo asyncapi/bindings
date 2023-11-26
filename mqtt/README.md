@@ -6,7 +6,7 @@ This document defines how to describe MQTT-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -46,17 +46,14 @@ servers:
           message: Guest gone offline.
           retain: false
         keepAlive: 60
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
 ```
-
 
 <a name="channel"></a>
 
 ## Channel Binding Object
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
-
-
 
 <a name="operation"></a>
 
@@ -66,11 +63,11 @@ This object contains information about the operation representation in MQTT.
 
 ##### Fixed Fields
 
-Field Name | Type | Applies To | Description
+Field Name | Type | Applies To Action | Description
 ---|:---:|:---:|---
-<a name="operationBindingObjectQoS"></a>`qos` | integer | Publish, Subscribe | Defines the Quality of Service (QoS) levels for the message flow between client and server. Its value MUST be either 0 (At most once delivery), 1 (At least once delivery), or 2 (Exactly once delivery).
-<a name="operationBindingObjectRetain"></a>`retain` | boolean | Publish, Subscribe | Whether the broker should retain the message or not.
-<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | Publish, Subscribe | The version of this binding. If omitted, "latest" MUST be assumed.
+<a name="operationBindingObjectQoS"></a>`qos` | integer | `receive`, `send` | Defines the Quality of Service (QoS) levels for the message flow between client and server. Its value MUST be either 0 (At most once delivery), 1 (At least once delivery), or 2 (Exactly once delivery).
+<a name="operationBindingObjectRetain"></a>`retain` | boolean | `receive`, `send` | Whether the broker should retain the message or not.
+<a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | `receive`, `send` | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
 
@@ -79,12 +76,14 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user/signup:
-    publish:
-      bindings:
-        mqtt:
-          qos: 2
-          retain: true
-          bindingVersion: 0.1.0
+operations:
+  userSignup:
+    action: receive
+    bindings:
+      mqtt:
+        qos: 2
+        retain: true
+        bindingVersion: 0.2.0
 ```
 
 
@@ -104,10 +103,11 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  user/signup:
-    publish:
-      message:
+  userSignup:
+    address: user/signup
+    messages:
+      userSignup:
         bindings:
           mqtt:
-            bindingVersion: 0.1.0
+            bindingVersion: 0.2.0
 ```
