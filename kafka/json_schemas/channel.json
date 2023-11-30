@@ -28,7 +28,7 @@
       "topicConfiguration" : {
         "description": "Topic configuration properties that are relevant for the API.",
         "type": "object",
-        "additionalProperties": false,
+        "additionalProperties": true,
         "properties": {
           "cleanup.policy": {
             "description": "The [`cleanup.policy`](https://kafka.apache.org/documentation/#topicconfigs_cleanup.policy) configuration option.",
