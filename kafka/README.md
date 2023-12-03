@@ -166,9 +166,9 @@ channels:
             key:
               type: string
               enum: ['myKey']
-          schemaIdLocation: 'payload'
-          schemaIdPayloadEncoding: '4'
-          bindingVersion: '0.4.0'
+            schemaIdLocation: 'payload'
+            schemaIdPayloadEncoding: '4'
+            bindingVersion: '0.4.0'
 ```
 
 This is another example that describes the use if Apicurio schema registry. We describe the `apicurio-new` way of serializing without details on how it's implemented. We reference a [specific lookup strategy](https://www.apicur.io/registry/docs/apicurio-registry/2.2.x/getting-started/assembly-using-kafka-client-serdes.html#registry-serdes-concepts-strategy_registry) that may be used to retrieve schema Id from registry during serialization.
