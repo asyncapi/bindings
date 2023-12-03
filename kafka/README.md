@@ -126,11 +126,11 @@ operations:
     bindings:
       kafka:
         groupId:
-        type: string
-        enum: ['myGroupId']
+          type: string
+          enum: ['myGroupId']
         clientId:
-        type: string
-        enum: ['myClientId']
+          type: string
+          enum: ['myClientId']
         bindingVersion: '0.4.0'
 ```
 
