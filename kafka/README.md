@@ -6,7 +6,7 @@ This document defines how to describe Kafka-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.4.0`.
+Current version is `0.5.0`.
 
 
 <a name="server"></a>
@@ -88,7 +88,7 @@ Field Name |  Type   |                                                          
 <a name="topicConfigurationDeleteRetentionBytes"></a>`delete.retention.ms` | integer |             The [`delete.retention.ms`](https://kafka.apache.org/documentation/#topicconfigs_delete.retention.ms) configuration option.                                               |        OPTIONAL         | see kafka documentation
 <a name="topicConfigurationMaxMessageBytes"></a>`max.message.bytes` | integer |                    The [`max.message.bytes`](https://kafka.apache.org/documentation/#topicconfigs_max.message.bytes) configuration option.                                      |        OPTIONAL         | see kafka documentation
 
-This object MUST contain only the properties defined above.
+This object MAY contain the properties defined above including optional additional properties.
 
 ##### Example
 
