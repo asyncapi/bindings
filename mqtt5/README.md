@@ -2,6 +2,8 @@
 
 This document defines how to describe MQTT 5-specific information on AsyncAPI.
 
+# **Deprecation Warning**: MQTT version 5 specific bindings are deprecated in favor of [MQTT bindings](../mqtt/README.md) that are not version specific.
+
 <a name="version"></a>
 
 ## Version
