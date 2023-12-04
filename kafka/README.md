@@ -57,8 +57,6 @@ This object MUST contain only the properties defined above.
 
 ##### Example
 
-This example is valid for any Confluent compatible schema registry. Here we describe the implementation using the first 4 bytes in payload to store schema identifier.
-
 ```yaml
 channels:
   user-signedup:
@@ -122,16 +120,18 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user-signedup:
-    subscribe:
-      bindings:
-        kafka:
-          groupId:
-            type: string
-            enum: ['myGroupId']
-          clientId:
-            type: string
-            enum: ['myClientId']
-          bindingVersion: '0.4.0'
+operations:
+  userSignup:
+    action: receive
+    bindings:
+      kafka:
+        groupId:
+          type: string
+          enum: ['myGroupId']
+        clientId:
+          type: string
+          enum: ['myClientId']
+        bindingVersion: '0.4.0'
 ```
 
 
@@ -158,8 +158,9 @@ This example is valid for any Confluent compatible schema registry. Here we desc
 ```yaml
 channels:
   test:
-    publish:
-      message:
+    address: test-topic
+    messages:
+      testMessage:
         bindings:
           kafka:
             key:
@@ -175,8 +176,9 @@ This is another example that describes the use if Apicurio schema registry. We d
 ```yaml
 channels:
   test:
-    publish:
-      message:
+    address: test-topic
+    messages:
+      testMessage:
         bindings:
           kafka:
             key:
@@ -188,5 +190,5 @@ channels:
             bindingVersion: '0.4.0'
 ```
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#schemaObject
-[referenceObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#referenceObject
+[schemaObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#schemaObject
+[referenceObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#referenceObject
