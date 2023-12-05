@@ -75,7 +75,6 @@ servers:
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
-
 <a name="operation"></a>
 
 ## Operation Binding Object
@@ -163,9 +162,10 @@ channels:
 ```
 ```yaml
 channels:
-  user/signup:
-    publish:
-      message:
+  userSignup:
+    address: user/signup
+    messages:
+      userSignup:
         bindings:
           mqtt:
             payloadFormatIndicator: 1

@@ -57,8 +57,6 @@ This object MUST contain only the properties defined above.
 
 ##### Example
 
-This example is valid for any Confluent compatible schema registry. Here we describe the implementation using the first 4 bytes in payload to store schema identifier.
-
 ```yaml
 channels:
   user-signedup:
@@ -122,16 +120,18 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   user-signedup:
-    subscribe:
-      bindings:
-        kafka:
-          groupId:
-            type: string
-            enum: ['myGroupId']
-          clientId:
-            type: string
-            enum: ['myClientId']
-          bindingVersion: '0.4.0'
+operations:
+  userSignup:
+    action: receive
+    bindings:
+      kafka:
+        groupId:
+          type: string
+          enum: ['myGroupId']
+        clientId:
+          type: string
+          enum: ['myClientId']
+        bindingVersion: '0.4.0'
 ```
 
 
@@ -145,7 +145,7 @@ This object contains information about the message representation in Kafka.
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key.
+<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object](referenceObject) way.
 <a name="messageBindingObjectSchemaIdLocation"></a>`schemaIdLocation` | string | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. `header` or `payload`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="messageBindingObjectSchemaIdPayloadEncoding"></a>`schemaIdPayloadEncoding` | string | Number of bytes or vendor specific values when schema id is encoded in payload (e.g `confluent`/ `apicurio-legacy` / `apicurio-new`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="messageBindingObjectSchemaLookupStrategy"></a>`schemaLookupStrategy` | string | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
@@ -158,8 +158,9 @@ This example is valid for any Confluent compatible schema registry. Here we desc
 ```yaml
 channels:
   test:
-    publish:
-      message:
+    address: test-topic
+    messages:
+      testMessage:
         bindings:
           kafka:
             key:
@@ -175,8 +176,9 @@ This is another example that describes the use if Apicurio schema registry. We d
 ```yaml
 channels:
   test:
-    publish:
-      message:
+    address: test-topic
+    messages:
+      testMessage:
         bindings:
           kafka:
             key:
@@ -188,5 +190,5 @@ channels:
             bindingVersion: '0.4.0'
 ```
 
-[schemaObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#schemaObject
-[referenceObject]: https://www.asyncapi.com/docs/specifications/2.4.0/#referenceObject
+[schemaObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#schemaObject
+[referenceObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#referenceObject
