@@ -44,7 +44,7 @@ channels:
     address: /employees
 operations:
   employees:
-    action: send:
+    action: send
     bindings:
       http:
         method: GET
@@ -58,7 +58,7 @@ operations:
               minimum: 1
               description: The Id of the company.
           additionalProperties: false
-        bindingVersion: '0.2.0'
+        bindingVersion: '0.3.0'
 ```
 
 
@@ -94,7 +94,7 @@ channels:
                 Content-Type:
                   type: string
                   enum: ['application/json']
-            bindingVersion: '0.2.0'
+            bindingVersion: '0.3.0'
 ```
 
 [schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
