@@ -21,7 +21,6 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
-
 <a name="operation"></a>
 
 ## Operation Binding Object
@@ -61,7 +60,6 @@ operations:
         bindingVersion: '0.3.0'
 ```
 
-
 <a name="message"></a>
 
 ## Message Binding Object
@@ -73,11 +71,10 @@ This object contains information about the message representation in HTTP.
 Field Name | Type | Description
 ---|:---:|---
 <a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
-<a name="messageBindingObjectStatusCode"></a>`status-code` | number | The HTTP response status code according to [RFC 9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes).
+<a name="messageBindingObjectStatusCode"></a>`statusCode` | number | The HTTP response status code according to [RFC 9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes).
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
-
 
 ```yaml
 channels:
@@ -87,7 +84,7 @@ channels:
       testMessage:
         bindings:
           http:
-            status-code: 200
+            statusCode: 200
             headers:
               type: object
               properties:
