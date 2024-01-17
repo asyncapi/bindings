@@ -71,7 +71,7 @@ This object contains information about the message representation in HTTP.
 Field Name | Type | Description
 ---|:---:|---
 <a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
-<a name="messageBindingObjectStatusCode"></a>`statusCode` | number | The HTTP response status code according to [RFC 9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes).
+<a name="messageBindingObjectStatusCode"></a>`statusCode` | number | The HTTP response status code according to [RFC 9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes). `statusCode` is only relevant for messages referenced by the [operation reply object](https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationReplyObject) as they define the status code for the response, in all other cases this can safely be ignored. 
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
