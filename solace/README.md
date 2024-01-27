@@ -6,7 +6,7 @@ This document defines how to describe Solace-specific information with AsyncAPI.
 
 ## Version
 
-Current version is `0.3.0`.
+Current version is `0.4.0`.
 
 <a name="server"></a>
 
@@ -14,8 +14,9 @@ Current version is `0.3.0`.
 
 Field Name | Type | Description
 ---|---|---
-`bindingVersion`|String|The current version is 0.3.0
+`bindingVersion`|String|The current version is 0.4.0
 `msgVpn`|String|The Virtual Private Network name on the Solace broker.
+`clientName`|String|A unique client name to use to register to the appliance. If specified, it must be a valid Topic name, and a maximum of 160 bytes in length when encoded as UTF-8.
 
 
 <a name="channel"></a>
@@ -32,10 +33,13 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 We need the ability to support several bindings for each operation, see the [Example](#example) section below for details.
 
-Field Name | Type | Description
----|---|---
-`bindingVersion`|String|The current version is 0.3.0
-`destinations`|List of Destination Objects|Destination Objects are described next.
+Field Name | Type                                                                            | Description
+---|---------------------------------------------------------------------------------|---
+`bindingVersion`| String                                                                          |The current version is 0.4.0
+`destinations`| List of Destination Objects                                                     |Destination Objects are described next.
+`timeToLive`  | Integer \| [Schema Object][schemaObject] \| [Reference Object][referenceObject] | Interval in milliseconds or a *Schema Object* containing the definition of the lifetime of the message. 
+`priority`  | Integer \| [Schema Object][schemaObject] \| [Reference Object][referenceObject] | The valid priority value range is 0-255 with 0 as the lowest priority and 255 as the highest or a *Schema Object* containing the definition of the priority.
+`dmqEligible`  | Boolean                                                                         | Set the message to be eligible to be moved to a Dead Message Queue. The default value is false.
 
 ### Destination Object
 
@@ -92,7 +96,7 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.3.0
+          bindingVersion: 0.4.0
           destinations:
             - destinationType: queue
               queue:
@@ -104,6 +108,9 @@ channels:
                 name: UpdatedHREvents
                 topicSubscriptions:
                 - person/*/updated
+          timeToLive: 5000
+          priority: 120
+          dmqEligible: true
       message:
         $ref: '#/components/messages/PersonEvent'
     parameters:
@@ -119,7 +126,7 @@ info:
   version: 0.0.1
 ```
 
-The expected behaviour would be that the application binds to both queues, and each queue has its own topic subscription, one to created and one to updated events.
+The expected behavior would be that the application binds to both queues, and each queue has its own topic subscription, one to create and one to updated events.
 
 
 ## Example with a wildcard subscription ##
@@ -142,11 +149,12 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.3.0
+          bindingVersion: 0.4.0
           destinations:
             - destinationType: topic
               topicSubscriptions:
               - person/>
+          timeToLive: 60000
       message:
         $ref: '#/components/messages/PersonEvent'
     parameters:
@@ -161,3 +169,6 @@ info:
   title: HRApp
   version: 0.0.1
 ```
+
+[schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
+[referenceObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject
