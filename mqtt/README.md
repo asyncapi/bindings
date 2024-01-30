@@ -29,8 +29,8 @@ Field Name | Type | MQTT Versions | Description
 <a name="serverBindingObjectLastWillMessage"></a>`lastWill.message` | string | 3, 5 | Last Will message.
 <a name="serverBindingObjectLastWillRetain"></a>`lastWill.retain` | boolean | 3, 5 | Whether the broker should retain the Last Will and Testament message or not.
 <a name="serverBindingObjectKeepAlive"></a>`keepAlive` | integer | 3, 5 | Interval in seconds of the longest period of time the broker and the client can endure without sending a message.
-<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | integer \| [Schema Object][schemaObject] \| [Reference Object](referenceObject) | 5 | Interval in seconds or a *Schema Object* containing the definition of the interval.  The broker maintains a session for a disconnected client until this interval expires.
-<a name="serverBindingObjectMaximumPacketSize"></a>`maximumPacketSize` | integer \| [Schema Object][schemaObject] \| [Reference Object](referenceObject) | 5 | Number of bytes or a *Schema Object* representing the maximum packet size the client is willing to accept.
+<a name="serverBindingObjectSessionExpiryInterval"></a>`sessionExpiryInterval` | integer \| [Schema Object][schemaObject] \| [Reference Object][referenceObject] | 5 | Interval in seconds or a *Schema Object* containing the definition of the interval.  The broker maintains a session for a disconnected client until this interval expires.
+<a name="serverBindingObjectMaximumPacketSize"></a>`maximumPacketSize` | integer \| [Schema Object][schemaObject] \| [Reference Object][referenceObject] | 5 | Number of bytes or a *Schema Object* representing the maximum packet size the client is willing to accept.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | | The version of this binding. If omitted, "latest" MUST be assumed. |
 
 This object MUST contain only the properties defined above.
@@ -87,7 +87,7 @@ Field Name | Type | Applies To | MQTT Versions | Description
 ---|:---:|:---:|:---:|---
 <a name="operationBindingObjectQoS"></a>`qos` | integer | Publish, Subscribe | 3, 5 | Defines the Quality of Service (QoS) levels for the message flow between client and server. Its value MUST be either 0 (At most once delivery), 1 (At least once delivery), or 2 (Exactly once delivery).
 <a name="operationBindingObjectRetain"></a>`retain` | boolean | Publish | 3, 5 | Whether the broker should retain the message or not.
-<a name="operationBindingObjectMessageExpiryInterval"></a>`messageExpiryInterval`  | integer \| [Schema Object][schemaObject] \| [Reference Object](referenceObject)| Publish | 5 | Interval in seconds or a *Schema Object* containing the definition of the lifetime of the message. 
+<a name="operationBindingObjectMessageExpiryInterval"></a>`messageExpiryInterval`  | integer \| [Schema Object][schemaObject] \| [Reference Object][referenceObject]| Publish | 5 | Interval in seconds or a *Schema Object* containing the definition of the lifetime of the message. 
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string |  | |  The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -138,9 +138,9 @@ This object contains information about the message representation in MQTT.
 Field Name | Type | MQTT Versions | Description
 ---|:---:|:---:|---
 <a name="messageBindingObjectPayloadFormatIndicator"></a>`payloadFormatIndicator` | integer | 5 | Either: **0** (zero): Indicates that the payload is unspecified bytes, or **1**: Indicates that the payload is UTF-8 encoded character data. |
-<a name="messageBindingObjectCorrelationData"></a>`correlationData` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | 5 | Correlation Data is used by the sender of the request message to identify which request the response message is for when it is received.
+<a name="messageBindingObjectCorrelationData"></a>`correlationData` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | 5 | Correlation Data is used by the sender of the request message to identify which request the response message is for when it is received.
 <a name="messageBindingObjectContentType"></a>`contentType` | string | 5 | String describing the content type of the message payload. This should not conflict with the `contentType` field of the associated AsyncAPI Message object.
-<a name="messageBindingObjectResponseTopic"></a>`responseTopic` | URI string \| [Schema Object][schemaObject] \| [Reference Object](referenceObject) | 5 | The topic (channel URI) for a response message.
+<a name="messageBindingObjectResponseTopic"></a>`responseTopic` | URI string \| [Schema Object][schemaObject] \| [Reference Object][referenceObject] | 5 | The topic (channel URI) for a response message.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
@@ -181,3 +181,4 @@ channels:
 
 [schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
 [referenceObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject
+
