@@ -6,7 +6,7 @@ This document defines how to describe HTTP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 
 <a name="server"></a>
@@ -20,7 +20,6 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 ## Channel Binding Object
 
 This object MUST NOT contain any properties. Its name is reserved for future use.
-
 
 <a name="operation"></a>
 
@@ -44,7 +43,7 @@ channels:
     address: /employees
 operations:
   employees:
-    action: send:
+    action: send
     bindings:
       http:
         method: GET
@@ -58,9 +57,8 @@ operations:
               minimum: 1
               description: The Id of the company.
           additionalProperties: false
-        bindingVersion: '0.2.0'
+        bindingVersion: '0.3.0'
 ```
-
 
 <a name="message"></a>
 
@@ -73,10 +71,10 @@ This object contains information about the message representation in HTTP.
 Field Name | Type | Description
 ---|:---:|---
 <a name="messageBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type `object` and have a `properties` key.
+<a name="messageBindingObjectStatusCode"></a>`statusCode` | number | The HTTP response status code according to [RFC 9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes). `statusCode` is only relevant for messages referenced by the [Operation Reply Object](https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationReplyObject), as it defines the status code for the response. In all other cases, this value can be safely ignored.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
-
 
 ```yaml
 channels:
@@ -86,13 +84,14 @@ channels:
       testMessage:
         bindings:
           http:
+            statusCode: 200
             headers:
               type: object
               properties:
                 Content-Type:
                   type: string
                   enum: ['application/json']
-            bindingVersion: '0.2.0'
+            bindingVersion: '0.3.0'
 ```
 
 [schemaObject]: https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject
