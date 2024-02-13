@@ -54,12 +54,6 @@ channels:
     bindings:
       amqp:
         is: routingKey
-        queue:
-          name: my-queue-name
-          durable: true
-          exclusive: true
-          autoDelete: false
-          vhost: /
         exchange:
           name: myExchange
           type: topic
@@ -69,6 +63,21 @@ channels:
         bindingVersion: 0.3.0
 ```
 
+```yaml
+channels:
+  userSignup:
+    address: 'user/signup'
+    bindings:
+      amqp:
+        is: queue
+        queue:
+          name: my-queue-name
+          durable: true
+          exclusive: true
+          autoDelete: false
+          vhost: /
+        bindingVersion: 0.3.0
+```
 
 <a name="operation"></a>
 
