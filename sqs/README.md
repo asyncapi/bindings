@@ -12,7 +12,7 @@ For publish-subscribe scenarios, use as a **publish** Operation Binding Object, 
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 <a name="server"></a>
 
@@ -109,7 +109,7 @@ On an Operation Binding Object we support an array of Queue objects. Members of 
 ### Fields
 |Field Name | Type | Description|
 |---|:---:|---|
-| <a name="channelBindingObjectQueue"></a>`queues` | [[Queue](#queue)]| **Required.** Queue objects that are either the *endpoint* for an SNS Operation Binding Object, or the *deadLetterQueue* of the SQS Operation Binding Object |
+| <a name="channelBindingObjectQueue"></a>`queues` | [[Queue](#queue)]| Queue objects that are either the *endpoint* for an SNS Operation Binding Object, or the *deadLetterQueue* of the SQS Operation Binding Object |
 |<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string | **Optional**, defaults to `latest`. The version of this binding.|
 
 ### Examples
