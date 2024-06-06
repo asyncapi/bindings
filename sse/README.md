@@ -2,7 +2,7 @@
 
 This document defines how to describe Server Sent Events-specific information on AsyncAPI.
 
-See the [Server-Sent Events protocol specification](protocolSpecification).
+See the [Server-Sent Events protocol specification][protocolSpecification].
 
 <a name="version"></a>
 
