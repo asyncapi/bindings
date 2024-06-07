@@ -51,9 +51,9 @@ This object contains information about the message representation in SSE.
 ##### Fixed Fields
 
 Field Name | Type | Description
----|:---:|:---:|---
-<a name="messageBindingObjectEventType"></a>`event` | string | Server-sent event type, defaults to `message` if omitted, by the [SSE specification](protocolSpecification). |
-<a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | | The version of this binding. If omitted, "latest" MUST be assumed.
+---|:---:|---
+<a name="messageBindingObjectEventType"></a>`event` | string | Server-sent event type, defaults to `message` if omitted, by the [SSE specification][protocolSpecification]. |
+<a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
 
 This object MUST contain only the properties defined above.
 
