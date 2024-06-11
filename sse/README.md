@@ -28,7 +28,6 @@ When using Server Sent Events, the channel represents a single logical message s
 
 Field Name | Type | Description
 ---|:---:|---
-<a name="operationBindingObjectMethod"></a>`method` | string | The HTTP method to use when establishing the request. Its value MUST be `GET`.
 <a name="operationBindingObjectQuery"></a>`query` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions for each query parameter. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectHeaders"></a>`headers` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | A Schema object containing the definitions of the HTTP headers to use when establishing the request. This schema MUST be of type `object` and have a `properties` key.
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed.
