@@ -4,7 +4,7 @@ This document defines how to describe Server Sent Events-specific information on
 
 See the [Server-Sent Events protocol specification][protocolSpecification].
 
-Server-Sent Events requires `http` protocol, so the SSE [Message Binding Object](#message) below is appropriate for Servers with protocol `http`.
+Server-Sent Events requires `http` protocol, so the SSE [Message Binding Object](#message) below is appropriate for AsyncAPI Servers with protocol `http` or `https`.
 
 <a name="version"></a>
 
