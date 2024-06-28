@@ -7,7 +7,6 @@ on:
     paths:
       - "./*.md"
 
-
 jobs:
   Make-PR:
     name: Make PR on website repository with updated latest Bindings documentation
@@ -51,39 +50,41 @@ jobs:
               configData.push(slug);
               await writeFile(configPath, JSON.stringify(configData, null, 2))
             } 
-            - name: Update title and weight of the markdown files
-            uses: actions/github-script@v4
-            with:
-              script: |
-                const fs = require('fs').promises;
-                const path = require('path');
-                const rootPath = './bindings/';
-          
-                async function processMarkdownFiles(folderPath, isRoot = true) {
-                  const items = await fs.readdir(folderPath, { withFileTypes: true });
-                  for (const item of items) {
-                    const fullPath = path.join(folderPath, item.name);
-                    if (item.isDirectory()) {
-                      // Always process subdirectories, mark isRoot as false for recursive calls
-                      await processMarkdownFiles(fullPath, false);
-                    } else if (item.name.endsWith('.md') && !isRoot) { // Skip root level .md files
-                      const baseName = path.basename(fullPath, '.md');
-                      const newData = `---\ntitle: '${baseName}'\nweight: 10\n---\n\n`;
-                      let existingFileData = await fs.readFile(fullPath, 'utf8');
-                      
-                      existingFileData = existingFileData.replace(/!\[([^\]]*)\]\((?!http)(.*?)\)/g, (match, alt, src) => {
-                        // Remove './' prefix from src path and prepend '/img/diagrams/'
-                        const updatedSrc = src.replace(/^\.\//, '');
-                        return `![${alt}](/img/diagrams/${updatedSrc})`;
-                      });
-          
-                      const updatedContent = newData + existingFileData;
-                      await fs.writeFile(fullPath, updatedContent);
-                    }
-                  }
+
+      - name: Update title and weight of the markdown files
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs').promises;
+            const path = require('path');
+            const rootPath = './bindings/';
+      
+            async function processMarkdownFiles(folderPath, isRoot = true) {
+              const items = await fs.readdir(folderPath, { withFileTypes: true });
+              for (const item of items) {
+                const fullPath = path.join(folderPath, item.name);
+                if (item.isDirectory()) {
+                  // Always process subdirectories, mark isRoot as false for recursive calls
+                  await processMarkdownFiles(fullPath, false);
+                } else if (item.name.endsWith('.md') && !isRoot) { // Skip root level .md files
+                  const baseName = path.basename(fullPath, '.md');
+                  const newData = `---\ntitle: '${baseName}'\nweight: 10\n---\n\n`;
+                  let existingFileData = await fs.readFile(fullPath, 'utf8');
+                  
+                  existingFileData = existingFileData.replace(/!\[([^\]]*)\]\((?!http)(.*?)\)/g, (match, alt, src) => {
+                    // Remove './' prefix from src path and prepend '/img/diagrams/'
+                    const updatedSrc = src.replace(/^\.\//, '');
+                    return `![${alt}](/img/diagrams/${updatedSrc})`;
+                  });
+      
+                  const updatedContent = newData + existingFileData;
+                  await fs.writeFile(fullPath, updatedContent);
                 }
-          
-                await processMarkdownFiles(rootPath);
+              }
+            }
+      
+            await processMarkdownFiles(rootPath);
+
       - name: Copy bindings folder from Current Repo to Another
         working-directory: ./website
         run: |
@@ -98,12 +99,14 @@ jobs:
           mkdir -p ./website/public/img/docs/
           # Find and copy all image files from the source directory to the target directory
           find ./bindings/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -iname "*.webp" \) -exec cp {} ./website/public/img/docs/ \;
+
       - name: Commit and push
         working-directory: ./website
         run: |
           git add .
           git commit -m "docs(extension): update latest bindings docs"
           git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/website
+
       - name: Create PR
         working-directory: ./website
         run: |
