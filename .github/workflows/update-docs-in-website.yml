@@ -3,9 +3,9 @@ name: Update latest Bindings documentation in the website
 on:
   push:
     branches:
-      - "master"
+      - master
     paths:
-      - "./*.md"
+      - "**/*.md"
 
 jobs:
   Make-PR:
@@ -17,21 +17,21 @@ jobs:
       - name: Checkout Current repository
         uses: actions/checkout@v3
         with:
-          path: extensions-catalog
+          path: bindings
       - name: Checkout Another repository
         uses: actions/checkout@v3
         with:
-          repository: asyncapi/website
+          repository: akshatnema/website
           path: website
           token: ${{ env.GITHUB_TOKEN }}
       - name: Config git
         run: |
-          git config --global user.name asyncapi-bot
-          git config --global user.email info@asyncapi.io
+          git config --global user.name akshatnema
+          git config --global user.email akshatnema.school@gmail.com
       - name: Create branch
         working-directory: ./website
         run: |
-          git checkout -b update-extensions-docs-${{ github.sha }}
+          git checkout -b update-bindings-docs-${{ github.sha }}
       - name: Update edit-page-config.json
         uses: actions/github-script@v4
         with:
@@ -41,15 +41,15 @@ jobs:
             const checkSlug = 'reference/bindings/';
             const slug = {
               "value": checkSlug,
-              "href": "https://github.com/asyncapi/bindings/tree/master/"
+              "href": "https://github.com/asyncapi/bindings/tree/master"
             };
-          
+
             const configData = require(configPath);
             const entryExists = configData.some(entry => entry.value === checkSlug);
             if (!entryExists) {
-              configData.push(slug);
+              configData.unshift(slug);
               await writeFile(configPath, JSON.stringify(configData, null, 2))
-            } 
+            }
 
       - name: Update title and weight of the markdown files
         uses: actions/github-script@v4
@@ -58,7 +58,8 @@ jobs:
             const fs = require('fs').promises;
             const path = require('path');
             const rootPath = './bindings/';
-      
+            let itemIndex = 10;
+
             async function processMarkdownFiles(folderPath, isRoot = true) {
               const items = await fs.readdir(folderPath, { withFileTypes: true });
               for (const item of items) {
@@ -68,30 +69,36 @@ jobs:
                   await processMarkdownFiles(fullPath, false);
                 } else if (item.name.endsWith('.md') && !isRoot) { // Skip root level .md files
                   const baseName = path.basename(fullPath, '.md');
-                  const newData = `---\ntitle: '${baseName}'\nweight: 10\n---\n\n`;
-                  let existingFileData = await fs.readFile(fullPath, 'utf8');
+                  const parentDirName = path.basename(folderPath);
+                  const newFileName = `${parentDirName}.md`;
+                  const newFullPath = path.join(folderPath, newFileName);
+                  await fs.rename(fullPath, newFullPath);
                   
-                  existingFileData = existingFileData.replace(/!\[([^\]]*)\]\((?!http)(.*?)\)/g, (match, alt, src) => {
-                    // Remove './' prefix from src path and prepend '/img/diagrams/'
+                  const newData = `---\ntitle: '${parentDirName}'\nweight: ${itemIndex}\n---\n\n`;
+                  let existingFileData = await fs.readFile(newFullPath, 'utf8');
+                  
+                  existingFileData = existingFileData.replace(/<img\s+src="(?!http)(.*?)"/g, (match, src) => {
+                    // Remove './' prefix from src path and prepend '/img/docs/'
                     const updatedSrc = src.replace(/^\.\//, '');
-                    return `![${alt}](/img/diagrams/${updatedSrc})`;
-                  });
-      
+                    return `<img src="/img/docs/${updatedSrc}"`;
+                    });
+                  
                   const updatedContent = newData + existingFileData;
-                  await fs.writeFile(fullPath, updatedContent);
+                  await fs.writeFile(newFullPath, updatedContent);
+                  itemIndex++;
                 }
               }
             }
-      
+
             await processMarkdownFiles(rootPath);
 
       - name: Copy bindings folder from Current Repo to Another
         working-directory: ./website
         run: |
           mkdir -p ./markdown/docs/reference/bindings
-          printf "%s\ntitle: Bindings\nweight: 11\n%s" "---" "---"> ../extensions-catalog/extensions/_section.md
-          mv ../bindings/**/*.md ./markdown/docs/reference/bindings
-      
+          printf "%s\ntitle: Bindings\nweight: 11\n%s" "---" "---"> ../bindings/_section.md
+          find ../bindings -type f -name '*.md' ! -name 'CONTRIBUTING.md' ! -name 'README.md' ! -name 'CODE_OF_CONDUCT.md' -exec mv {} ./markdown/docs/reference/bindings/ \;
+
       - name: Copy images to website
         run: |
           # Assuming the workflow runs on Linux/macOS
