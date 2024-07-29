@@ -21,13 +21,13 @@ jobs:
       - name: Checkout Another repository
         uses: actions/checkout@v3
         with:
-          repository: akshatnema/website
+          repository: asyncapi/website
           path: website
           token: ${{ env.GITHUB_TOKEN }}
       - name: Config git
         run: |
-          git config --global user.name akshatnema
-          git config --global user.email akshatnema.school@gmail.com
+          git config --global user.name asyncapi-bot
+          git config --global user.email info@asyncapi.io
       - name: Create branch
         working-directory: ./website
         run: |
@@ -74,7 +74,7 @@ jobs:
                   const newFullPath = path.join(folderPath, newFileName);
                   await fs.rename(fullPath, newFullPath);
                   
-                  const newData = `---\ntitle: '${parentDirName}'\nweight: ${itemIndex}\n---\n\n`;
+                  const newData = `---\ntitle: '${parentDirName.charAt(0).toUpperCase() + parentDirName.slice(1)}'\nweight: ${itemIndex}\n---\n\n`;
                   let existingFileData = await fs.readFile(newFullPath, 'utf8');
                   
                   existingFileData = existingFileData.replace(/<img\s+src="(?!http)(.*?)"/g, (match, src) => {
