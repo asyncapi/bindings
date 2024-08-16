@@ -6,7 +6,7 @@ This document defines how to describe SNS-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 
 <a name="server"></a>
@@ -52,8 +52,10 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingPolicyStatementObjectEffect"></a>`effect` | string |**Required.** Either "Allow" or "Deny"|
-| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or resource ARN that this statement applies to|
+| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or AWS principal property containing a string or string array |**Required.** The AWS account(s) or resource ARN(s) that the statement applies to|
 | <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SNS permission being allowed or denied e.g. sns:Publish|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`resource` | string or array of string |**Optional.** The resource(s) that this policy applies to|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`condition` | object or list of objects |**Optional.** Specific circumstances under which the policy grants permission|
 
 ##### Examples
 
