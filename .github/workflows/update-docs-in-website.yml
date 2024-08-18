@@ -60,22 +60,22 @@ jobs:
             const rootPath = './bindings/';
             let itemIndex = 10;
 
-            async function processMarkdownFiles(folderPath, isRoot = true) {
-              const items = await fs.readdir(folderPath, { withFileTypes: true });
+            function processMarkdownFiles(folderPath, isRoot = true) {
+              const items = fs.readdirSync(folderPath, { withFileTypes: true });
               for (const item of items) {
                 const fullPath = path.join(folderPath, item.name);
                 if (item.isDirectory()) {
                   // Always process subdirectories, mark isRoot as false for recursive calls
-                  await processMarkdownFiles(fullPath, false);
+                  processMarkdownFiles(fullPath, false);
                 } else if (item.name.endsWith('.md') && !isRoot) { // Skip root level .md files
                   const baseName = path.basename(fullPath, '.md');
                   const parentDirName = path.basename(folderPath);
                   const newFileName = `${parentDirName}.md`;
                   const newFullPath = path.join(folderPath, newFileName);
-                  await fs.rename(fullPath, newFullPath);
+                  fs.renameSync(fullPath, newFullPath);
                   
                   const newData = `---\ntitle: '${parentDirName.charAt(0).toUpperCase() + parentDirName.slice(1)}'\nweight: ${itemIndex}\n---\n\n`;
-                  let existingFileData = await fs.readFile(newFullPath, 'utf8');
+                  let existingFileData = fs.readFileSync(newFullPath, 'utf8');
                   
                   existingFileData = existingFileData.replace(/<img\s+src="(?!http)(.*?)"/g, (match, src) => {
                     // Remove './' prefix from src path and prepend '/img/docs/'
@@ -84,7 +84,7 @@ jobs:
                     });
                   
                   const updatedContent = newData + existingFileData;
-                  await fs.writeFile(newFullPath, updatedContent);
+                  fs.writeFileSync(newFullPath, updatedContent);
                   itemIndex++;
                 }
               }
