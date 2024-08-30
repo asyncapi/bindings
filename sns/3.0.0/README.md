@@ -92,9 +92,9 @@ This object contains information operation binding in SNS.
 
 We represent SNS producers via a **subscribe** Operation Object. In simple cases this may not require configuration, and can be shown as an empty SNS Binding Object i.e. {} if you need to explicitly indicate how a producer publishes to the channel.
 
-We represent SNS consumers via a **publish** Operation Object. These consumers need an SNS Subscription that defines how they consume from SNS i.e. the protocol that they use, and any filters applied.
+SNS consumers need an SNS Subscription that defines how they consume from SNS i.e. the protocol that they use, and any filters applied.
 
-The SNS binding does not describe the receiver.If you wish to define the receiver, add a **publish** Operation Binding Object for that receiver. For example, if you send message to an SQS queue from an SNS Topic, you would add a protocol of 'sqs' and an Identifier object for the queue. That identifier could be an ARN of a queue defined outside of the scope of AsyncAPI, but if you wanted to define the receiver you would use the name of a queue defined in an SQS Binding on the **publish** Operation Binding Object.
+The SNS binding does not describe the receiver.If you wish to define the receiver, add an Operation Binding Object for that receiver. For example, if you send message to an SQS queue from an SNS Topic, you would add a protocol of 'sqs' and an Identifier object for the queue. That identifier could be an ARN of a queue defined outside of the scope of AsyncAPI, but if you wanted to define the receiver you would use the name of a queue defined in an SQS Binding in the Operation Binding Object.
 
 We support an array of consumers via the **consumers** field. This allows you to represent multiple protocols consuming an SNS Topic in one file. You may also use it for multiple consumers with the same protocol, instead of representing each consumer in a separate file.
 
@@ -102,10 +102,10 @@ We support an array of consumers via the **consumers** field. This allows you to
 
 | Field Name | Type | Applies To | Description |
 |---|:---:|:---:|---|
-| <a name="operationBindingObjectTopic"></a>`topic` | [identifier](#identifier) |Publish, Subscribe| **Optional.** Often we can assume that the SNS Topic is the channel name-we provide this field in case the you need to supply the ARN, or the Topic name is not the channel name in the AsyncAPI document.|
-| <a name="operationBindingObjectConsumers"></a>`consumers` | [[Consumer](#consumer)] |Publish| **Required.** The protocols that listen to this topic and their endpoints.|
-| <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) |Subscribe| **Optional.** Policy for retries to HTTP. The field is the default for HTTP receivers of the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html) which may be overridden by a specific consumer.|
-|<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string |Publish, Subscribe| **Optional**, defaults to `latest`. The version of this binding.|
+| <a name="operationBindingObjectTopic"></a>`topic` | [identifier](#identifier) |send, receive| **Optional.** Often we can assume that the SNS Topic is the channel name-we provide this field in case the you need to supply the ARN, or the Topic name is not the channel name in the AsyncAPI document.|
+| <a name="operationBindingObjectConsumers"></a>`consumers` | [[Consumer](#consumer)] |receive| **Required.** The protocols that listen to this topic and their endpoints.|
+| <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) |send| **Optional.** Policy for retries to HTTP. The field is the default for HTTP receivers of the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html) which may be overridden by a specific consumer.|
+|<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string |send, receive| **Optional**, defaults to `latest`. The version of this binding.|
 
 ### Schemas
 
@@ -142,7 +142,7 @@ We support an array of consumers via the **consumers** field. This allows you to
 |<a name="identifierObjectEmail"></a>`email` |string| **Optional.** The endpoint is an email address |
 |<a name="identifierObjectPhone"></a>`phone` |string| **Optional.** The endpoint is a phone number|
 |<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:{region}:{account-id}:{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)|
-|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this **publish** Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding. We don't use $ref because we are referring, not including. |
+|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on the Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding. We don't use $ref because we are referring, not including. |
 
 We provide an Identifer Object to support providing the identifier of an externally defined endpoint for this SNS *publication* to target, or an endpoint on another binding against this Operation Object (via the name field). 
 
@@ -184,7 +184,7 @@ operations:
       $ref: '#/channels/userSignedUp'
 ```
 
-We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
+We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the Operation Binding.
 
 In this version, the SQS queue is defined elsewhere, and we just reference via its ARN. It is worth noting that this couples the specification to the AWS *region* and *account*, which are part of the ARN, and if we moved  the queue to a new region or account was this specification would need to be updated to reflect that.
 
@@ -210,7 +210,7 @@ operations:
       $ref: '#/channels/userSignedUp'
 ```
 
-We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
+We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the Operation Binding.
 
 In this version, the SQS queue is defined in this file, and we reference it by name. For brevity that definition is not shown here. See the SQS Binding Object for more. 
 
