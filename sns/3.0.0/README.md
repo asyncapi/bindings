@@ -6,7 +6,7 @@ This document defines how to describe SNS-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `1.0.0`.
 
 
 <a name="server"></a>
@@ -163,20 +163,25 @@ We are producing to an SNS channel
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
     description:  A user has signed up for our service
     binding :
       sns: {}     # Indicates that the channel is an SNS Topic
-    subscribe:
-      operationId: sendMessage
-      description: send messages to the topic
-      bindings:
-        sns:
-          consumers:
-            - protocol: sqs
-              endpoint:
-                name: myQueue
-              rawMessageDelivery: false
+operations:
+  userSignedUp:
+    description:  A user has signed up for our service
+    operationId: sendMessage
+    description: send messages to the topic
+    action: send
+    binding:
+      sns:
+        consumers:
+          - protocol: sqs
+            endpoint:
+              name: myQueue
+            rawMessageDelivery: false
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
@@ -186,18 +191,23 @@ In this version, the SQS queue is defined elsewhere, and we just reference via i
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
+    # ...(redacted for brevity)
+operations:
+  userSignedUp:
     description:  A user has signed up for our service
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
-          consumers:
-            - protocol: sqs
-              endpoint:
-                arn: arn:aws:sqs:us-west-2:123456789012:UserSignedUpQueue
-              rawMessageDelivery: true  
+    operationId: receiveMessage
+    description: receive messages from the topic
+    action: receive
+    bindings:
+      sns:
+        consumers:
+          - protocol: sqs
+            endpoint:
+              arn: arn:aws:sqs:us-west-2:123456789012:UserSignedUpQueue
+            rawMessageDelivery: true  
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
@@ -206,14 +216,17 @@ In this version, the SQS queue is defined in this file, and we reference it by n
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
+    # ...(redacted for brevity)
+operations:
+  userSignedUp:
     description:  A user has signed up for our service
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
-          consumers:
+    operationId: receiveMessage
+    description: receive messages from the topic
+    action: receive
+    bindings:
+      sns:
+        consumers:
           - protocol: sqs
             endpoint:
               name: user-signedup-queue # refers to a queue defined in this file, but not shown in this example
@@ -223,7 +236,9 @@ channels:
                 anything-but: password-reset
             redrivePolicy:
               deadLetterQueue:
-                name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
+                name: user-signedup-queue-dlq # refers to a queue defined in this file, but not show in this example
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 #### SNS to HTTP Pub Sub
@@ -236,7 +251,7 @@ In this version, we define a default delivery policy for any HTTP based consumer
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
     description:  A user has signed up for our service
     bindings:
       sns:
@@ -245,35 +260,43 @@ channels:
           - effect : Allow
             principal: *
             action: SNS:Publish 
-    subscribe:
-      operationId: sendMessage
-      description: send messages to the topic
-      bindings:
-        sns:
-          deliveryPolicy:
-            minDelayTarget: 1
-            maxDelayTarget: 60
-            numRetries: 50
-            numNoDelayRetries: 3
-            numMinDelayRetries: 2
-            numMaxDelayRetries: 35
-            backoffFunction: exponential
-            maxReceivesPerSecond: 10
+operations:
+  userSignedUp:
+    description:  A user has signed up for our service
+    operationId: sendMessage
+    description: send messages to the topic
+    action: send
+    binding:
+      sns:
+        deliveryPolicy:
+          minDelayTarget: 1
+          maxDelayTarget: 60
+          numRetries: 50
+          numNoDelayRetries: 3
+          numMinDelayRetries: 2
+          numMaxDelayRetries: 35
+          backoffFunction: exponential
+          maxReceivesPerSecond: 10
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 We are consuming an SNS channel, using an HTTP endpoint, which is defined in this AsyncAPI file. For brevity we do not show an http endpoint here. The delivery policy here is defined for the http consumer and overrides any policy set by the producer
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
     description:  A user has signed up for our service
     bindings:
-      sns: {}    # Indicates that the channel is an SNS Topic, but assumes defined by producer
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
+      sns: {} # Indicates that the channel is an SNS Topic, but assumes defined by producer
+operations:
+  userSignedUp:
+    description:  A user has signed up for our service
+    operationId: receiveMessage
+    description: receive messages from the topic
+    action: receive
+    bindings:
+      sns:
         - protocol: http
           endpoint:
             url: http://login.my.com/user/new
@@ -292,7 +315,9 @@ channels:
             maxReceivesPerSecond: 20
           redrivePolicy:
             deadLetterQueue:
-              name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
+              name: user-signedup-queue-dlq # refers to a queue defined in this file, but not show in this example
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 <a name="message"></a>
