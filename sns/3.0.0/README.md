@@ -6,7 +6,7 @@ This document defines how to describe SNS-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `1.0.0`.
 
 
 <a name="server"></a>
@@ -52,8 +52,10 @@ SNS supports many optional properties. To mark a channel as SNS, but use default
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingPolicyStatementObjectEffect"></a>`effect` | string |**Required.** Either "Allow" or "Deny"|
-| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or resource ARN that this statement applies to|
+| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or AWS principal property containing a string or string array |**Required.** The AWS account(s) or resource ARN(s) that the statement applies to|
 | <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SNS permission being allowed or denied e.g. sns:Publish|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`resource` | string or array of string |**Optional.** The resource(s) that this policy applies to|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`condition` | object or list of objects |**Optional.** Specific circumstances under which the policy grants permission|
 
 ##### Examples
 
@@ -90,9 +92,9 @@ This object contains information operation binding in SNS.
 
 We represent SNS producers via a **subscribe** Operation Object. In simple cases this may not require configuration, and can be shown as an empty SNS Binding Object i.e. {} if you need to explicitly indicate how a producer publishes to the channel.
 
-We represent SNS consumers via a **publish** Operation Object. These consumers need an SNS Subscription that defines how they consume from SNS i.e. the protocol that they use, and any filters applied.
+SNS consumers need an SNS Subscription that defines how they consume from SNS i.e. the protocol that they use, and any filters applied.
 
-The SNS binding does not describe the receiver.If you wish to define the receiver, add a **publish** Operation Binding Object for that receiver. For example, if you send message to an SQS queue from an SNS Topic, you would add a protocol of 'sqs' and an Identifier object for the queue. That identifier could be an ARN of a queue defined outside of the scope of AsyncAPI, but if you wanted to define the receiver you would use the name of a queue defined in an SQS Binding on the **publish** Operation Binding Object.
+The SNS binding does not describe the receiver.If you wish to define the receiver, add an Operation Binding Object for that receiver. For example, if you send message to an SQS queue from an SNS Topic, you would add a protocol of 'sqs' and an Identifier object for the queue. That identifier could be an ARN of a queue defined outside of the scope of AsyncAPI, but if you wanted to define the receiver you would use the name of a queue defined in an SQS Binding in the Operation Binding Object.
 
 We support an array of consumers via the **consumers** field. This allows you to represent multiple protocols consuming an SNS Topic in one file. You may also use it for multiple consumers with the same protocol, instead of representing each consumer in a separate file.
 
@@ -100,10 +102,10 @@ We support an array of consumers via the **consumers** field. This allows you to
 
 | Field Name | Type | Applies To | Description |
 |---|:---:|:---:|---|
-| <a name="operationBindingObjectTopic"></a>`topic` | [identifier](#identifier) |Publish, Subscribe| **Optional.** Often we can assume that the SNS Topic is the channel name-we provide this field in case the you need to supply the ARN, or the Topic name is not the channel name in the AsyncAPI document.|
-| <a name="operationBindingObjectConsumers"></a>`consumers` | [[Consumer](#consumer)] |Publish| **Required.** The protocols that listen to this topic and their endpoints.|
-| <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) |Subscribe| **Optional.** Policy for retries to HTTP. The field is the default for HTTP receivers of the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html) which may be overridden by a specific consumer.|
-|<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string |Publish, Subscribe| **Optional**, defaults to `latest`. The version of this binding.|
+| <a name="operationBindingObjectTopic"></a>`topic` | [identifier](#identifier) |send, receive| **Optional.** Often we can assume that the SNS Topic is the channel name-we provide this field in case the you need to supply the ARN, or the Topic name is not the channel name in the AsyncAPI document.|
+| <a name="operationBindingObjectConsumers"></a>`consumers` | [[Consumer](#consumer)] |receive| **Required.** The protocols that listen to this topic and their endpoints.|
+| <a name="operationBindingObjectDeliveryPolicy"></a>`deliveryPolicy` | [deliveryPolicy](#delivery-policy) |send| **Optional.** Policy for retries to HTTP. The field is the default for HTTP receivers of the [SNS Topic](https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html) which may be overridden by a specific consumer.|
+|<a name="channelBindingObjectBindingVersion"></a>`bindingVersion` | string |send, receive| **Optional**, defaults to `latest`. The version of this binding.|
 
 ### Schemas
 
@@ -134,13 +136,13 @@ We support an array of consumers via the **consumers** field. This allows you to
 | <a name="channelBindingDeliveryPolicyObjectMaxReceivesPerSecond"></a>`maxReceivesPerSecond` | integer | **Optional.** The maximum number of deliveries per second, per subscription |
 
 #### Identifier
-|Field Name | Type | Description                                                                                                                                                                                                                                                                                                                               |
-|---|:---:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|<a name="identifierObjectUrl"></a>`url` |string| **Optional.** The endpoint is a URL                                                                                                                                                                                                                                                                                                       |
-|<a name="identifierObjectEmail"></a>`email` |string| **Optional.** The endpoint is an email address                                                                                                                                                                                                                                                                                            |
-|<a name="identifierObjectPhone"></a>`phone` |string| **Optional.** The endpoint is a phone number                                                                                                                                                                                                                                                                                              |
-|<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:\{region}:\{account-id}:\{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)         |
-|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this **publish** Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding. We don't use $ref because we are referring, not including. |
+|Field Name | Type | Description|
+|---|:---:|---|
+|<a name="identifierObjectUrl"></a>`url` |string| **Optional.** The endpoint is a URL  |
+|<a name="identifierObjectEmail"></a>`email` |string| **Optional.** The endpoint is an email address |
+|<a name="identifierObjectPhone"></a>`phone` |string| **Optional.** The endpoint is a phone number|
+|<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:{region}:{account-id}:{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)|
+|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on the Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding. We don't use $ref because we are referring, not including. |
 
 We provide an Identifer Object to support providing the identifier of an externally defined endpoint for this SNS *publication* to target, or an endpoint on another binding against this Operation Object (via the name field). 
 
@@ -161,57 +163,70 @@ We are producing to an SNS channel
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
     description:  A user has signed up for our service
     binding :
       sns: {}     # Indicates that the channel is an SNS Topic
-    subscribe:
-      operationId: sendMessage
-      description: send messages to the topic
-      bindings:
-        sns:
-          consumers:
-            - protocol: sqs
-              endpoint:
-                name: myQueue
-              rawMessageDelivery: false
+operations:
+  userSignedUp:
+    description:  A user has signed up for our service
+    operationId: sendMessage
+    description: send messages to the topic
+    action: send
+    binding:
+      sns:
+        consumers:
+          - protocol: sqs
+            endpoint:
+              name: myQueue
+            rawMessageDelivery: false
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
-We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
+We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the Operation Binding.
 
 In this version, the SQS queue is defined elsewhere, and we just reference via its ARN. It is worth noting that this couples the specification to the AWS *region* and *account*, which are part of the ARN, and if we moved  the queue to a new region or account was this specification would need to be updated to reflect that.
 
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
+    # ...(redacted for brevity)
+operations:
+  userSignedUp:
     description:  A user has signed up for our service
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
-          consumers:
-            - protocol: sqs
-              endpoint:
-                arn: arn:aws:sqs:us-west-2:123456789012:UserSignedUpQueue
-              rawMessageDelivery: true  
+    operationId: receiveMessage
+    description: receive messages from the topic
+    action: receive
+    bindings:
+      sns:
+        consumers:
+          - protocol: sqs
+            endpoint:
+              arn: arn:aws:sqs:us-west-2:123456789012:UserSignedUpQueue
+            rawMessageDelivery: true  
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
-We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the **publish** Operation Binding.
+We are consuming an SNS channel, using an SQS queue. A separate file specifies the producer, and has the SNS Bindings for the channel. For this reason we do not repeat the SNS binding information for the channel here, to avoid duplicated definitions diverging. Instead we just define the Operation Binding.
 
 In this version, the SQS queue is defined in this file, and we reference it by name. For brevity that definition is not shown here. See the SQS Binding Object for more. 
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
+    # ...(redacted for brevity)
+operations:
+  userSignedUp:
     description:  A user has signed up for our service
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
-          consumers:
+    operationId: receiveMessage
+    description: receive messages from the topic
+    action: receive
+    bindings:
+      sns:
+        consumers:
           - protocol: sqs
             endpoint:
               name: user-signedup-queue # refers to a queue defined in this file, but not shown in this example
@@ -221,7 +236,9 @@ channels:
                 anything-but: password-reset
             redrivePolicy:
               deadLetterQueue:
-                name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
+                name: user-signedup-queue-dlq # refers to a queue defined in this file, but not show in this example
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 #### SNS to HTTP Pub Sub
@@ -234,7 +251,7 @@ In this version, we define a default delivery policy for any HTTP based consumer
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
     description:  A user has signed up for our service
     bindings:
       sns:
@@ -243,35 +260,43 @@ channels:
           - effect : Allow
             principal: *
             action: SNS:Publish 
-    subscribe:
-      operationId: sendMessage
-      description: send messages to the topic
-      bindings:
-        sns:
-          deliveryPolicy:
-            minDelayTarget: 1
-            maxDelayTarget: 60
-            numRetries: 50
-            numNoDelayRetries: 3
-            numMinDelayRetries: 2
-            numMaxDelayRetries: 35
-            backoffFunction: exponential
-            maxReceivesPerSecond: 10
+operations:
+  userSignedUp:
+    description:  A user has signed up for our service
+    operationId: sendMessage
+    description: send messages to the topic
+    action: send
+    binding:
+      sns:
+        deliveryPolicy:
+          minDelayTarget: 1
+          maxDelayTarget: 60
+          numRetries: 50
+          numNoDelayRetries: 3
+          numMinDelayRetries: 2
+          numMaxDelayRetries: 35
+          backoffFunction: exponential
+          maxReceivesPerSecond: 10
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 We are consuming an SNS channel, using an HTTP endpoint, which is defined in this AsyncAPI file. For brevity we do not show an http endpoint here. The delivery policy here is defined for the http consumer and overrides any policy set by the producer
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedUp:
     description:  A user has signed up for our service
     bindings:
-      sns: {}    # Indicates that the channel is an SNS Topic, but assumes defined by producer
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
+      sns: {} # Indicates that the channel is an SNS Topic, but assumes defined by producer
+operations:
+  userSignedUp:
+    description:  A user has signed up for our service
+    operationId: receiveMessage
+    description: receive messages from the topic
+    action: receive
+    bindings:
+      sns:
         - protocol: http
           endpoint:
             url: http://login.my.com/user/new
@@ -290,7 +315,9 @@ channels:
             maxReceivesPerSecond: 20
           redrivePolicy:
             deadLetterQueue:
-              name: user-signedup-queue-dlq # refers toa queue defined in this file, but not show in this example
+              name: user-signedup-queue-dlq # refers to a queue defined in this file, but not show in this example
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 <a name="message"></a>
