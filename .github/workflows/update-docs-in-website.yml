@@ -37,7 +37,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const { writeFile } = require('fs');
+            const { writeFile } = require('fs').promises;
             const configPath = './website/config/edit-page-config.json';
             const checkSlug = 'reference/bindings/';
             const slug = {
