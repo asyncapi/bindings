@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - "**/*.md"
+  workflow_dispatch:
 
 jobs:
   Make-PR:
@@ -55,7 +56,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const fs = require('fs').promises;
+            const fs = require('fs');
             const path = require('path');
             const rootPath = './bindings/';
             let itemIndex = 10;
