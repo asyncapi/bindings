@@ -147,7 +147,7 @@ channels:
         deadLetterQueue: 
           name: user-signedup-dlq 
           messageRetentionPeriod: 1209600 
-	        fifoQueue: false
+          fifoQueue: false
 operations:
   userSignedUp:
     action: send
