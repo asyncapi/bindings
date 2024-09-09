@@ -16,11 +16,11 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout Current repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: bindings
       - name: Checkout Another repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: asyncapi/website
           path: website
@@ -37,7 +37,7 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const { writeFile } = require('fs').promises;
+            const { writeFile } = require('fs').promis;
             const configPath = './website/config/edit-page-config.json';
             const checkSlug = 'reference/bindings/';
             const slug = {
@@ -75,7 +75,7 @@ jobs:
                   const newFullPath = path.join(folderPath, newFileName);
                   fs.renameSync(fullPath, newFullPath);
                   
-                  const newData = `---\ntitle: '${parentDirName.charAt(0).toUpperCase() + parentDirName.slice(1)}'\nweight: ${itemIndex}\n---\n\n`;
+                  const newData = `---\ntitle: '${parentDirName}'\nweight: ${itemIndex}\n---\n\n`;
                   let existingFileData = fs.readFileSync(newFullPath, 'utf8');
                   
                   existingFileData = existingFileData.replace(/<img\s+src="(?!http)(.*?)"/g, (match, src) => {
