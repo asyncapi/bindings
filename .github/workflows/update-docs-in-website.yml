@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - "**/*.md"
+      - ".github/workflows/update-docs-in-website.yml"
   workflow_dispatch:
 
 jobs:
