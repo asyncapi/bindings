@@ -52,7 +52,7 @@ This object MUST contain only the properties defined above.
 ```yaml
 channels:
   userSignupExchange:
-    address: 'user.signup'
+    address: 'signup'
     bindings:
       amqp:
         is: routingKey
