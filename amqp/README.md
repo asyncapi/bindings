@@ -6,7 +6,7 @@ This document defines how to describe AMQP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.3.0`.
+Current version is `0.4.0`.
 
 
 <a name="server"></a>
@@ -65,7 +65,7 @@ channels:
           durable: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
 ```
 
 ```yaml
@@ -81,7 +81,7 @@ channels:
           exclusive: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
 ```
 
 <a name="operation"></a>
@@ -125,7 +125,7 @@ operations:
         bcc: ['external.audit']
         timestamp: true
         ack: false
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
 ```
 
 
@@ -154,5 +154,5 @@ channels:
           amqp:
             contentEncoding: gzip
             messageType: 'user.signup'
-            bindingVersion: 0.3.0
+            bindingVersion: 0.4.0
 ```
