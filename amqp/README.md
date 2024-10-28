@@ -51,14 +51,14 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  userSignup:
-    address: 'user/signup'
+  userSignupExchange:
+    address: 'user.signup'
     bindings:
       amqp:
         is: routingKey
-        name: routing.pattern
+        name: user.signup
         channel:
-          $ref: #/components/channels/userSignup
+          $ref: #/components/channels/userSignupQueue
         exchange:
           name: myExchange
           type: topic
@@ -70,8 +70,8 @@ channels:
 
 ```yaml
 channels:
-  userSignup:
-    address: 'user/signup'
+  userSignupQueue:
+    address: 'user.signup'
     bindings:
       amqp:
         is: queue
@@ -113,7 +113,7 @@ This object MUST contain only the properties defined above.
 operations:
   userSignup:
     channel: 
-      $ref: '#/channels/userSignup'
+      $ref: '#/channels/userSignupQueue'
     bindings:
       amqp:
         expiration: 100000
@@ -147,8 +147,7 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  userSignup:
-    address: 'user/signup'
+  userSignupQueue:
     messages:
       userSignupMessage:
         bindings:
