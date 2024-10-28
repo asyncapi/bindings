@@ -30,7 +30,8 @@ Field Name | Type | Description
 ---|:---:|---
 <a name="channelBindingObjectIs"></a>`is` | string | Defines what type of channel is it. Can be either `queue` or `routingKey` (default).
 <a name="channelBindingObjectName"></a>`name` | string | When `is`=`routingKey`, this defines the actual routing pattern to route the message from the exchange to the queue.
-<a name="channelBindingObjectChannelRef"></a>`channel.$ref` | string | When `is`=`routingKey`, this defines the target queue after routing the message (essentially the binding).
+<a name="channelBindingObjectChannel"></a>`channel` | Map[string, any] | When `is`=`routingKey`, this defines the destination amqp queue.
+<a name="channelBindingObjectChannelRef"></a>`channel.$ref` | string | When `is`=`routingKey`, this defines an AsyncAPI channel `$ref` pointer to the destination amqp queue.
 <a name="channelBindingObjectExchange"></a>`exchange` | Map[string, any] | When `is`=`routingKey`, this object defines the exchange properties.
 <a name="channelBindingObjectExchangeName"></a>`exchange.name` | string | The name of the exchange. It MUST NOT exceed 255 characters long.
 <a name="channelBindingObjectExchangeType"></a>`exchange.type` | string | The type of the exchange. Can be either `topic`, `direct`, `fanout`, `default` or `headers`.
