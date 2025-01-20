@@ -12,7 +12,7 @@ For publish-subscribe scenarios, use as a Operation Binding Object with a `send`
 
 ## Version
 
-Current version is `0.3.0`.
+Current version is `0.4.0`.
 
 <a name="server"></a>
 
