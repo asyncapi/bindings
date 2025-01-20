@@ -1,0 +1,122 @@
+name: Update latest Bindings documentation in the website
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**/*.md"
+      - ".github/workflows/update-docs-in-website.yml"
+  workflow_dispatch:
+
+jobs:
+  Make-PR:
+    name: Make PR on website repository with updated latest Bindings documentation
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout Current repository
+        uses: actions/checkout@v4
+        with:
+          path: bindings
+      - name: Checkout Another repository
+        uses: actions/checkout@v4
+        with:
+          repository: asyncapi/website
+          path: website
+          token: ${{ env.GITHUB_TOKEN }}
+      - name: Config git
+        run: |
+          git config --global user.name asyncapi-bot
+          git config --global user.email info@asyncapi.io
+      - name: Create branch
+        working-directory: ./website
+        run: |
+          git checkout -b update-bindings-docs-${{ github.sha }}
+      - name: Update edit-page-config.json
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const { writeFile } = require('fs').promises;
+            const configPath = './website/config/edit-page-config.json';
+            const checkSlug = 'reference/bindings/';
+            const slug = {
+              "value": checkSlug,
+              "href": "https://github.com/asyncapi/bindings/tree/master"
+            };
+
+            const configData = require(configPath);
+            const entryExists = configData.some(entry => entry.value === checkSlug);
+            if (!entryExists) {
+              configData.unshift(slug);
+              await writeFile(configPath, JSON.stringify(configData, null, 2))
+            }
+
+      - name: Update title and weight of the markdown files
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const rootPath = './bindings/';
+            let itemIndex = 10;
+
+            function processMarkdownFiles(folderPath, isRoot = true) {
+              const items = fs.readdirSync(folderPath, { withFileTypes: true });
+              for (const item of items) {
+                const fullPath = path.join(folderPath, item.name);
+                if (item.isDirectory()) {
+                  // Always process subdirectories, mark isRoot as false for recursive calls
+                  processMarkdownFiles(fullPath, false);
+                } else if (item.name.endsWith('.md') && !isRoot) { // Skip root level .md files
+                  const baseName = path.basename(fullPath, '.md');
+                  const parentDirName = path.basename(folderPath);
+                  const newFileName = `${parentDirName}.md`;
+                  const newFullPath = path.join(folderPath, newFileName);
+                  fs.renameSync(fullPath, newFullPath);
+                  
+                  const newData = `---\ntitle: '${parentDirName}'\nweight: ${itemIndex}\n---\n\n`;
+                  let existingFileData = fs.readFileSync(newFullPath, 'utf8');
+                  
+                  existingFileData = existingFileData.replace(/<img\s+src="(?!http)(.*?)"/g, (match, src) => {
+                    // Remove './' prefix from src path and prepend '/img/docs/'
+                    const updatedSrc = src.replace(/^\.\//, '');
+                    return `<img src="/img/docs/${updatedSrc}"`;
+                    });
+                  
+                  const updatedContent = newData + existingFileData;
+                  fs.writeFileSync(newFullPath, updatedContent);
+                  itemIndex++;
+                }
+              }
+            }
+
+            await processMarkdownFiles(rootPath);
+
+      - name: Copy bindings folder from Current Repo to Another
+        working-directory: ./website
+        run: |
+          mkdir -p ./markdown/docs/reference/bindings
+          printf "%s\ntitle: Bindings\nweight: 11\n%s" "---" "---"> ../bindings/_section.md
+          find ../bindings -type f -name '*.md' ! -name 'CONTRIBUTING.md' ! -name 'README.md' ! -name 'CODE_OF_CONDUCT.md' -exec mv {} ./markdown/docs/reference/bindings/ \;
+
+      - name: Copy images to website
+        run: |
+          # Assuming the workflow runs on Linux/macOS
+          # Create the target directory if it doesn't exist
+          mkdir -p ./website/public/img/docs/
+          # Find and copy all image files from the source directory to the target directory
+          find ./bindings/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -iname "*.webp" \) -exec cp {} ./website/public/img/docs/ \;
+
+      - name: Commit and push
+        working-directory: ./website
+        run: |
+          git add .
+          git commit -m "docs(extension): update latest bindings docs"
+          git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/website
+
+      - name: Create PR
+        working-directory: ./website
+        run: |
+          gh pr create --title "docs(bindings): update latest bindings documentation" --body "Updated bindings documentation is available and this PR introduces update to bindings folder on the website" --head "update-bindings-docs-${{ github.sha }}"
