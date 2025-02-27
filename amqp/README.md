@@ -6,7 +6,7 @@ This document defines how to describe AMQP-specific information on AsyncAPI.
 
 ## Version
 
-Current version is `0.3.0`.
+Current version is `0.4.0`.
 
 
 <a name="server"></a>
@@ -29,6 +29,8 @@ This object contains information about the channel representation in AMQP.
 Field Name | Type | Description
 ---|:---:|---
 <a name="channelBindingObjectIs"></a>`is` | string | Defines what type of channel is it. Can be either `queue` or `routingKey` (default).
+<a name="channelBindingObjectName"></a>`name` | string | When `is`=`routingKey`, this defines the actual routing pattern to route the message from the exchange to the queue.
+<a name="channelBindingObjectChannel"></a>`channel` | [Reference Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#referenceObject) | When `is`=`routingKey`, a $ref pointer to the definition of the channel where the amqp message is routed to. If defined, this property MUST point to a Channel Object in any location. Please note the channel property value MUST be a Reference Object and, therefore, MUST NOT contain a Channel Object.
 <a name="channelBindingObjectExchange"></a>`exchange` | Map[string, any] | When `is`=`routingKey`, this object defines the exchange properties.
 <a name="channelBindingObjectExchangeName"></a>`exchange.name` | string | The name of the exchange. It MUST NOT exceed 255 characters long.
 <a name="channelBindingObjectExchangeType"></a>`exchange.type` | string | The type of the exchange. Can be either `topic`, `direct`, `fanout`, `default` or `headers`.
@@ -49,24 +51,27 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  userSignup:
-    address: 'user/signup'
+  userSignupExchange:
+    address: 'signup'
     bindings:
       amqp:
         is: routingKey
+        name: user.signup
+        channel:
+          $ref: #/components/channels/userSignupQueue
         exchange:
           name: myExchange
           type: topic
           durable: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
 ```
 
 ```yaml
 channels:
-  userSignup:
-    address: 'user/signup'
+  userSignupQueue:
+    address: 'user.signup'
     bindings:
       amqp:
         is: queue
@@ -76,7 +81,7 @@ channels:
           exclusive: true
           autoDelete: false
           vhost: /
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
 ```
 
 <a name="operation"></a>
@@ -108,7 +113,7 @@ This object MUST contain only the properties defined above.
 operations:
   userSignup:
     channel: 
-      $ref: '#/channels/userSignup'
+      $ref: '#/channels/userSignupQueue'
     bindings:
       amqp:
         expiration: 100000
@@ -120,7 +125,7 @@ operations:
         bcc: ['external.audit']
         timestamp: true
         ack: false
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
 ```
 
 
@@ -142,13 +147,12 @@ This object MUST contain only the properties defined above.
 
 ```yaml
 channels:
-  userSignup:
-    address: 'user/signup'
+  userSignupQueue:
     messages:
       userSignupMessage:
         bindings:
           amqp:
             contentEncoding: gzip
             messageType: 'user.signup'
-            bindingVersion: 0.3.0
+            bindingVersion: 0.4.0
 ```
