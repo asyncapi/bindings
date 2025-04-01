@@ -16,22 +16,23 @@ Current version is `0.1.0`.
 
 This object contains information about the server representation in ROS 2. 
 ROS 2 can use either DDS or Zenoh as its middleware. 
-DDS is decentralized with no central server, so the field `host` can be set to `localhost`.
+DDS is decentralized with no central server, so the field `host` can set to `none`.
+For more information on DDS tuning, you can visit the [DDS Tuning Guide](https://docs.ros.org/en/rolling/How-To-Guides/DDS-tuning.html).
 When using Zenoh, the `host` field specifies the Zenoh Router IP address.
 
 ###### Fixed Fields
 
 Field Name | Type | Description
 ---|:---:|---|
-`rmwImplementation` | string  |  Specifies the ROS 2 middleware implementation to be used. Valid values include the different [ROS 2 middleware vendors](https://docs.ros.org/en/rolling/Concepts/Intermediate/About-Different-Middleware-Vendors.html). This determines the underlying middleware implementation that handles communication.
-`domainId` | integer  |  All ROS 2 nodes use domain ID 0 by default. To prevent interference between different groups of computers running ROS 2 on the same network, a group can be set with a unique domain ID. Must be a non-negative integer less than 232. 
+`rmwImplementation` | string  |  Specifies the ROS 2 middleware implementation to be used. Valid values include the different [ROS 2 middleware vendors (RMW)](https://docs.ros.org/en/rolling/Concepts/Intermediate/About-Different-Middleware-Vendors.html) like `rmw_fastrtps_cpp` (Fast DDS) or `rmw_zenoh_cpp` (Zenoh). This determines the underlying middleware implementation that handles communication.
+`domainId` | integer  |  All ROS 2 nodes use domain ID 0 by default. To prevent interference between different groups of computers running ROS 2 on the same network, a group can be set with a unique domain ID. [Must be a non-negative integer less than 232](https://docs.ros.org/en/rolling/Concepts/Intermediate/About-Domain-ID.html). 
 
 ### Examples
 
 ```yaml
 servers:
   ros2:
-    host: localhost
+    host: none
     protocol: ros2
     protocolVersion: humble
     bindings:
@@ -82,22 +83,22 @@ Field Name | Type | Description
 ROS 2 subscriber example:
 
 ```yaml
-  receiveCmdVel:
-    action: receive
-    channel:
-      $ref: "#/channels/CmdVel"
-    bindings:
-      ros2:
-        role: subscriber
-        node: /turtlesim
-          qosPolicies:
-            history: unknown
-            reliability: reliable
-            durability: volatile
-            lifespan: -1
-            deadline: -1
-            liveliness: automatic
-            leaseDuration: -1
+receiveCmdVel:
+  action: receive
+  channel:
+    $ref: "#/channels/CmdVel"
+  bindings:
+    ros2:
+      role: subscriber
+      node: /turtlesim
+        qosPolicies:
+          history: unknown
+          reliability: reliable
+          durability: volatile
+          lifespan: -1
+          deadline: -1
+          liveliness: automatic
+          leaseDuration: -1
 ```
 
 ROS 2 publisher example:
@@ -176,4 +177,92 @@ RotateAbsolute:
 
 ## Message Binding Object
 
-This object MUST NOT contain any properties. Its name is reserved for future use.
+While this object DOES NOT contain any ROS 2 specific properties, it is important to understand how to express the different [ROS2 data types](https://design.ros2.org/articles/legacy_interface_definition.html#:~:text=to%20IDL%20types-,ROS%20type,string,-The%20mapping%20of) in [AsyncAPI message types and formats](https://www.asyncapi.com/docs/reference/specification/v3.0.0#dataTypeFormat:~:text=The%20formats%20defined%20by%20the%20AsyncAPI%20Specification%20are%3A).
+
+ROS 2  Type | AsyncAPI Type | AsyncAPI Format | 
+---|:---:|---|
+bool | boolean | boolean
+byte | string | octet
+char | integer | uint8
+float32 | number | float
+float64 | number | double
+int8 | integer | int8
+uint8 | integer | uint8
+int16 | integer | int16
+uint16 | integer | uint16
+int32 | integer | int32
+uint32 | integer | uint32
+int64 | integer | int64
+uint64 | integer | uint64
+string | string | string
+array | array | --
+
+
+## Complete example:
+From the AsyncAPI specification example it could be extracted that:
+- It consist on a ROS2 jazzy application running with Fast DDS as RMW. 
+-  `/turtlesim` node is a subscriber of the `/turtle1/cmd_vel` topic and its qos policies.
+- The interface of the `/turtle1/cmd_vel` topic is `Twist` that has a nested type: `Vector3`
+- `Vector3` has already the types converted to AsyncAPI types and formats (number and double), instead of using the ROS2 types.
+
+```yaml
+asyncapi: 3.0.0
+info:
+  title: Head AsyncAPI definition
+  version: 1.0.0
+servers:
+  ros2:
+    host: none
+    protocol: ros2
+    protocolVersion: jazzy
+    bindings:
+      x-ros2:
+        rmwImplementation: rmw_fastrtps_cpp
+        domainId: 0
+channels:
+  Twist:
+    address: /turtle1/cmd_vel
+    messages:
+      Twist:
+        $ref: "#/components/messages/Twist"
+operations:
+  Twist:
+    action: receive
+    channel:
+      $ref: "#/channels/Twist"
+    bindings:
+      x-ros2:
+        role: subscriber
+        node: /turtlesim
+        qosPolicies:
+          history: unknown
+          reliability: reliable
+          durability: volatile
+          lifespan: -1
+          deadline: -1
+          liveliness: automatic
+          leaseDuration: -1
+components:
+  Twist:
+    tags:
+      - name: msg
+    payload:
+      type: object
+      properties:
+        linear:
+          $ref: "#/components/messages/Vector3/payload"
+        angular:
+          $ref: "#/components/messages/Vector3/payload"
+  Vector3:
+    payload:
+      properties:
+        x:
+          type: number
+          format: double
+        y:
+          type: number
+          format: double
+        z:
+          type: number
+          format: double
+```
