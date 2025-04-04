@@ -197,41 +197,94 @@ uint64 | integer | uint64
 string | string | string
 array | array | --
 
+It is important to understand that the message header of the AsyncAPI specification does not map with the message header in ROS2.
+For this reason, the AsyncAPI message header will be ignored. If you want to define the header of a message in ROS2, you should put in the payload of the message. [Example](https://docs.ros.org/en/ros2_packages/rolling/api/point_cloud_interfaces/msg/CompressedPointCloud2.html):
+
+```yaml
+channels:
+  PointCloud:
+    address: /pointCloud
+    messages:
+      CompressedPointCloud2:
+        $ref: "#/components/messages/CompressedPointCloud2"
+components:
+  CompressedPointCloud2:
+    tags:
+      - name: msg
+    payload:
+      type: object
+      properties:
+        header:
+          $ref: "#/components/messages/std_msgs/header/payload"
+        height:
+          $ref: "#/components/messages/uint32/payload"
+        width:
+          $ref: "#/components/messages/uint32/payload"
+        fields:
+          $ref: "#/components/messages/sensor_msgs/PointField/payload"
+        is_bigendian:
+          $ref: "#/components/messages/bool/payload"
+        point_step:
+          $ref: "#/components/messages/uint32/payload"
+        row_step:
+          $ref: "#/components/messages/uint32/payload"
+        compressed_data:
+          $ref: "#/components/messages/uint8/payload"
+        is_dense:
+          $ref: "#/components/messages/bool/payload"
+        format:
+          $ref: "#/components/messages/string/payload"     
+```
 
 ## Complete example:
 From the AsyncAPI specification example it could be extracted that:
 - It consist on a ROS2 jazzy application running with Fast DDS as RMW. 
 -  `/turtlesim` node is a subscriber of the `/turtle1/cmd_vel` topic and its qos policies.
-- The interface of the `/turtle1/cmd_vel` topic is `Twist` that has a nested type: `Vector3`
+- The interface of the `/turtle1/cmd_vel` topic is `Twist` that has a nested type: `Vector3`. Both of them are part of the standard package `geometry_msgs`.
 - `Vector3` has already the types converted to AsyncAPI types and formats (number and double), instead of using the ROS2 types.
+- There is one file (head-asyncapi.yaml) that references the different standard/custom packages. This packages contains the strucute of its messages.
+
+  ```
+  ├── interfaces
+  │ ├── geometry_msgs.yaml
+  │ ├── std_msgs.yaml
+  │ ├── <custom_pkg_msgs>.yaml
+  │ └── ....
+  └── head-asyncapi.yaml
+  ```
+
+head-asyncapi.yaml
 
 ```yaml
 asyncapi: 3.0.0
 info:
-  title: Head AsyncAPI definition
+  title: Turtlesim example for ROS 2
   version: 1.0.0
+
 servers:
   ros2:
     host: none
     protocol: ros2
     protocolVersion: jazzy
     bindings:
-      x-ros2:
+      ros2:
         rmwImplementation: rmw_fastrtps_cpp
         domainId: 0
+
 channels:
-  Twist:
+  CmdVel:
     address: /turtle1/cmd_vel
     messages:
       Twist:
-        $ref: "#/components/messages/Twist"
+        $ref: ./interfaces/geometry_msgs.yaml#/components/messages/Twist
+
 operations:
-  Twist:
+  CmdVel:
     action: receive
     channel:
-      $ref: "#/channels/Twist"
+      $ref: "#/channels/CmdVel"
     bindings:
-      x-ros2:
+      ros2:
         role: subscriber
         node: /turtlesim
         qosPolicies:
@@ -242,27 +295,36 @@ operations:
           deadline: -1
           liveliness: automatic
           leaseDuration: -1
+```
+
+./interfaces/geometry_msgs.yaml
+```yaml
+asyncapi: 3.0.0
+info:
+  title: geometry_msgs
+  version: 1.0.0
 components:
-  Twist:
-    tags:
-      - name: msg
-    payload:
-      type: object
-      properties:
-        linear:
-          $ref: "#/components/messages/Vector3/payload"
-        angular:
-          $ref: "#/components/messages/Vector3/payload"
-  Vector3:
-    payload:
-      properties:
-        x:
-          type: number
-          format: double
-        y:
-          type: number
-          format: double
-        z:
-          type: number
-          format: double
+  messages:
+    Twist:
+      tags:
+        - name: msg
+      payload:
+        type: object
+        properties:
+          linear:
+            $ref: "#/components/messages/Vector3/payload"
+          angular:
+            $ref: "#/components/messages/Vector3/payload"
+    Vector3:
+      payload:
+        properties:
+          x:
+            type: number
+            format: double
+          y:
+            type: number
+            format: double
+          z:
+            type: number
+            format: double
 ```
