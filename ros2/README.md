@@ -197,8 +197,8 @@ uint64 | integer | uint64
 string | string | string
 array | array | --
 
-It is important to understand that the message header of the AsyncAPI specification does not map with the message header in ROS2.
-For this reason, the AsyncAPI message header will be ignored. If you want to define the header of a message in ROS2, you should put in the payload of the message. [Example](https://docs.ros.org/en/ros2_packages/rolling/api/point_cloud_interfaces/msg/CompressedPointCloud2.html):
+It is important to understand that the message header of the AsyncAPI specification does not map with the message header in ROS 2.
+For this reason, the AsyncAPI message header will be ignored. If you want to define the header of a message in ROS 2, you should put in the payload of the message. [Example](https://docs.ros.org/en/ros2_packages/rolling/api/point_cloud_interfaces/msg/CompressedPointCloud2.html):
 
 ```yaml
 channels:
