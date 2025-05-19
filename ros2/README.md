@@ -177,7 +177,7 @@ RotateAbsolute:
 
 ## Message Binding Object
 
-While this object DOES NOT contain any ROS 2 specific properties, it is important to understand how to express the different [ROS2 data types](https://design.ros2.org/articles/legacy_interface_definition.html#:~:text=to%20IDL%20types-,ROS%20type,string,-The%20mapping%20of) in [AsyncAPI message types and formats](https://www.asyncapi.com/docs/reference/specification/v3.0.0#dataTypeFormat:~:text=The%20formats%20defined%20by%20the%20AsyncAPI%20Specification%20are%3A).
+While this object DOES NOT contain any ROS 2 specific properties, it is important to understand how to express the different [ROS 2 data types](https://design.ros2.org/articles/legacy_interface_definition.html#:~:text=to%20IDL%20types-,ROS%20type,string,-The%20mapping%20of) in [AsyncAPI message types and formats](https://www.asyncapi.com/docs/reference/specification/v3.0.0#dataTypeFormat:~:text=The%20formats%20defined%20by%20the%20AsyncAPI%20Specification%20are%3A).
 
 ROS 2  Type | AsyncAPI Type | AsyncAPI Format | 
 ---|:---:|---|
