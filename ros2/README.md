@@ -241,7 +241,7 @@ From the AsyncAPI specification example it could be extracted that:
 - It consist on a ROS 2 Jazzy application running with Fast DDS as RMW. 
 -  `/turtlesim` node is a subscriber of the `/turtle1/cmd_vel` topic and its qos policies.
 - The interface of the `/turtle1/cmd_vel` topic is `Twist` that has a nested type: `Vector3`. Both of them are part of the standard package `geometry_msgs`.
-- `Vector3` has already the types converted to AsyncAPI types and formats (number and double), instead of using the ROS2 types.
+- `Vector3` has already the types converted to AsyncAPI types and formats (number and double), instead of using the ROS 2 types.
 - There is one file (head-asyncapi.yaml) that references the different standard/custom packages. This packages contains the strucute of its messages.
 
   ```
