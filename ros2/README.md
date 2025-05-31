@@ -15,8 +15,8 @@ Current version is `0.1.0`.
 ## Server Binding Object
 
 This object contains information about the server representation in ROS 2. 
-ROS 2 can use either DDS or Zenoh as its middleware. 
-DDS is decentralized with no central server, so the field `host` can set to `none`.
+ROS 2 can use a vast variety of [middleware implementations](https://docs.ros.org/en/rolling/Installation/RMW-Implementations.html). This document focuses on DDS and Zenoh middleware implementations.
+DDS-based ROS 2 implementations are per default decentralized with no central server, so the field `host` can be set to `none`.
 For more information on DDS tuning, you can visit the [DDS Tuning Guide](https://docs.ros.org/en/rolling/How-To-Guides/DDS-tuning.html).
 When using Zenoh, the `host` field specifies the Zenoh Router IP address.
 
