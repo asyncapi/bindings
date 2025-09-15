@@ -2,17 +2,17 @@
 
 This document defines how to describe SQS-specific information on AsyncAPI.
 
-SQS can be used both stand-alone as a point-to-point and paired with SNS and as a publish-subscribe channel (where SQS is the endpoint that SNS delivers messages to). For this reason we define a Queue schema, and reference that schema from both a Channel Binding Object and a **publish** Operation Binding Object. 
+SQS can be used both stand-alone as a point-to-point and paired with SNS and as a send-receive (more commonly referred to as pubsub in SNS/SQS nomenclature) channel (where SQS is the endpoint that SNS delivers messages to). For this reason we define a Queue schema, and reference that schema from both a Channel Binding Object and a Operation Binding Object. 
 
 For point-to-point scenarios, use the Channel Binding Object, as producers send to the queue and consumers receive from it directly.
 
-For publish-subscribe scenarios, use as a **publish** Operation Binding Object, as the producer sends to SNS and the consumer receives via SQS.
+For publish-subscribe scenarios, use as a Operation Binding Object with a `send` action, as the producer sends to SNS and the consumer receives via SQS.
 
 <a name="version"></a>
 
 ## Version
 
-Current version is `0.3.0`.
+Current version is `0.4.0`.
 
 <a name="server"></a>
 
@@ -28,11 +28,11 @@ Use the Channel Binding Operation for Point-to-Point SQS channels.
 
 There are three likely scenarios for use of the Channel Binding Object:
 
-- One file defines both publish and subscribe operations, for example if we were implementing the work queue pattern to offload work from an HTTP API endpoint to a worker process. In this case the channel would be defined on the Channel Object in that single file. 
+- One file defines both send and receive operations, for example if we were implementing the work queue pattern to offload work from an HTTP API endpoint to a worker process. In this case the channel would be defined on the Channel Object in that single file. 
 - The producer and consumer both have an AsyncAPI specification file, and the producer is raising an event, for example interop between microservices, and the producer 'owns' the channel definition and thus has the SQS Binding on its Channel Object. 
 - The producer and consumer both have an AsyncAPI specification file, and the consumer receives commands, for example interop between microservices, and the consumer 'owns' the channel  definition and thus has the SQS Binding on its Channel Object. 
 
-An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To support this requirement, the Channel Binding Object allows you to define both a Queue Object to use as the Channel or target in a *publish* Operation and a Dead Letter Queue. You can then refer to the Dead letter Queue in the Redrive Policy using the Identifier Object and setting the *name* field to match the *name* field of your Dead Letter Queue Object. (If you define the DLQ externally, the Identifier also supports an ARN). 
+An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To support this requirement, the Channel Binding Object allows you to define both a Queue Object to use as the Channel or target in a *send* Operation and a Dead Letter Queue. You can then refer to the Dead letter Queue in the Redrive Policy using the Identifier Object and setting the *name* field to match the *name* field of your Dead Letter Queue Object. (If you define the DLQ externally, the Identifier also supports an ARN). 
 
 ### Fields
 |Field Name | Type | Description|
@@ -59,10 +59,10 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 | <a name="queueObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the queue. |
 
 #### Identifier
-|Field Name | Type | Description                                                                                                                                                                                                                                                                                                                       |
-|---|:---:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:\{region}:\{account-id}:\{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) |
-|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this **publish** Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding                                                     |
+|Field Name | Type | Description|
+|---|:---:|---|
+|<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:{region}:{account-id}:{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)|
+|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this **send** Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding|
 
 #### Policy
 |Field Name | Type | Description|
@@ -91,16 +91,16 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 
 ### SQS Point-To-Point
 
-Because we have defined Queue as part of the Channel Binding Binding object, we do not require Binding information for the **publish** Operation Object of the **subscribe** Operation Object. You can use an empty Queue object ({}) to denote the Binding on the Operation Object, if you want to indicate the protocol used to send or receive for generation purposes such as Infrastructure As Code.
+Because we have defined Queue as part of the Channel Binding Binding object, we do not require Binding information for the **send** Operation Object of the **receive** Operation Object. You can use an empty Queue object ({}) to denote the Binding on the Operation Object, if you want to indicate the protocol used to send or receive for generation purposes such as Infrastructure As Code.
 
 ### SNS to SQS Pub-Sub
 
-Use the Operation Binding Object when SQS is listening to an SNS Topic. In this case we need to define both an SQS Operation Binding Objects on the receiver **publish** Operation Object to represent the queue definition and we need to define an SNS Operation Binding Object to define the Subscription to SNS that makes your queue a receiver of that endpoint.
+Use the Operation Binding Object when SQS is listening to an SNS Topic. In this case we need to define both an SQS Operation Binding Objects on the receiver **send** Operation Object to represent the queue definition and we need to define an SNS Operation Binding Object to define the Subscription to SNS that makes your queue a receiver of that endpoint.
 
 Assuming you have separate AsyncAPI specifications for the producer and the consumer, we would assume the following bindings would appear for an SNS producer and an SQS consumer.
 
-Producer: SNS Channel Binding Object, SNS **subscribe** Operation Binding Object [if required]
-Consumer: SNS **publish** Operation Binding Object, SQS **publish** Operation Binding Object
+Producer: SNS Channel Binding Object, SNS **receive** Operation Binding Object [if required]
+Consumer: SNS **send** Operation Binding Object, SQS **send** Operation Binding Object
 
 - We assume that the SNS binding information only needs to be present in the producer file (although defining it in both is allowable) and any infrastructure as code dependencies can recognize this.
 
@@ -126,7 +126,7 @@ The producer file would look like this:
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedup:
     bindings:
       sqs:
         queue:
@@ -147,24 +147,30 @@ channels:
         deadLetterQueue: 
           name: user-signedup-dlq 
           messageRetentionPeriod: 1209600 
-	        fifoQueue: false
-    subscribe:
-      operationId: sendMessage
-      description: sends messages when a user has signed up
-      bindings:
-        sqs: {}
+          fifoQueue: false
+operations:
+  userSignedUp:
+    action: send
+    operationId: sendMessage
+    description: sends messages when a user has signed up
+    bindings:
+      sqs: {}
+    channel:
+      $ref: '#/channels/userSignedUp'
 
 ```
-In this case we can minimize duplicated information by omitting the binding in our specification, and assume it is picked up from the producer file. We can use an empty object to indicate the SQS Binding on the **publish** Operation Object, if need a marker for generation, otherwise we could omit the Operation Binding Object.
+In this case we can minimize duplicated information by omitting the binding in our specification, and assume it is picked up from the producer file. We can use an empty object to indicate the SQS Binding on the **send** Operation Object, if need a marker for generation, otherwise we could omit the Operation Binding Object.
 
 ```yaml
-channels:
-  user-signedup:
-   publish:
-      operationId: receiveMessage
-      description: receives a messages when a user has signed up
-      bindings:
-        sqs: {}
+operations:
+  userSignedup:
+    action: receive
+    operationId: receiveMessage
+    description: receives a messages when a user has signed up
+    bindings:
+      sqs: {}
+    channel:
+      $ref: '#/channels/userSignedUp'
 
 ```
 
@@ -179,20 +185,23 @@ The producer files looks like this (see the [SNS Binding]() for more).
 
 ```yaml
 channels:
-  user-signedup:
-    description:  A user has signed up for our service
-    binding :
-      sns: {}     # Indicates that the channel is an SNS Topic
-    subscribe:
-      operationId: sendMessage
-      description: send messages to the topic
-      bindings:
-        sns:
-          policy:
-            statements: 
-            - effect : Allow
-              principal: *
-              action: SNS:Publish
+  userSignedup:
+    bindings:
+      sqs: {} # Indicates that the channel is an SNS Topic
+operations:
+  userSignedUp:
+    action: send
+    operationId: sendMessage
+    description: send messages to the topic
+    bindings:
+      sns:
+        policy:
+          statements: 
+          - effect : Allow
+            principal: *
+            action: SNS:Publish
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 And the consumer file would look like this. Note that for simplicity, we choose not to repeat the SNS Binding on the Consumer as it does not 'own' the channel.
@@ -200,41 +209,45 @@ And the consumer file would look like this. Note that for simplicity, we choose 
 
 ```yaml
 channels:
-  user-signedup:
+  userSignedup:
     description:  A user has signed up for our service
-    publish:
-      operationId: receiveMessage
-      description: receive messages from the topic
-      bindings:
-        sns:
-          consumers:
-          - protocol: sqs
-            endpoint:
-            name: user-signedup-queue
-            rawMessageDelivery: true  
-            filterPolicy:
-              attributes:
-                reason: 
-                  anything-but: password-reset
-            redrivePolicy:
-              deadLetterQueue:
-              name: user-signedup-queue-dlq
-        sqs:
-          queues:
-          - name: user-signedup-queue
-            fifoQueue: false
-            receiveMessageWaitTime: 4
-            policy:
-              statements: 
-              - effect : Allow
-                principal: *
-                action: Sqs:SendMessage
-              - effect : Allow
-                principal: *
-                action: Sqs:ReceiveMessage 
-          - name: user-signedup-dlq 
-            messageRetentionPeriod: 1209600 
-            fifoQueue: false
+operations:
+  userSignedup:
+    action: receive
+    operationId: receiveMessage
+    description: receive messages from the topic
+    bindings:
+      sns:
+        consumers:
+        - protocol: sqs
+          endpoint:
+          name: user-signedup-queue
+          rawMessageDelivery: true  
+          filterPolicy:
+            attributes:
+              reason: 
+                anything-but: password-reset
+          redrivePolicy:
+            deadLetterQueue:
+            name: user-signedup-queue-dlq
+      sqs:
+        queues:
+        - name: user-signedup-queue
+          fifoQueue: false
+          receiveMessageWaitTime: 4
+          policy:
+            statements: 
+            - effect : Allow
+              principal: *
+              action: Sqs:SendMessage
+            - effect : Allow
+              principal: *
+              action: Sqs:ReceiveMessage 
+        - name: user-signedup-dlq 
+          messageRetentionPeriod: 1209600 
+          fifoQueue: false
+    channel:
+      $ref: '#/channels/userSignedUp'
 ```
 
 <a name="message"></a>
