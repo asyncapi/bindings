@@ -12,7 +12,7 @@ For publish-subscribe scenarios, use as a **publish** Operation Binding Object, 
 
 ## Version
 
-Current version is `0.2.0`.
+Current version is `0.3.0`.
 
 <a name="server"></a>
 
@@ -59,10 +59,10 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 | <a name="queueObjectTags"></a>`tags` |Object | **Optional.** Key-value pairs that represent AWS tags on the queue. |
 
 #### Identifier
-|Field Name | Type | Description|
-|---|:---:|---|
-|<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:{region}:{account-id}:{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)|
-|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this **publish** Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding|
+|Field Name | Type | Description                                                                                                                                                                                                                                                                                                                       |
+|---|:---:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|<a name="identifierObjectArn"></a>`arn` |string| **Optional.** The target is an [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html). For example, for SQS, the identifier may be an ARN, which will be of the form: ["arn:aws:sqs:\{region}:\{account-id}:\{queueName}"](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) |
+|<a name="identifierObjectName"></a>`name` |string| **Optional.** The endpoint is identified by a name, which corresponds to an identifying field called 'name' of a binding for that protocol on this **publish** Operation Object. For example, if the protocol is 'sqs' then the name refers to the name field **sqs** binding                                                     |
 
 #### Policy
 |Field Name | Type | Description|
@@ -79,8 +79,10 @@ An SQS queue can set up a Dead Letter Queue as part of a Redelivery Policy. To s
 |Field Name | Type | Description|
 |---|:---:|---|
 | <a name="channelBindingPolicyStatementObjectEffect"></a>`effect` | string |**Required.** Either "Allow" or "Deny"|
-| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or array of string |**Required.** The AWS account or resource ARN that this statement applies to|
-| <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SQS permission being allowed or denied e.g. sqs:ReceiveMessage |
+| <a name="channelBindingPolicyStatementObjectPrincipal"></a>`principal` | string or AWS principal property containing a string or string array |**Required.** The AWS account(s) or resource ARN(s) that the statement applies to|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`action` | string or array of string |**Required.** The SNS permission being allowed or denied e.g. sns:Publish|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`resource` | string or array of string |**Optional.** The resource(s) that this policy applies to|
+| <a name="channelBindingPolicyStatementObjectAction"></a>`condition` | object or list of objects |**Optional.** Specific circumstances under which the policy grants permission|
 
 
 <a name="operation"></a>
