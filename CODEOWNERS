@@ -6,7 +6,7 @@
 
 # The default owners are automatically added as reviewers when you open a pull request unless different owners are specified in the file.
 
-* @derberg @fmvilas @dalelane @smoya @char0n @asyncapi-bot-eve @GreenRover
+* @derberg @fmvilas @dalelane @char0n @asyncapi-bot-eve @GreenRover
 
 /anypointmq/   @mboss37 @GeraldLoeffler
 /ibmmq/        @rcoppen
