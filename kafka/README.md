@@ -51,6 +51,7 @@ Field Name |                       Type                       |                 
 <a name="channelBindingObjectReplicas"></a>`replicas` |                     integer                      |                              Number of replicas configured on this topic.                               |        OPTIONAL         | MUST be positive
 <a name="channelBindingObjectTopicConfiguration"></a>`topicConfiguration` | [TopicConfiguration Object](#topicConfiguration) |                   Topic configuration properties that are relevant for the API.                    |       OPTIONAL       | -
 <a name="channelBindingObjectBindingVersion"></a>`bindingVersion` |                      string                      |                   The version of this binding. If omitted, "latest" MUST be assumed.                    |   OPTIONAL [`latest`]   | -
+<a name="channelBindingObjectTransactionConfiguration"></a>`transaction` | [TransacionConfiguration Object](#transactionConfiguration)                      |                   Transaction configuration properites that are revelan for the API.                    |   OPTIONAL   | -
 
 
 This object MUST contain only the properties defined above.
@@ -106,6 +107,17 @@ topicConfiguration:
   confluent.value.schema.validation: true
   confluent.value.subject.name.strategy: "TopicNameStrategy"
 ```
+
+<a name="transactionConfiguration"></a>
+
+## TransactionConfiguration Object
+
+This objects contains information about the API relevant transaction configuration in Kafka.
+
+Field Name |  Type   |                                                                             Description                                                                              | Applicability [default] | Constraints
+---|:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------:|---
+<a name="transactionConfigurationTransactionalId"></a>`transactional.id` |  string  |                            The [`transacional.id`](https://kafka.apache.org/documentation/#producerconfigs_transactional.id) configuration option.                          |        OPTIONAL         | -
+<a name="transactionConfigurationCommitIntervalMs"></a>`commit.interval.ms` | long |                               The [`commit.interval.ms`](https://kafka.apache.org/documentation/#producerconfigs_transactional.id) configuration option. | OPTIONAL | -
 
 <a name="operation"></a>
 
