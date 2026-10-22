@@ -5,7 +5,7 @@ This document defines how to describe Apache Pulsar specific information with As
 
 ## Version
 
-Current version is `0.1.0`.
+Current version is `0.2.0`.
 
 <a name="server"></a>
 ## Server Binding Object
@@ -27,7 +27,7 @@ servers:
     bindings:
       pulsar:
         tenant: contoso
-        bindingVersion: '0.1.0'
+        bindingVersion: '0.2.0'
 ```
 
 <a name="channel"></a>
@@ -74,7 +74,7 @@ channels:
           size: 1000
         ttl: 360
         deduplication: false
-        bindingVersion: '0.1.0'
+        bindingVersion: '0.2.0'
 ```
 
 <a name="operation"></a>
@@ -82,5 +82,31 @@ channels:
 This object MUST NOT contain any properties. Its name is reserved for future use.
 
 <a name="message"></a>
-## Message binding fields
-This object MUST NOT contain any properties. Its name is reserved for future use.
+## Message Binding Object
+This object contains information about the message representation in Pulsar.
+
+##### Fixed Fields
+
+Field Name | Type | Required | Description | Default value |
+---|:---:|:---:|:---|:---|
+`key` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | No | The message key, determining the [order](https://pulsar.apache.org/docs/next/concepts-messaging/#ordering-guarantee) for consumers using a [Key_Shared](https://pulsar.apache.org/docs/next/concepts-messaging/#key_shared) subscription. | N/A |
+`bindingVersion` | String | No | The version of this binding. If omitted, "latest" MUST be assumed. | `latest` |
+
+##### Example
+
+```yaml
+channels:
+  user-signedup:
+    messages:
+      userSignedUp:
+        bindings:
+          pulsar:
+            key:
+              type: string
+              format: uuid
+              description: The user ID. All events for the same user are delivered in order.
+            bindingVersion: '0.2.0'
+```
+
+[schemaObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0#schemaObject
+[referenceObject]: https://www.asyncapi.com/docs/reference/specification/v3.0.0#referenceObject
