@@ -89,7 +89,8 @@ This object contains information about the message representation in Pulsar.
 
 Field Name | Type | Required | Description | Default value |
 ---|:---:|:---:|:---|:---|
-`key` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | No | The message key, determining the [order](https://pulsar.apache.org/docs/next/concepts-messaging/#ordering-guarantee) for consumers using a [Key_Shared](https://pulsar.apache.org/docs/next/concepts-messaging/#key_shared) subscription. | N/A |
+`key` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | No | The message key, also called the partition key. It determines the partition on a partitioned topic, the [order](https://pulsar.apache.org/docs/next/concepts-messaging/#ordering-guarantee) for consumers using a [Key_Shared](https://pulsar.apache.org/docs/next/concepts-messaging/#key_shared) subscription, and which messages are kept by [topic compaction](https://pulsar.apache.org/docs/next/concepts-topic-compaction/). The schema MUST be of type `string`. | N/A |
+`orderingKey` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | No | The ordering key. If present, it determines the order for consumers using a Key_Shared subscription, instead of `key`. The schema MUST be of type `string`. | N/A |
 `bindingVersion` | String | No | The version of this binding. If omitted, "latest" MUST be assumed. | `latest` |
 
 ##### Example
@@ -104,7 +105,11 @@ channels:
             key:
               type: string
               format: uuid
-              description: The user ID. All events for the same user are delivered in order.
+              description: The user ID. All events for the same user are delivered to the same partition.
+            orderingKey:
+              type: string
+              format: uuid
+              description: The session ID. All events within the same session are delivered in order.
             bindingVersion: '0.2.0'
 ```
 
