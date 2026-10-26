@@ -142,10 +142,10 @@ This object contains information about the operation representation in Kafka (eg
 
 Field Name | Type | Description | Applicability [default] | Constraints
 ---|:---:|:---:|:---:|---
-<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | Id of the consumer group. | OPTIONAL | -
-<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) | Id of the consumer inside a consumer group. | OPTIONAL | -
+<a name="operationBindingObjectGroupId"></a>`groupId` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | Id of the consumer group. | OPTIONAL | -
+<a name="operationBindingObjectClientId"></a>`clientId` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | Id of the consumer inside a consumer group. | OPTIONAL | -
 <a name="operationBindingObjectPrincipal"></a>`principal` | string | The Kafka principal (e.g. `User:bob`) used to authenticate this operation. Intended for ACL documentation purposes. | OPTIONAL | -
-<a name="operationBindingObjectTransactional"></a>`transactional` | boolean | Marks this producer as transactional. When `true`, the Kafka client MUST be configured with a `transactional.id` at runtime. | OPTIONAL [`false`] — `send` only | MUST NOT be set on `receive` operations
+<a name="operationBindingObjectTransactionalIdPrefix"></a>`transactionalIdPrefix` | string | Prefix of the [`transactional.id`](https://kafka.apache.org/documentation/#producerconfigs_transactional.id) values used by this producer. Its presence marks the producer as transactional. Tooling can use it to grant `PREFIXED` `TRANSACTIONAL_ID` ACLs to the operation's `principal`. | OPTIONAL — `send` only | MUST NOT be set on `receive` operations
 <a name="operationBindingObjectIsolationLevel"></a>`isolationLevel` | string | Controls the visibility of transactional messages to this consumer. | OPTIONAL [`read_uncommitted`] — `receive` only | MUST be one of `read_uncommitted`, `read_committed`. SHOULD be `read_committed` when consuming from a transactional topic
 <a name="operationBindingObjectErrorTopics"></a>`errorTopics` | [Error Topics Object](#errorTopics) | Configuration for retry and dead-letter queue (DLQ) topics associated with this consumer operation. Enables full Kafka infrastructure provisioning from a single AsyncAPI document without defining error topics as separate channels. | OPTIONAL — `receive` only | -
 <a name="operationBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
@@ -178,7 +178,7 @@ operations:
     bindings:
       kafka:
         principal: 'User:payment-producer'
-        transactional: true
+        transactionalIdPrefix: 'payments-service-'
         bindingVersion: '0.6.0'
 ```
 
@@ -189,13 +189,15 @@ operations:
     bindings:
       kafka:
         groupId:
-          type: string
-          enum: ['payments-consumer-group']
+          const: 'payments-consumer-group'
         principal: 'User:payment-consumer'
         isolationLevel: read_committed
         errorTopics:
           addressTemplate: '${groupId}.__.${channel.address}.${suffix}'
           retryTopics: 3
+          retrySuffixes: ['retry-5s', 'retry-30s', 'retry-5m']
+          extraHeaders:
+            $ref: '#/components/schemas/SpringKafkaErrorHeaders'
           retry:
             partitions: 1
             replicas: 2
@@ -221,10 +223,12 @@ This object configures retry and dead-letter queue (DLQ) topics for a consumer o
 
 Field Name | Type | Description | Applicability [default] | Constraints
 ---|:---:|:---:|:---:|---
-<a name="errorTopicsAddressTemplate"></a>`addressTemplate` | string | Template for generated topic addresses. Supports variables: `${groupId}` (first enum value of `groupId`), `${channel.address}` (the channel's address), `${suffix}` (`retry-0` … `retry-{N-1}` and `dlq`). | REQUIRED | -
-<a name="errorTopicsRetryTopics"></a>`retryTopics` | integer | Number of retry topics to create (named `retry-0` through `retry-{N-1}`). | OPTIONAL | MUST be a positive integer. REQUIRED when `retry` is present.
-<a name="errorTopicsRetry"></a>`retry` | [Error Topic Configuration Object](#errorTopicConfiguration) \| [Reference Object](referenceObject) | Topic configuration applied to each retry topic. | OPTIONAL | -
-<a name="errorTopicsDlq"></a>`dlq` | [Error Topic Configuration Object](#errorTopicConfiguration) \| [Reference Object](referenceObject) | Topic configuration applied to the DLQ topic. | OPTIONAL | -
+<a name="errorTopicsAddressTemplate"></a>`addressTemplate` | string | Template for generated topic addresses. Supports variables: `${groupId}` (the `const` value of `groupId`, or its first `enum` value), `${channel.address}` (the channel's address), `${suffix}` (`retry-0` … `retry-{N-1}`, or the values of `retrySuffixes`, and `dlq`). | REQUIRED | -
+<a name="errorTopicsRetryTopics"></a>`retryTopics` | integer | Number of retry topics to create (named `retry-0` through `retry-{N-1}` unless `retrySuffixes` is provided). | OPTIONAL | MUST be a positive integer. REQUIRED when `retry` or `retrySuffixes` is present.
+<a name="errorTopicsRetrySuffixes"></a>`retrySuffixes` | [string] | Explicit suffixes for the retry topics, in order (e.g. `retry-5s`, `retry-30s`, `retry-5m` for retries with backoff). Replaces the default `retry-0` … `retry-{N-1}`. | OPTIONAL | Its length MUST equal `retryTopics`. Values MUST be unique and non-empty.
+<a name="errorTopicsExtraHeaders"></a>`extraHeaders` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] | Schema of the headers that the error-handling framework adds on top of the original message (e.g. Spring Kafka `kafka_dlt-*` headers). Payload, key and original headers are the same as the original message. | OPTIONAL | -
+<a name="errorTopicsRetry"></a>`retry` | [Error Topic Configuration Object](#errorTopicConfiguration) \| [Reference Object][referenceObject] | Topic configuration applied to each retry topic. | OPTIONAL | -
+<a name="errorTopicsDlq"></a>`dlq` | [Error Topic Configuration Object](#errorTopicConfiguration) \| [Reference Object][referenceObject] | Topic configuration applied to the DLQ topic. | OPTIONAL | -
 
 <a name="errorTopicConfiguration"></a>
 ## Error Topic Configuration Object
@@ -248,11 +252,11 @@ This object contains information about the message representation in Kafka.
 
 Field Name |  Type   |                                                                             Description                                                                              | Applicability [default] | Constraints
 ---|:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------:|---
-<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [Reference Object](referenceObject) \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object](referenceObject) way. | OPTIONAL | -
+<a name="messageBindingObjectKey"></a>`key` | [Schema Object][schemaObject] \| [Reference Object][referenceObject] \| [AVRO Schema Object](https://avro.apache.org/docs/current/spec.html) | The message key. **NOTE**: You can also use the [reference object][referenceObject] way. | OPTIONAL | -
 <a name="messageBindingObjectSchemaIdLocation"></a>`schemaIdLocation` | string | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. `header` or `payload`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="messageBindingObjectSchemaIdPayloadEncoding"></a>`schemaIdPayloadEncoding` | string | Number of bytes or vendor specific values when schema id is encoded in payload (e.g `confluent`/ `apicurio-legacy` / `apicurio-new`). | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
 <a name="messageBindingObjectSchemaLookupStrategy"></a>`schemaLookupStrategy` | string | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | OPTIONAL | MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level
-<a name="messageBindingObjectCompatibility"></a>`compatibility` | string | The schema compatibility mode used when registering this schema with the schema registry. Values derive from compatibility types defined by Confluent Schema Registry and supported by Apicurio Registry and Karapace. | OPTIONAL | MUST be one of `BACKWARD`, `BACKWARD_TRANSITIVE`, `FORWARD`, `FORWARD_TRANSITIVE`, `FULL`, `FULL_TRANSITIVE`, `NONE`. MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level.
+<a name="messageBindingObjectSchemaCompatibility"></a>`schemaCompatibility` | string | The schema compatibility mode used when registering this schema with the schema registry. Values derive from compatibility types defined by Confluent Schema Registry and supported by Apicurio Registry and Karapace. Compatibility is configured per registry subject, so messages that resolve to the same subject MUST declare the same value. | OPTIONAL | MUST be one of `BACKWARD`, `BACKWARD_TRANSITIVE`, `FORWARD`, `FORWARD_TRANSITIVE`, `FULL`, `FULL_TRANSITIVE`, `NONE`. MUST NOT be specified if `schemaRegistryUrl` is not specified at the Server level.
 <a name="messageBindingObjectBindingVersion"></a>`bindingVersion` | string | The version of this binding. If omitted, "latest" MUST be assumed. | OPTIONAL [`latest`] | -
 
 This object MUST contain only the properties defined above.
@@ -301,7 +305,7 @@ messages:
       kafka:
         schemaIdLocation: 'payload'
         schemaLookupStrategy: 'TopicNameStrategy'
-        compatibility: 'BACKWARD'
+        schemaCompatibility: 'BACKWARD'
         bindingVersion: '0.6.0'
 ```
 
