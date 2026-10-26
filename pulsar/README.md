@@ -109,7 +109,7 @@ channels:
             orderingKey:
               type: string,
               minLength: 3,
-              maxLength: 64,
+              maxLength: 64
               format: email
               description: The account e-mail address. All events regarding the same account e-mail address are delivered in order.
             bindingVersion: '0.2.0'
