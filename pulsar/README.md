@@ -107,8 +107,8 @@ channels:
               format: uuid
               description: The user ID. All events for the same user are delivered to the same partition.
             orderingKey:
-              type: string,
-              minLength: 3,
+              type: string
+              minLength: 3
               maxLength: 64
               format: email
               description: The account e-mail address. All events regarding the same account e-mail address are delivered in order.
