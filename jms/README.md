@@ -36,12 +36,12 @@ Server Object Field Name | Values for JMS Protocol | Description
 
 ## Server Binding Object
 
-The JMS [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#server-bindings-object) is defined by a [JSON Schema](json_schemas/server.json), which defines these fields:
+The JMS [Server Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#server-bindings-object) defines these fields:
 
 Field Name | Type | Description
 ---|:---:|---
 <a name="serverBindingObjectJMSConnectionFactory"></a>`jmsConnectionFactory` | string | **REQUIRED**. The classname of the [ConnectionFactory](https://docs.oracle.com/javaee/7/api/javax/jms/ConnectionFactory.html) implementation for the JMS Provider.
-<a name="serverBindingObjectJMSProperties"></a>`properties` | [Schema Array](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaArray) | **OPTIONAL**. Additional properties to set on the JMS ConnectionFactory implementation for the JMS Provider.
+<a name="serverBindingObjectJMSProperties"></a>`properties` | array of objects | **OPTIONAL**. Additional properties to set on the JMS ConnectionFactory implementation for the JMS Provider. Each item represents a name/value pair.
 <a name="serverBindingObjectJMSClientID"></a>`clientID` | string | **OPTIONAL**. A client identifier for applications that use this JMS connection factory. If the Client ID Policy is set to 'Restricted' (the default), then configuring a Client ID on the [ConnectionFactory](https://docs.oracle.com/javaee/7/api/javax/jms/ConnectionFactory.html) prevents more than one JMS client from using a connection from this factory.
 <a name="serverBindingObjectBindingVersion"></a>`bindingVersion` | string | **OPTIONAL**, defaults to `latest`. The version of this binding.
 
@@ -70,7 +70,7 @@ servers:
 <a name="channel"></a>
 ## Channel Binding Object
 
-The JMS [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) is defined by a [JSON Schema](json_schemas/channel.json), which defines these fields:
+The JMS [Channel Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#channel-bindings-object) defines these fields:
 
 Field Name | Type | Description
 ---|:---:|---
@@ -109,7 +109,7 @@ This object MUST NOT contain any properties. Its name is reserved for future use
 
 ## Message Binding Object
 
-The JMS [Message Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#message-bindings-object) is defined by a [JSON Schema](json_schemas/message.json), which defines these fields:
+The JMS [Message Binding Object](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#message-bindings-object) defines these fields:
 
 Field Name | Type | Description
 ---|:---:|---
